@@ -7,7 +7,7 @@ import  org.pro.ygcms.core.domain.ftp.CmsFtp;
 
 public interface CmsFtpApplication {
 
-	public CmsFtp getCmsFtp(Long id);
+	public CmsFtp getCmsFtp(String id);
 	
 	public void creatCmsFtp(CmsFtp cmsFtp);
 	

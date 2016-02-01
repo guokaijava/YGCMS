@@ -7,7 +7,7 @@ import  org.pro.ygcms.core.domain.model.CmsModel;
 
 public interface CmsModelApplication {
 
-	public CmsModel getCmsModel(Long id);
+	public CmsModel getCmsModel(String id);
 	
 	public void creatCmsModel(CmsModel cmsModel);
 	

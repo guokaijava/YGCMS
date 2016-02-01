@@ -11,7 +11,7 @@ import org.pro.ygcms.core.domain.content.CmsContentType;
 @Transactional
 public class CmsContentTypeApplicationImpl implements CmsContentTypeApplication {
 
-	public CmsContentType getCmsContentType(Long id) {
+	public CmsContentType getCmsContentType(String id) {
 		return CmsContentType.get(CmsContentType.class, id);
 	}
 	

@@ -7,7 +7,7 @@ import  org.pro.ygcms.core.domain.model.CmsModelItem;
 
 public interface CmsModelItemApplication {
 
-	public CmsModelItem getCmsModelItem(Long id);
+	public CmsModelItem getCmsModelItem(String id);
 	
 	public void creatCmsModelItem(CmsModelItem cmsModelItem);
 	

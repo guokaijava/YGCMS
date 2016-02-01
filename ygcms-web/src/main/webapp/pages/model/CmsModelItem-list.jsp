@@ -137,7 +137,7 @@ $(function (){
 	                            }else{
 	                                elm.val(json[index]);
 	                            }
-	                            if(index=="issingle"||index=="isdisplay"){
+	                            if(index=="issingle"||index=="isdisplay"||index=="iscustom"){
 									elm = dialog.find('#'+ index + 'ID1');
 										if(elm.val()==json[index]){
 										elm.attr("checked",true);
@@ -156,7 +156,7 @@ $(function (){
 	                });
 	                dialog.find('#save').on('click',{grid: grid}, function(e){
 	                    if(!Validator.Validate(dialog.find('form')[0],3))return;
-	                    $.post('${pageContext.request.contextPath}/CmsModelItem/update.koala?id='+id, dialog.find('form').serialize()).done(function(result){
+	                    $.post('${pageContext.request.contextPath}/CmsModelItem/update.koala', dialog.find('form').serialize()).done(function(result){
 	                        if(result.success){
 	                            dialog.modal('hide');
 	                            e.data.grid.data('koala.grid').refresh();

@@ -34,7 +34,7 @@ public class CmsFtpFacadeImpl implements CmsFtpFacade {
      return queryChannel;
     }
 	
-	public InvokeResult getCmsFtp(Long id) {
+	public InvokeResult getCmsFtp(String id) {
 		return InvokeResult.success(CmsFtpAssembler.toDTO(application.getCmsFtp(id)));
 	}
 	
@@ -48,14 +48,14 @@ public class CmsFtpFacadeImpl implements CmsFtpFacade {
 		return InvokeResult.success();
 	}
 	
-	public InvokeResult removeCmsFtp(Long id) {
+	public InvokeResult removeCmsFtp(String id) {
 		application.removeCmsFtp(application.getCmsFtp(id));
 		return InvokeResult.success();
 	}
 	
-	public InvokeResult removeCmsFtps(Long[] ids) {
+	public InvokeResult removeCmsFtps(String[] ids) {
 		Set<CmsFtp> cmsFtps= new HashSet<CmsFtp>();
-		for (Long id : ids) {
+		for (String id : ids) {
 			cmsFtps.add(application.getCmsFtp(id));
 		}
 		application.removeCmsFtps(cmsFtps);

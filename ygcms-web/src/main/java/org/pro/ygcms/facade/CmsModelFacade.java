@@ -7,15 +7,15 @@ import org.pro.ygcms.facade.dto.*;
 
 public interface CmsModelFacade {
 
-	public InvokeResult getCmsModel(Long id);
+	public InvokeResult getCmsModel(String id);
 	
 	public InvokeResult creatCmsModel(CmsModelDTO cmsModel);
 	
 	public InvokeResult updateCmsModel(CmsModelDTO cmsModel);
 	
-	public InvokeResult removeCmsModel(Long id);
+	public InvokeResult removeCmsModel(String id);
 	
-	public InvokeResult removeCmsModels(Long[] ids);
+	public InvokeResult removeCmsModels(String[] ids);
 	
 	public List<CmsModelDTO> findAllCmsModel();
 	

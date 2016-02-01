@@ -1,9 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<html lang="zh-CN">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-</head>
-<body>
 <form class="form-horizontal">
 	<input type="hidden" id="idID" name="id" /> 
 	<input type="hidden" id="versionID" name="version" /> 
@@ -102,7 +97,7 @@
 	</div>
 	<div class="form-group">
 		<label class="col-lg-2 control-label">所属选卡:</label>
-		<div class="col-lg-10">
+		<div class="col-lg-4">
 			<select name="card" style="display: inline; width: 94%;"
 				class="form-control" id="cardID" >
 				<option value="1">基本信息</option>
@@ -112,10 +107,12 @@
 				<option value="5">高级设置</option>
 			</select>
 		</div>
+		<label class="col-lg-2 control-label" style="padding-left:0">是否自定义:</label>
+		<div class="col-lg-4" style="padding-top:6px">
+			<input name="iscustom"  type="radio" id="iscustomID1" value="1"/>&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="iscustom"  type="radio" id="iscustomID2" value="0"/>&nbsp;否
+		</div>
 	</div>
 	<input name="modelid" type="hidden" id="modelidID" /> <input
-		name="ischannel" type="hidden" id="ischannelID" /> <input
-		name="iscustom" type="hidden" id="iscustomID" value="0" />
+		name="ischannel" type="hidden" id="ischannelID" /> 
 	</form>
-</body>
-</html>

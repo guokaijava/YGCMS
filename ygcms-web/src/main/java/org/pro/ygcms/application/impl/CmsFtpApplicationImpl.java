@@ -11,7 +11,7 @@ import org.pro.ygcms.core.domain.ftp.CmsFtp;
 @Transactional
 public class CmsFtpApplicationImpl implements CmsFtpApplication {
 
-	public CmsFtp getCmsFtp(Long id) {
+	public CmsFtp getCmsFtp(String id) {
 		return CmsFtp.get(CmsFtp.class, id);
 	}
 	

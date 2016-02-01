@@ -33,7 +33,7 @@ public class CmsModelItemFacadeImpl implements CmsModelItemFacade {
      return queryChannel;
     }
 	
-	public InvokeResult getCmsModelItem(Long id) {
+	public InvokeResult getCmsModelItem(String id) {
 		return InvokeResult.success(CmsModelItemAssembler.toDTO(application.getCmsModelItem(id)));
 	}
 	
@@ -47,14 +47,14 @@ public class CmsModelItemFacadeImpl implements CmsModelItemFacade {
 		return InvokeResult.success();
 	}
 	
-	public InvokeResult removeCmsModelItem(Long id) {
+	public InvokeResult removeCmsModelItem(String id) {
 		application.removeCmsModelItem(application.getCmsModelItem(id));
 		return InvokeResult.success();
 	}
 	
-	public InvokeResult removeCmsModelItems(Long[] ids) {
+	public InvokeResult removeCmsModelItems(String[] ids) {
 		Set<CmsModelItem> cmsModelItems= new HashSet<CmsModelItem>();
-		for (Long id : ids) {
+		for (String id : ids) {
 			cmsModelItems.add(application.getCmsModelItem(id));
 		}
 		application.removeCmsModelItems(cmsModelItems);

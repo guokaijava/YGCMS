@@ -48,16 +48,12 @@ public class CmsFtpController {
 	@RequestMapping("/delete")
 	public InvokeResult remove(@RequestParam String ids) {
 		String[] value = ids.split(",");
-        Long[] idArrs = new Long[value.length];
-        for (int i = 0; i < value.length; i ++) {
-        	        					idArrs[i] = Long.parseLong(value[i]);
-						        }
-        return cmsFtpFacade.removeCmsFtps(idArrs);
+        return cmsFtpFacade.removeCmsFtps(value);
 	}
 	
 	@ResponseBody
 	@RequestMapping("/get/{id}")
-	public InvokeResult get(@PathVariable Long id) {
+	public InvokeResult get(@PathVariable String id) {
 		return cmsFtpFacade.getCmsFtp(id);
 	}
 	

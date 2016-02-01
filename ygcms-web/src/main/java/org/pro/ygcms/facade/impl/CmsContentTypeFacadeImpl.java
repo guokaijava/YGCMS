@@ -33,7 +33,7 @@ public class CmsContentTypeFacadeImpl implements CmsContentTypeFacade {
      return queryChannel;
     }
 	
-	public InvokeResult getCmsContentType(Long id) {
+	public InvokeResult getCmsContentType(String id) {
 		return InvokeResult.success(CmsContentTypeAssembler.toDTO(application.getCmsContentType(id)));
 	}
 	
@@ -47,14 +47,14 @@ public class CmsContentTypeFacadeImpl implements CmsContentTypeFacade {
 		return InvokeResult.success();
 	}
 	
-	public InvokeResult removeCmsContentType(Long id) {
+	public InvokeResult removeCmsContentType(String id) {
 		application.removeCmsContentType(application.getCmsContentType(id));
 		return InvokeResult.success();
 	}
 	
-	public InvokeResult removeCmsContentTypes(Long[] ids) {
+	public InvokeResult removeCmsContentTypes(String[] ids) {
 		Set<CmsContentType> cmsContentTypes= new HashSet<CmsContentType>();
-		for (Long id : ids) {
+		for (String id : ids) {
 			cmsContentTypes.add(application.getCmsContentType(id));
 		}
 		application.removeCmsContentTypes(cmsContentTypes);

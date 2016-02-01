@@ -162,7 +162,7 @@ $(function (){
 	                });
 	                dialog.find('#save').on('click',{grid: grid}, function(e){
 	                    if(!Validator.Validate(dialog.find('form')[0],3))return;
-	                    $.post('${pageContext.request.contextPath}/CmsModel/update.koala?id='+id, dialog.find('form').serialize()).done(function(result){
+	                    $.post('${pageContext.request.contextPath}/CmsModel/update.koala', dialog.find('form').serialize()).done(function(result){
 	                        if(result.success){
 	                            dialog.modal('hide');
 	                            e.data.grid.data('koala.grid').refresh();

@@ -11,7 +11,7 @@ import org.pro.ygcms.core.domain.model.CmsModelItem;
 @Transactional
 public class CmsModelItemApplicationImpl implements CmsModelItemApplication {
 
-	public CmsModelItem getCmsModelItem(Long id) {
+	public CmsModelItem getCmsModelItem(String id) {
 		return CmsModelItem.get(CmsModelItem.class, id);
 	}
 	

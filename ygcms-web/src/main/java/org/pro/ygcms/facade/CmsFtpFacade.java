@@ -7,15 +7,15 @@ import org.pro.ygcms.facade.dto.*;
 
 public interface CmsFtpFacade {
 
-	public InvokeResult getCmsFtp(Long id);
+	public InvokeResult getCmsFtp(String id);
 	
 	public InvokeResult creatCmsFtp(CmsFtpDTO cmsFtp);
 	
 	public InvokeResult updateCmsFtp(CmsFtpDTO cmsFtp);
 	
-	public InvokeResult removeCmsFtp(Long id);
+	public InvokeResult removeCmsFtp(String id);
 	
-	public InvokeResult removeCmsFtps(Long[] ids);
+	public InvokeResult removeCmsFtps(String[] ids);
 	
 	public List<CmsFtpDTO> findAllCmsFtp();
 	

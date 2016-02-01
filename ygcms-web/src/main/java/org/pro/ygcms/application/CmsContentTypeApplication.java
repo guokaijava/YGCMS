@@ -7,7 +7,7 @@ import  org.pro.ygcms.core.domain.content.CmsContentType;
 
 public interface CmsContentTypeApplication {
 
-	public CmsContentType getCmsContentType(Long id);
+	public CmsContentType getCmsContentType(String id);
 	
 	public void creatCmsContentType(CmsContentType cmsContentType);
 	
