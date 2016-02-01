@@ -2,12 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@include file="/commons/taglibs.jsp"%>
 <div class="department-detail" id="departmentDetail">
-    <div>
-    <div style="margin:8px 8px 4px">站点选择：<select id="sitelist" class="form-control" style="display:inline-block;width:215px;"></select></div>
+    <div style="margin:15px 8px 0">站点选择：<select id="sitelist" class="form-control" style="display:inline-block;width:215px;"></select></div>
 	<ul class="u-tree tree" id="channelTree"
-		oncontextmenu="return false" style="width: 28%"></ul>
-    </div>
-	<div class="right-content" style="width: 70%;padding-top:5px;padding-right:0px;height:540px">
+		oncontextmenu="return false" style="width:28%;min-height:500px;height:500px;border-radius:0"></ul>
+	<div class="right-content" style="width: 70%;position:relative;top:-55px;padding-right:0px;height:540px;">
 	    <div class="dropdown" style="margin:3px 0 7px">
   			<button id="dLabel" type="button" class="btn btn-success"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     			<span class="glyphicon glyphicon-plus"></span> 添加子栏目

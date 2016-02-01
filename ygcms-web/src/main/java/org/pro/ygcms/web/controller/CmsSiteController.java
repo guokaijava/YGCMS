@@ -28,8 +28,6 @@ public class CmsSiteController {
 	@ResponseBody
 	@RequestMapping("/add")
 	public InvokeResult add(CmsSiteDTO cmsSiteDTO) {
-		System.out.println("#############");
-	    System.out.println(cmsSiteDTO.getDomain());
 		return cmsSiteFacade.creatCmsSite(cmsSiteDTO);
 	}
 	

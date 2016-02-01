@@ -43,14 +43,48 @@ public abstract class CmsAbstractEntity extends KoalaBaseEntity {
 		this.version = version;
 	}
 
+	
 	/**
 	 * 将实体本身持久化到数据库
 	 */
 	public void save() {
-		if (this.notExisted()) {
+		if (notExisted()) {
 			setId(UUID.randomUUID().toString());
 		}
 		getRepository().save(this);
+	}
+	
+	/**
+     * 判断该实体是否已经存在于数据库中。
+     * @return 如果数据库中已经存在拥有该id的实体则返回true，否则返回false。
+     */
+    @Override
+    public boolean existed() {
+        Object id = getId();
+        if (id == null) {
+            return false;
+        }
+        if (id instanceof String && ((String)id).equals("")) {
+            return false;
+        }
+        return getRepository().exists(getClass(), getId());
+    }
+
+    /**
+     * 判断该实体是否不存在于数据库中。
+     * @return 如果数据库中已经存在拥有该id的实体则返回false，否则返回true。
+     */
+    @Override
+    public boolean notExisted() {
+        return !existed();
+    }
+
+	
+
+	@Override
+	public String[] businessKeys() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**

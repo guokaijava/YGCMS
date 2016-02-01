@@ -177,7 +177,7 @@
 			},{
 				title : "菜单图片",
 				name : "menuIcon",
-				width : 150,
+				width : 80,
 				render: function(item, name, index){
 					return '<span class="'+item[name]+'"></span>';
 				}
@@ -188,7 +188,7 @@
 			},{
 				title : "菜单描述",
 				name : "description",
-				width : 150
+				width : 100
 			}];
 		
 		var url = contextPath + "/auth/menu/findAllMenusTree.koala";

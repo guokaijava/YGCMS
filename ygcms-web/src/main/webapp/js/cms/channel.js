@@ -1,8 +1,6 @@
 var channelManager = function(){
 	var baseUrl =  contextPath + '/CmsChannel/';
 	var dialog = null;    //对话框
-	
-	
 	/**
 	 * 生成内容模版树
 	 */
@@ -25,7 +23,6 @@ var channelManager = function(){
 			getTreeData(firstsite);
 		});
 	};
-	
 	var getTreeData = function(siteId){
 		$('#channelTree').html("");
 		var firstchild =0;
@@ -102,6 +99,7 @@ var channelManager = function(){
 	};
 	
 	var selectChildren = function(id){
+		alert(id);
 	};
 	
 	

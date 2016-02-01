@@ -121,7 +121,7 @@
 .grid-table-body {
 	min-height: 150px;
 	height: 315px;
-	overflow: auto;
+	overflow-x:hidden;
 }
 .grid .grid-tree-space {
 	display: inline;

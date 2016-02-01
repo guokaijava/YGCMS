@@ -20,7 +20,7 @@ public class CmsSiteApplicationImpl implements CmsSiteApplication {
 	}
 	
 	public void updateCmsSite(CmsSite cmsSite) {
-		cmsSite .save();
+		cmsSite.save();
 	}
 	
 	public void removeCmsSite(CmsSite cmsSite) {

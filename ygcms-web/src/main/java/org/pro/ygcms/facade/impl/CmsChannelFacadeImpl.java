@@ -96,11 +96,11 @@ public class CmsChannelFacadeImpl implements CmsChannelFacade {
 	@Override
 	public CmsChannelInfoDTO getChannelTree(String siteId) {
 		StringBuilder jpql = new StringBuilder("SELECT NEW org.pro.ygcms.facade.dto.CmsChannelInfoDTO"
-				+ "(cc.id,cce.channelName,cc.siteId,cc.parentId) FROM CmsChannel cc , CmsChannelExt cce  "
+				+ "(cc.id,cc.channelName,cc.siteId,cc.parentId) FROM CmsChannel cc , CmsChannelExt cce  "
 				+ "WHERE cce.channelId = cc.id and cc.siteId="+siteId+" and cc.parentId = 0 order by cc.id ");
 		CmsChannelInfoDTO top = (CmsChannelInfoDTO) getQueryChannelService().createJpqlQuery(jpql.toString()).singleResult();
 		jpql = new StringBuilder("SELECT NEW org.pro.ygcms.facade.dto.CmsChannelInfoDTO"
-				+ "(cc.id,cce.channelName,cc.siteId,cc.parentId) FROM CmsChannel cc , CmsChannelExt cce  "
+				+ "(cc.id,cc.channelName,cc.siteId,cc.parentId) FROM CmsChannel cc , CmsChannelExt cce  "
 				+ "WHERE cce.channelId = cc.id and cc.siteId="+siteId+" order by cc.id ");
 		List<CmsChannelInfoDTO> all = getQueryChannelService().createJpqlQuery(jpql.toString()).list();
 		LinkedHashMap<String, CmsChannelInfoDTO> map = new LinkedHashMap<String, CmsChannelInfoDTO>();
