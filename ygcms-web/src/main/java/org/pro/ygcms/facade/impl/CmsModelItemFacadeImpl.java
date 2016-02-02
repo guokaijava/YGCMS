@@ -148,9 +148,15 @@ public class CmsModelItemFacadeImpl implements CmsModelItemFacade {
         return new Page<CmsModelItemDTO>(pages.getStart(), pages.getResultCount(),pageSize, CmsModelItemAssembler.toDTOs(pages.getData()));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<CmsModelItemDTO> getItemsByModelId(String id,int ischannel) {
-		return CmsModelItemAssembler.toDTOs(application.findCmsModelItemByModelId(id,ischannel));
+	   	StringBuilder jpql = new StringBuilder("select _cmsModelItem from CmsModelItem _cmsModelItem   where 1=1 ");
+	   	jpql.append(" and _cmsModelItem.modelid="+id);
+	   	jpql.append(" and _cmsModelItem.ischannel="+ischannel);
+	   	jpql.append(" order by _cmsModelItem.priority");
+	   	Page<CmsModelItem> pages = getQueryChannelService().createJpqlQuery(jpql.toString()).setPage(0, Integer.MAX_VALUE).pagedList();
+	    return new Page<CmsModelItemDTO>(pages.getStart(), pages.getResultCount(),Integer.MAX_VALUE, CmsModelItemAssembler.toDTOs(pages.getData())).getData();
 	}
 	
 	
