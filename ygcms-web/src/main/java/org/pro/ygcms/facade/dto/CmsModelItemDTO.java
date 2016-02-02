@@ -17,7 +17,7 @@ public class CmsModelItemDTO implements Serializable {
 
 	private String defvalue;
 
-	private Integer modelid;
+	private String modelid;
 
 	private Integer issingle;
 
@@ -63,11 +63,11 @@ public class CmsModelItemDTO implements Serializable {
 		return this.defvalue;
 	}
 
-	public void setModelid(Integer modelid) {
+	public void setModelid(String modelid) {
 		this.modelid = modelid;
 	}
 
-	public Integer getModelid() {
+	public String getModelid() {
 		return this.modelid;
 	}
 

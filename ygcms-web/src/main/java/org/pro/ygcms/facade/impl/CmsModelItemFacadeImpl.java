@@ -65,6 +65,7 @@ public class CmsModelItemFacadeImpl implements CmsModelItemFacade {
 		return CmsModelItemAssembler.toDTOs(application.findAllCmsModelItem());
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Page<CmsModelItemDTO> pageQueryCmsModelItem(CmsModelItemDTO queryVo, int currentPage, int pageSize) {
 		List<Object> conditionVals = new ArrayList<Object>();
 	   	StringBuilder jpql = new StringBuilder("select _cmsModelItem from CmsModelItem _cmsModelItem   where 1=1 ");
@@ -137,13 +138,19 @@ public class CmsModelItemFacadeImpl implements CmsModelItemFacade {
 	   		conditionVals.add(queryVo.getCard());
 	   	}	
 	   	jpql.append(" order by _cmsModelItem.priority");
-        Page<CmsModelItem> pages = getQueryChannelService()
+	   	
+		Page<CmsModelItem> pages = getQueryChannelService()
 		   .createJpqlQuery(jpql.toString())
 		   .setParameters(conditionVals)
 		   .setPage(currentPage, pageSize)
 		   .pagedList();
 		   
         return new Page<CmsModelItemDTO>(pages.getStart(), pages.getResultCount(),pageSize, CmsModelItemAssembler.toDTOs(pages.getData()));
+	}
+
+	@Override
+	public List<CmsModelItemDTO> getItemsByModelId(String id,int ischannel) {
+		return CmsModelItemAssembler.toDTOs(application.findCmsModelItemByModelId(id,ischannel));
 	}
 	
 	

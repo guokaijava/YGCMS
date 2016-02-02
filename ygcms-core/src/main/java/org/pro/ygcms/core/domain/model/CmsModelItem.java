@@ -13,7 +13,7 @@ public class CmsModelItem extends CmsAbstractEntity {
 	private static final long serialVersionUID = -2595802162201156329L;
 
 	@Column(name = "model_id")
-	private int modelid;
+	private String modelid;
 
 	@Column(name = "field")
 	private String field;
@@ -63,11 +63,11 @@ public class CmsModelItem extends CmsAbstractEntity {
 	@Column(name = "card")
 	private int card;
 
-	public int getModelid() {
+	public String getModelid() {
 		return modelid;
 	}
 
-	public void setModelid(int modelid) {
+	public void setModelid(String modelid) {
 		this.modelid = modelid;
 	}
 

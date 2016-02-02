@@ -20,6 +20,8 @@ public interface CmsModelItemFacade {
 	public List<CmsModelItemDTO> findAllCmsModelItem();
 	
 	public Page<CmsModelItemDTO> pageQueryCmsModelItem(CmsModelItemDTO cmsModelItem, int currentPage, int pageSize);
+
+	public List<CmsModelItemDTO> getItemsByModelId(String id,int ischannel);
 	
 
 }

@@ -3,6 +3,7 @@ package org.pro.ygcms.application;
 
 import java.util.List;
 import java.util.Set;
+
 import  org.pro.ygcms.core.domain.model.CmsModelItem;
 
 public interface CmsModelItemApplication {
@@ -18,6 +19,8 @@ public interface CmsModelItemApplication {
 	public void removeCmsModelItems(Set<CmsModelItem> cmsModelItems);
 	
 	public List<CmsModelItem> findAllCmsModelItem();
+
+	public List<CmsModelItem> findCmsModelItemByModelId(String id,int ischannel);
 	
 }
 

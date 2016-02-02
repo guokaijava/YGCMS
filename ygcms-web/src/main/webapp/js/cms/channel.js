@@ -128,7 +128,7 @@ var channelManager = function(){
              });
 			 operateul.find("li").each(function(data){
 				 $(this).click(function(){
-					 var type = $(this).attr("id");
+					    var type = $(this).attr("id");
 				        var dialog = $('<div class="modal fade"><div class="modal-dialog">'
 				        	+'<div class="modal-content"><div class="modal-header"><button type="button" class="close" '
 				        	+'data-dismiss="modal" aria-hidden="true">&times;</button>'
@@ -143,6 +143,11 @@ var channelManager = function(){
 				            }).on({
 				                'hidden.bs.modal': function(){
 				                    $(this).remove();
+				                },
+				                'shown.bs.modal':function(){
+				                	 $.get(contextPath + '/CmsModelItem/getItemsByPid/'+type+'.koala').done(function(result){
+				                		 console.log(result);
+				                	 });
 				                }
 				            }).find('.modal-body').html(html);
 				        });
