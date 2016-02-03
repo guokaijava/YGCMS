@@ -129,7 +129,7 @@ var channelManager = function(){
 			 operateul.find("li").each(function(data){
 				 $(this).click(function(){
 					    var type = $(this).attr("id");
-				        var dialog = $('<div class="modal fade"><div class="modal-dialog">'
+				        var dialog = $('<div class="modal fade"><div class="modal-dialog modal-lg">'
 				        	+'<div class="modal-content"><div class="modal-header"><button type="button" class="close" '
 				        	+'data-dismiss="modal" aria-hidden="true">&times;</button>'
 				        	+'<h4 class="modal-title">新增栏目</h4></div><div class="modal-body">'
@@ -204,7 +204,6 @@ var channelManager = function(){
 				rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\" style=\"padding-top:6px\"><input type='radio' name='"+field_name+"' value=\"1\" checked/>&nbsp;"+firstVal+"&nbsp;&nbsp;&nbsp;&nbsp;<input type='radio' name='"+field_name+"'  value=\"0\"/>&nbsp;"+secVal+"</div>";
 			}
 		}else if(row.datatype == 9){ // 文本编辑
-			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\" style=\"padding-top:6px\"><input type='radio' name='"+field_name+"' value=\"1\" checked/>&nbsp;是 <input type='radio' name='"+field_name+"'  value=\"0\"/>&nbsp;否</div>";
 		}
 		return rowhtml;
 	}
