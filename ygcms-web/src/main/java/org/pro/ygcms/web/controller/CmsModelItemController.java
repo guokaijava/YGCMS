@@ -2,7 +2,8 @@ package org.pro.ygcms.web.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -40,8 +41,12 @@ public class CmsModelItemController {
 	
 	@ResponseBody
 	@RequestMapping("/getItemsByPid/{pid}")
-	public List<CmsModelItemDTO> getItemsByPid(@PathVariable String pid) {
-		return cmsModelItemFacade.getItemsByModelId(pid,1);
+	public Map<String,Object> getItemsByPid(@PathVariable String pid) {
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("tplList", cmsModelItemFacade.getItemsByModelId(pid,1));
+		
+		return map;
 	}
 	
 	@SuppressWarnings("rawtypes")

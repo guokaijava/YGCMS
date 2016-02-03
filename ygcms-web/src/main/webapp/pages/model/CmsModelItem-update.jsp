@@ -6,7 +6,7 @@
 		<label class="col-lg-2 control-label">字段:</label>
 		<div class="col-lg-4">
 			<input name="field" style="display: inline; width: 94%;"
-				class="form-control" type="text" id="fieldID" dataType="DataName" /><span class="required">*</span>
+				class="form-control" type="text" id="fieldID" /><span class="required">*</span>
 		</div>
 		<label class="col-lg-2 control-label">名称:</label>
 		<div class="col-lg-4">
@@ -27,6 +27,7 @@
 				<option value="6">下拉列表</option>
 				<option value="7">复选框</option>
 				<option value="8">单选框</option>
+				<option value="9">文本编辑区</option>
 			</select>
 		</div>
 		<label class="col-lg-2 control-label">排序号:</label>

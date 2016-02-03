@@ -146,6 +146,7 @@ var channelManager = function(){
 				                },
 				                'shown.bs.modal':function(){
 				                	 $.get(contextPath + '/CmsModelItem/getItemsByPid/'+type+'.koala').done(function(result){
+				                		 console.log(result);
 				                		 renderForm(result,dialog);
 				                	 });
 				                }
@@ -157,9 +158,8 @@ var channelManager = function(){
 	};
 	// 渲染表单
 	var renderForm = function(result,root){
-		for(var i = 0;result.length>0&&i<result.length;i++){
-			var ele = result[i];
-			console.log(ele);
+		for(var i = 0;result.tplList.length>0&&i<result.tplList.length;i++){
+			var ele = result.tplList[i];
 			if(ele.card == 1){ // 基本信息
 				root.find("#tab_base").append(renderRow(ele));
 			}else if(ele.card == 2){ // 编辑信息
@@ -178,21 +178,33 @@ var channelManager = function(){
 		var rowhtml="";
 		var field_name = row.iscustom == 1?"attr_"+row.field:row.field;
 		if(row.datatype == 1){ // 字符串文本
-			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-4 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-6\"><input type='text' name='"+field_name+"' class=\"form-control\"/></div>";
+			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><input type='text' name='"+field_name+"' class=\"form-control\"/></div>";
 		}else if(row.datatype == 2){ // 整型文本
-			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-4 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-6\"><input type='text' name='"+field_name+"' class=\"form-control\"/></div>";
+			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><input type='text' name='"+field_name+"' class=\"form-control\"/></div>";
 		}else if(row.datatype == 3){ // 浮点型文本
-			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-4 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-6\"><input type='text' name='"+field_name+"' class=\"form-control\"/></div>";
+			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><input type='text' name='"+field_name+"' class=\"form-control\"/></div>";
 		}else if(row.datatype == 4){ // 文本区
-			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-4 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-6\"><input type='text' name='"+field_name+"' class=\"form-control\"/></div>";
+			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><textarea name='"+field_name+"' class=\"form-control\"></textarea></div>";
 		}else if(row.datatype == 5){ // 日期
-			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-4 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-6\"><input type='text' name='"+field_name+"' class=\"form-control\"/></div>";
+			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><input type='date' name='"+field_name+"' class=\"form-control\"/></div>";
 		}else if(row.datatype == 6){ // 下拉列表
-			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-4 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-6\"><input type='text' name='"+field_name+"' class=\"form-control\"/></div>";
+			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><select name='"+field_name+"' class=\"form-control\"></select></div>";
 		}else if(row.datatype == 7){ // 复选框
-			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-4 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-6\"><input type='text' name='"+field_name+"' class=\"form-control\"/></div>";
+			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><input type='checkbox' name='"+field_name+"' value=\"1\"/>有</div>";
 		}else if(row.datatype == 8){ // 单选框
-			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-4 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-6\"><input type='text' name='"+field_name+"' class=\"form-control\"/></div>";
+			var firstVal = "是";
+			var secVal="否";
+			if(row.field == "commentControl"){ // 评论
+				rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\" style=\"padding-top:6px\"><input type='radio' name='"+field_name+"' value=\"0\" checked/>&nbsp;游客评论&nbsp;&nbsp;&nbsp;&nbsp;<input type='radio' name='"+field_name+"'  value=\"1\"/>&nbsp;登录评论&nbsp;&nbsp;&nbsp;&nbsp;<input type='radio' name='"+field_name+"'  value=\"2\"/>&nbsp;关闭评论</div>";
+			}else{
+				if(row.optvalue!=""){
+					firstVal = row.optvalue.split(",")[0];
+					secVal = row.optvalue.split(",")[1];
+				}
+				rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\" style=\"padding-top:6px\"><input type='radio' name='"+field_name+"' value=\"1\" checked/>&nbsp;"+firstVal+"&nbsp;&nbsp;&nbsp;&nbsp;<input type='radio' name='"+field_name+"'  value=\"0\"/>&nbsp;"+secVal+"</div>";
+			}
+		}else if(row.datatype == 9){ // 文本编辑
+			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\" style=\"padding-top:6px\"><input type='radio' name='"+field_name+"' value=\"1\" checked/>&nbsp;是 <input type='radio' name='"+field_name+"'  value=\"0\"/>&nbsp;否</div>";
 		}
 		return rowhtml;
 	}
