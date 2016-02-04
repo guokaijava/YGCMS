@@ -6,6 +6,7 @@
 <head>
     <%--<%@include file="/commons/metas.jsp"%>--%>
     <title>网站后台管理系统</title>
+    <link rel="icon" href="/images/global.logo.png">
     <%@include file="/commons/statics.jsp"%>
     <style>
         .nav-stacked .node ul{

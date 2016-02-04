@@ -40,6 +40,12 @@ public abstract class Constants {
 	 * HTTP GET请求
 	 */
 	public static final String GET = "GET";
-	
+	/**
+	 * 文件上传根目录
+	 */
 	public static final String BASEPICUPLOADPATH = "/images/uploadfiles/";
+	/**
+	 * 水印图片
+	 */
+	public static final String WATER_IMG_PTAH = "/images/global.logo.png";
 }
