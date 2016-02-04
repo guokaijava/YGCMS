@@ -40,4 +40,6 @@ public abstract class Constants {
 	 * HTTP GET请求
 	 */
 	public static final String GET = "GET";
+	
+	
 }
