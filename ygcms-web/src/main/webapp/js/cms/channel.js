@@ -179,7 +179,6 @@ var channelManager = function(){
 		}
 		// 绑定文件上传事件
 		root.find("input[type=file]").each(function(){
-			console.log($(this).attr("name"));
 			$(this).change(function(){
 				if($(this).val()!=""){
 					 var imgPath = $(this).val();
@@ -207,6 +206,27 @@ var channelManager = function(){
 		            });
 				}
 			});
+		});
+		// 绑定保存事件
+		root.find("#save").click(function(){
+			var txtcontent = root.find("#txteditor")[0].contentWindow.getContent();
+			root.find("#txt").val(txtcontent);
+			if(!Validator.Validate(root.find('form')[0],3))return;
+            $.post(baseUrl+'add.koala', root.find('form').serialize()).done(function(result){
+                 if(result.success ){
+                	  root.modal('hide');
+                      e.data.grid.data('koala.grid').refresh();
+                      e.data.grid.message({
+                          type: 'success',
+                          content: '保存成功'
+                       });
+                  }else{
+                	  root.find('.modal-content').message({
+                          type: 'error',
+                          content: result.actionError
+                      });
+                   }
+            });
 		});
 	};
 	// 渲染行
@@ -244,7 +264,8 @@ var channelManager = function(){
 				}
 			}else if(row.datatype == 9){ // 文本编辑
 				if(row.field == "txt"){
-					root.find("#txt").css("display","block");
+					root.find("#txteditor").css("display","block");
+					rowhtml = "<input type=\"hidden\" name='"+field_name+"' id='"+field_name+"'/>";
 				}
 			}else if(row.datatype == 10){ 
 				rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><div class=\"fileinput\"><button class=\"btn btn-success\"><i class=\"glyphicon glyphicon-picture\"></i>&nbsp;选择文件</button><input type='file' id='"+field_name+"_file' name=\"myfiles\"/><input type=\"hidden\" name='"+field_name+"' id='"+field_name+"'/><img id='"+field_name+"_view' alt='请上传"+row.itemlabel+"'/><div></div>";

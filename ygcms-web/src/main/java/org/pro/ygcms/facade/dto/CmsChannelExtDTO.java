@@ -10,6 +10,8 @@ public class CmsChannelExtDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String id;
+	
+	private String parentId;
 
 	private int version;
 
@@ -153,6 +155,14 @@ public class CmsChannelExtDTO implements Serializable {
 		return this.commentControl;
 	}
 
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
+	
 	public void setTitle(String title) {
 		this.title = title;
 	}

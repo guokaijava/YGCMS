@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.dayatang.utils.Page;
 import org.openkoala.koala.commons.InvokeResult;
 import org.openkoala.security.shiro.CurrentUser;
+import org.pro.ygcms.facade.CmsChannelExtFacade;
 import org.pro.ygcms.facade.CmsChannelFacade;
 import org.pro.ygcms.facade.dto.CmsChannelDTO;
+import org.pro.ygcms.facade.dto.CmsChannelExtDTO;
 import org.pro.ygcms.facade.dto.CmsSiteDTO;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,9 @@ public class CmsChannelController {
 		
 	@Inject
 	private CmsChannelFacade cmsChannelFacade;
+	
+	@Inject
+	private CmsChannelExtFacade cmsChannelExtFacade;
 	
 	@ResponseBody
 	@RequestMapping("/tree")
@@ -66,8 +71,15 @@ public class CmsChannelController {
 	
 	@ResponseBody
 	@RequestMapping("/add")
-	public InvokeResult add(CmsChannelDTO cmsChannelDTO) {
-		return cmsChannelFacade.creatCmsChannel(cmsChannelDTO);
+	public InvokeResult add(CmsChannelExtDTO cmsChannelExtDTO,HttpServletRequest req) {
+		// 插入CmsChannel
+		
+		// 插入CmsChannelExt
+		
+		// 插入CmsChannelTxt
+		
+		//return cmsChannelFacade.creatCmsChannel(cmsChannelDTO);
+		return null;
 	}
 	
 	@ResponseBody
