@@ -16,7 +16,11 @@ public class CmsChannelExtDTO implements Serializable {
 	private int version;
 
 	private Boolean hasTitleImg;
+	
+	private String channelPath;
 
+	private String modelId;
+	
 	private Boolean allowUpdown;
 
 	private Integer contentImgHeight;
@@ -74,6 +78,34 @@ public class CmsChannelExtDTO implements Serializable {
 	private String tplContent;
 
 	private String isListChild;
+	
+	private String siteId;
+	
+	private int priority;
+	
+	private int isDisplay;
+	
+	private String txt;
+	
+	private String txt1;
+	
+	
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
+	public String getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(String siteId) {
+		this.siteId = siteId;
+	}
 
 	public void setHasTitleImg(Boolean hasTitleImg) {
 		this.hasTitleImg = hasTitleImg;
@@ -337,6 +369,46 @@ public class CmsChannelExtDTO implements Serializable {
 
 	public void setVersion(int version) {
 		this.version = version;
+	}
+	
+	public String getChannelPath() {
+		return channelPath;
+	}
+
+	public void setChannelPath(String channelPath) {
+		this.channelPath = channelPath;
+	}
+
+	public String getModelId() {
+		return modelId;
+	}
+
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
+	}
+
+	public int getIsDisplay() {
+		return isDisplay;
+	}
+
+	public void setIsDisplay(int isDisplay) {
+		this.isDisplay = isDisplay;
+	}
+
+	public String getTxt() {
+		return txt;
+	}
+
+	public void setTxt(String txt) {
+		this.txt = txt;
+	}
+
+	public String getTxt1() {
+		return txt1;
+	}
+
+	public void setTxt1(String txt1) {
+		this.txt1 = txt1;
 	}
 
 	@Override

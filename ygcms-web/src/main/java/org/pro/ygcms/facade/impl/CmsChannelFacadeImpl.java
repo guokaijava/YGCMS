@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,6 +19,7 @@ import org.pro.ygcms.application.CmsChannelApplication;
 import org.pro.ygcms.core.domain.channel.CmsChannel;
 import org.pro.ygcms.facade.CmsChannelFacade;
 import org.pro.ygcms.facade.dto.CmsChannelDTO;
+import org.pro.ygcms.facade.dto.CmsChannelExtDTO;
 import org.pro.ygcms.facade.dto.CmsChannelInfoDTO;
 import org.pro.ygcms.facade.impl.assembler.CmsChannelAssembler;
 
@@ -40,18 +42,46 @@ public class CmsChannelFacadeImpl implements CmsChannelFacade {
 	public InvokeResult getCmsChannel(String id) {
 		return InvokeResult.success(CmsChannelAssembler.toDTO(application.getCmsChannel(id)));
 	}
-	
-	public InvokeResult creatCmsChannel(CmsChannelDTO cmsChannelDTO) {
-		application.creatCmsChannel(CmsChannelAssembler.toEntity(cmsChannelDTO));
-		return InvokeResult.success();
+	/**
+	 * 新增栏目
+	 */
+	public String creatCmsChannel(CmsChannelDTO cmsChannelDTO) {
+		CmsChannel pcmsChannel = application.getCmsChannel(cmsChannelDTO.getParentId());
+		if(pcmsChannel!=null){
+			// 更新其他栏目左值
+			String updLftSql = "update  CmsChannel _cmsChannel set _cmsChannel.lft = _cmsChannel.lft+2 where _cmsChannel.lft > "+pcmsChannel.getRgt()+" and _cmsChannel.siteId = "+pcmsChannel.getSiteId();  
+			application.execJpqlSql(updLftSql);
+			// 更新其他栏目右值
+			String updRgtSql = "update  CmsChannel _cmsChannel set _cmsChannel.rgt = _cmsChannel.rgt+2 where _cmsChannel.rgt >= "+pcmsChannel.getRgt()+" and _cmsChannel.siteId = "+pcmsChannel.getSiteId();  
+			application.execJpqlSql(updRgtSql);
+			cmsChannelDTO.setLft(pcmsChannel.getRgt());
+			cmsChannelDTO.setRgt(pcmsChannel.getRgt()+1);
+			cmsChannelDTO.setId(UUID.randomUUID().toString());
+			application.creatCmsChannel(CmsChannelAssembler.toEntity(cmsChannelDTO));
+			return cmsChannelDTO.getId();
+		}
+		return "父栏目不存在";
 	}
 	
-	public InvokeResult updateCmsChannel(CmsChannelDTO cmsChannelDTO) {
-		application.updateCmsChannel(CmsChannelAssembler.toEntity(cmsChannelDTO));
+	public InvokeResult updateCmsChannel(CmsChannelExtDTO cmsChannelExtDTO) {
+		CmsChannel cmsChannel = application.getCmsChannel(cmsChannelExtDTO.getChannelId());
+		cmsChannel.setChannelName(cmsChannelExtDTO.getChannelName());
+		cmsChannel.setChannelPath(cmsChannelExtDTO.getChannelPath());
+		cmsChannel.setPriority(cmsChannelExtDTO.getPriority());
+		cmsChannel.setIsDisplay(cmsChannelExtDTO.getIsDisplay());
+		application.updateCmsChannel(cmsChannel);
 		return InvokeResult.success();
 	}
 	
 	public InvokeResult removeCmsChannel(String id) {
+		CmsChannel cmsChannel = application.getCmsChannel(id);
+		int offset = cmsChannel.getRgt() - cmsChannel.getLft() +1 ;
+		// 更新其他栏目左值
+		String updLftSql = "update  CmsChannel _cmsChannel set _cmsChannel.lft = _cmsChannel.lft - "+offset+" where _cmsChannel.lft > "+cmsChannel.getLft()+" and _cmsChannel.siteId = "+cmsChannel.getSiteId();  
+		application.execJpqlSql(updLftSql);
+		// 更新其他栏目右值
+		String updRgtSql = "update  CmsChannel _cmsChannel set _cmsChannel.rgt = _cmsChannel.rgt - "+offset+" where _cmsChannel.rgt > "+cmsChannel.getRgt()+" and _cmsChannel.siteId = "+cmsChannel.getSiteId();  
+		application.execJpqlSql(updRgtSql);
 		application.removeCmsChannel(application.getCmsChannel(id));
 		return InvokeResult.success();
 	}
@@ -84,6 +114,7 @@ public class CmsChannelFacadeImpl implements CmsChannelFacade {
 	   		jpql.append(" and _cmsChannel.isDisplay=?");
 	   		conditionVals.add(queryVo.getIsDisplay());
 	   	}	
+	   	
 		Page<CmsChannel> pages = getQueryChannelService()
 		   .createJpqlQuery(jpql.toString())
 		   .setParameters(conditionVals)
@@ -97,11 +128,11 @@ public class CmsChannelFacadeImpl implements CmsChannelFacade {
 	public CmsChannelInfoDTO getChannelTree(String siteId) {
 		StringBuilder jpql = new StringBuilder("SELECT NEW org.pro.ygcms.facade.dto.CmsChannelInfoDTO"
 				+ "(cc.id,cc.channelName,cc.siteId,cc.parentId) FROM CmsChannel cc , CmsChannelExt cce  "
-				+ "WHERE cce.channelId = cc.id and cc.siteId="+siteId+" and cc.parentId = 0 order by cc.id ");
+				+ "WHERE cce.channelId = cc.id and cc.siteId="+siteId+" and cc.parentId = 0 order by cc.priority,cc.id ");
 		CmsChannelInfoDTO top = (CmsChannelInfoDTO) getQueryChannelService().createJpqlQuery(jpql.toString()).singleResult();
 		jpql = new StringBuilder("SELECT NEW org.pro.ygcms.facade.dto.CmsChannelInfoDTO"
 				+ "(cc.id,cc.channelName,cc.siteId,cc.parentId) FROM CmsChannel cc , CmsChannelExt cce  "
-				+ "WHERE cce.channelId = cc.id and cc.siteId="+siteId+" order by cc.id ");
+				+ "WHERE cce.channelId = cc.id and cc.siteId="+siteId+" order by cc.priority,cc.id ");
 		List<CmsChannelInfoDTO> all = getQueryChannelService().createJpqlQuery(jpql.toString()).list();
 		LinkedHashMap<String, CmsChannelInfoDTO> map = new LinkedHashMap<String, CmsChannelInfoDTO>();
 		if(top!=null){
@@ -124,7 +155,7 @@ public class CmsChannelFacadeImpl implements CmsChannelFacade {
 
 	@Override
 	public Page<CmsChannelDTO> getChildChannel(String pid) {
-	   	StringBuilder jpql = new StringBuilder("select _cmsChannel from CmsChannel _cmsChannel   where 1=1 and _cmsChannel.parentId = "+pid);
+	   	StringBuilder jpql = new StringBuilder("select _cmsChannel from CmsChannel _cmsChannel   where 1=1 and _cmsChannel.parentId = '"+pid+"' order by _cmsChannel.priority");
 		Page<CmsChannel> pages = getQueryChannelService()
 		   .createJpqlQuery(jpql.toString())
 		   .setPage(0, Integer.MAX_VALUE)

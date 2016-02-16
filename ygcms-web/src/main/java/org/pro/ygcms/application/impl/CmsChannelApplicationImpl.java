@@ -20,7 +20,7 @@ public class CmsChannelApplicationImpl implements CmsChannelApplication {
 	}
 	
 	public void updateCmsChannel(CmsChannel cmsChannel) {
-		cmsChannel .save();
+		cmsChannel.save();
 	}
 	
 	public void removeCmsChannel(CmsChannel cmsChannel) {
@@ -37,6 +37,11 @@ public class CmsChannelApplicationImpl implements CmsChannelApplication {
 	
 	public List<CmsChannel> findAllCmsChannel() {
 		return CmsChannel.findAll(CmsChannel.class);
+	}
+
+	@Override
+	public void execJpqlSql(String updLftSql) {
+		CmsChannel.updateByJpql(updLftSql);
 	}
 	
 }

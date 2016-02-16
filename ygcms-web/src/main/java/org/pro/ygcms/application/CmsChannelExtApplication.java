@@ -18,6 +18,8 @@ public interface CmsChannelExtApplication {
 	public void removeCmsChannelExts(Set<CmsChannelExt> cmsChannelExts);
 	
 	public List<CmsChannelExt> findAllCmsChannelExt();
+
+	public CmsChannelExt getCmsChannelExtByCid(String id);
 	
 }
 

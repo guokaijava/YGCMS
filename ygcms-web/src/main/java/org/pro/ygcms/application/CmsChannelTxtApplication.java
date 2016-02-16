@@ -18,6 +18,10 @@ public interface CmsChannelTxtApplication {
 	public void removeCmsChannelTxts(Set<CmsChannelTxt> cmsChannelTxts);
 	
 	public List<CmsChannelTxt> findAllCmsChannelTxt();
-	
+
+	public CmsChannelTxt getCmsChannelTxtByCid(String id);
+
+	public void execJpqlSql(String updLftSql);
+
 }
 

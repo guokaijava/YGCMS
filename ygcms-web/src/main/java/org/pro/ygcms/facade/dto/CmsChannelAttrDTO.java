@@ -2,67 +2,52 @@ package org.pro.ygcms.facade.dto;
 
 import java.io.Serializable;
 
-public class CmsChannelTxtDTO implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class CmsChannelAttrDTO implements Serializable {
 
 	private String id;
 
 	private int version;
 
-	private String txt1;
-
-	private String txt2;
-
-	private String txt3;
-
-	private String channelId;
-
-	private String txt;
-
-	public void setTxt1(String txt1) {
-		this.txt1 = txt1;
-	}
-
-	public String getTxt1() {
-		return this.txt1;
-	}
-
-	public void setTxt2(String txt2) {
-		this.txt2 = txt2;
-	}
-
-	public String getTxt2() {
-		return this.txt2;
-	}
-
-	public void setTxt3(String txt3) {
-		this.txt3 = txt3;
-	}
-
-	public String getTxt3() {
-		return this.txt3;
-	}
-
-	public void setChannelId(String channelId) {
+			
+		private String channelId;
+		
+				
+		private String attrName;
+		
+				
+		private String attrValue;
+		
+			
+	
+	public void setChannelId(String channelId) { 
 		this.channelId = channelId;
 	}
 
 	public String getChannelId() {
 		return this.channelId;
 	}
-
-	public void setTxt(String txt) {
-		this.txt = txt;
+		
+			
+	
+	public void setAttrName(String attrName) { 
+		this.attrName = attrName;
 	}
 
-	public String getTxt() {
-		return this.txt;
+	public String getAttrName() {
+		return this.attrName;
+	}
+		
+			
+	
+	public void setAttrValue(String attrValue) { 
+		this.attrValue = attrValue;
 	}
 
+	public String getAttrValue() {
+		return this.attrValue;
+	}
+		
+		
 	public String getId() {
 		return id;
 	}
@@ -70,7 +55,7 @@ public class CmsChannelTxtDTO implements Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
-
+	
 	public int getVersion() {
 		return version;
 	}
@@ -79,7 +64,7 @@ public class CmsChannelTxtDTO implements Serializable {
 		this.version = version;
 	}
 
-	@Override
+    @Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -95,7 +80,7 @@ public class CmsChannelTxtDTO implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CmsChannelTxtDTO other = (CmsChannelTxtDTO) obj;
+		CmsChannelAttrDTO other = (CmsChannelAttrDTO) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

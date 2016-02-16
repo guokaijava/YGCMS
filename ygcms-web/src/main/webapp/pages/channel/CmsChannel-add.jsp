@@ -20,7 +20,7 @@ input[type="radio"],input[type="checkbox"]{
           
         </div>
          <div id="tab_content" class="tab-pane fade">
-            <iframe src="../thirdparty/ueditor/index.html" name="txteditor" id="txteditor" scrolling="no" frameborder="0" style="width:100%;height:500px;display:none"></iframe>
+            <iframe src="../thirdparty/ueditor/index.html" id="txteditor" scrolling="no" frameborder="0" style="width:100%;height:500px;display:none"></iframe>
         </div>
         <div id="tab_image" class="tab-pane fade">
           

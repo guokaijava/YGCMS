@@ -10,9 +10,9 @@ public interface CmsChannelFacade {
 
 	public InvokeResult getCmsChannel(String id);
 	
-	public InvokeResult creatCmsChannel(CmsChannelDTO cmsChannel);
+	public String creatCmsChannel(CmsChannelDTO cmsChannel);
 	
-	public InvokeResult updateCmsChannel(CmsChannelDTO cmsChannel);
+	public InvokeResult updateCmsChannel(CmsChannelExtDTO cmsChannelExtDTO);
 	
 	public InvokeResult removeCmsChannel(String id);
 	

@@ -188,13 +188,24 @@ public class CmsChannelExtFacadeImpl implements CmsChannelExtFacade {
 		   	jpql.append(" and _cmsChannelExt.allowScore is ?");
 		   	conditionVals.add(queryVo.getAllowScore());
 	   	}	
-        Page<CmsChannelExt> pages = getQueryChannelService()
+        @SuppressWarnings("unchecked")
+		Page<CmsChannelExt> pages = getQueryChannelService()
 		   .createJpqlQuery(jpql.toString())
 		   .setParameters(conditionVals)
 		   .setPage(currentPage, pageSize)
 		   .pagedList();
 		   
         return new Page<CmsChannelExtDTO>(pages.getStart(), pages.getResultCount(),pageSize, CmsChannelExtAssembler.toDTOs(pages.getData()));
+	}
+
+	@Override
+	public CmsChannelExtDTO getCmsChannelExtByCid(String id) {
+		return CmsChannelExtAssembler.toDTO(application.getCmsChannelExtByCid(id));
+	}
+
+	@Override
+	public void removeCmsChannelExtByCid(String id) {
+		application.removeCmsChannelExt(application.getCmsChannelExtByCid(id));
 	}
 	
 	

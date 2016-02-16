@@ -20,6 +20,10 @@ public interface CmsChannelTxtFacade {
 	public List<CmsChannelTxtDTO> findAllCmsChannelTxt();
 	
 	public Page<CmsChannelTxtDTO> pageQueryCmsChannelTxt(CmsChannelTxtDTO cmsChannelTxt, int currentPage, int pageSize);
+
+	public CmsChannelTxtDTO getCmsChannelTxtByCid(String id);
+
+	public void removeCmsChannelTxtByCid(String channelId);
 	
 
 }

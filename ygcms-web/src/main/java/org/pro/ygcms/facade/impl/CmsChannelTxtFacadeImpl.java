@@ -1,22 +1,23 @@
 package org.pro.ygcms.facade.impl;
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Set;
-import java.text.MessageFormat;
+
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.dayatang.domain.InstanceFactory;
-import org.dayatang.utils.Page;
-import org.dayatang.querychannel.QueryChannelService;
-import org.openkoala.koala.commons.InvokeResult;
-import org.pro.ygcms.facade.dto.*;
-import org.pro.ygcms.facade.impl.assembler.CmsChannelTxtAssembler;
-import org.pro.ygcms.facade.CmsChannelTxtFacade;
-import org.pro.ygcms.application.CmsChannelTxtApplication;
 
-import org.pro.ygcms.core.domain.channel.*;
+import org.dayatang.domain.InstanceFactory;
+import org.dayatang.querychannel.QueryChannelService;
+import org.dayatang.utils.Page;
+import org.openkoala.koala.commons.InvokeResult;
+import org.pro.ygcms.application.CmsChannelTxtApplication;
+import org.pro.ygcms.core.domain.channel.CmsChannelTxt;
+import org.pro.ygcms.facade.CmsChannelTxtFacade;
+import org.pro.ygcms.facade.dto.CmsChannelTxtDTO;
+import org.pro.ygcms.facade.impl.assembler.CmsChannelTxtAssembler;
 
 @Named
 public class CmsChannelTxtFacadeImpl implements CmsChannelTxtFacade {
@@ -43,7 +44,13 @@ public class CmsChannelTxtFacadeImpl implements CmsChannelTxtFacade {
 	}
 	
 	public InvokeResult updateCmsChannelTxt(CmsChannelTxtDTO cmsChannelTxtDTO) {
-		application.updateCmsChannelTxt(CmsChannelTxtAssembler.toEntity(cmsChannelTxtDTO));
+		CmsChannelTxt cmsChannelTxt = application.getCmsChannelTxtByCid(cmsChannelTxtDTO.getChannelId());
+		if(cmsChannelTxt==null){
+			application.creatCmsChannelTxt(CmsChannelTxtAssembler.toEntity(cmsChannelTxtDTO));
+		}else{
+			cmsChannelTxt.setTxt(cmsChannelTxtDTO.getTxt());
+			application.updateCmsChannelTxt(cmsChannelTxt);
+		}
 		return InvokeResult.success();
 	}
 	
@@ -88,13 +95,24 @@ public class CmsChannelTxtFacadeImpl implements CmsChannelTxtFacade {
 	   		jpql.append(" and _cmsChannelTxt.txt3 like ?");
 	   		conditionVals.add(MessageFormat.format("%{0}%", queryVo.getTxt3()));
 	   	}		
-        Page<CmsChannelTxt> pages = getQueryChannelService()
+        @SuppressWarnings("unchecked")
+		Page<CmsChannelTxt> pages = getQueryChannelService()
 		   .createJpqlQuery(jpql.toString())
 		   .setParameters(conditionVals)
 		   .setPage(currentPage, pageSize)
 		   .pagedList();
 		   
         return new Page<CmsChannelTxtDTO>(pages.getStart(), pages.getResultCount(),pageSize, CmsChannelTxtAssembler.toDTOs(pages.getData()));
+	}
+
+	@Override
+	public CmsChannelTxtDTO getCmsChannelTxtByCid(String id) {
+		return CmsChannelTxtAssembler.toDTO(application.getCmsChannelTxtByCid(id));
+	}
+
+	@Override
+	public void removeCmsChannelTxtByCid(String channelId) {
+		application.removeCmsChannelTxt(application.getCmsChannelTxtByCid(channelId));
 	}
 	
 	

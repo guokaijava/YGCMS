@@ -20,7 +20,7 @@ public class CmsChannelExtApplicationImpl implements CmsChannelExtApplication {
 	}
 	
 	public void updateCmsChannelExt(CmsChannelExt cmsChannelExt) {
-		cmsChannelExt .save();
+		cmsChannelExt.save();
 	}
 	
 	public void removeCmsChannelExt(CmsChannelExt cmsChannelExt) {
@@ -37,6 +37,11 @@ public class CmsChannelExtApplicationImpl implements CmsChannelExtApplication {
 	
 	public List<CmsChannelExt> findAllCmsChannelExt() {
 		return CmsChannelExt.findAll(CmsChannelExt.class);
+	}
+
+	@Override
+	public CmsChannelExt getCmsChannelExtByCid(String id) {
+		return CmsChannelExt.findByProperty(CmsChannelExt.class, "channelId", id).get(0);
 	}
 	
 }

@@ -21,7 +21,7 @@ public class CmsChannelTxt extends CmsAbstractEntity {
 	private static final long serialVersionUID = -710838823289994042L;
 
 	@Column(name = "channel_id")
-	private int channelId;
+	private String channelId;
 
 	@Column(name = "txt")
 	private String txt;
@@ -35,11 +35,11 @@ public class CmsChannelTxt extends CmsAbstractEntity {
 	@Column(name = "txt3")
 	private String txt3;
 
-	public int getChannelId() {
+	public String getChannelId() {
 		return channelId;
 	}
 
-	public void setChannelId(int channelId) {
+	public void setChannelId(String channelId) {
 		this.channelId = channelId;
 	}
 

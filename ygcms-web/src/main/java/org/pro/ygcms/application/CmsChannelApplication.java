@@ -18,6 +18,8 @@ public interface CmsChannelApplication {
 	public void removeCmsChannels(Set<CmsChannel> cmsChannels);
 	
 	public List<CmsChannel> findAllCmsChannel();
+
+	public void execJpqlSql(String updLftSql);
 	
 }
 

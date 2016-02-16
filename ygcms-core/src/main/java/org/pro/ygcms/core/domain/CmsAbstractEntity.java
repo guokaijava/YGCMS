@@ -49,7 +49,9 @@ public abstract class CmsAbstractEntity extends KoalaBaseEntity {
 	 */
 	public void save() {
 		if (notExisted()) {
-			setId(UUID.randomUUID().toString());
+			if(this.getId()==null){
+				setId(UUID.randomUUID().toString());
+			}
 		}
 		getRepository().save(this);
 	}
@@ -183,4 +185,13 @@ public abstract class CmsAbstractEntity extends KoalaBaseEntity {
 	public static <T extends Entity> List<T> findByProperties(Class<T> clazz, Map<String, Object> propValues) {
 		return getRepository().findByProperties(clazz, NamedParameters.create(propValues));
 	}
+	
+	/**
+	 * 根据jpql语句更新数据
+	 * @param jpqlstring JpqlSql语句
+	 * @return
+	 */
+	public static int updateByJpql(String jpqlstring){
+		return getRepository().createJpqlQuery(jpqlstring).executeUpdate();
+	};
 }

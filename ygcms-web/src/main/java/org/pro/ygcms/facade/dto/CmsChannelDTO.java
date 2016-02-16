@@ -31,6 +31,18 @@ public class CmsChannelDTO implements Serializable {
 
 	private int hasContent;
 	
+	public void setIsDisplay(int isDisplay) {
+		this.isDisplay = isDisplay;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
+	public void setHasContent(int hasContent) {
+		this.hasContent = hasContent;
+	}
+
 	private String channelName;
 	
 
