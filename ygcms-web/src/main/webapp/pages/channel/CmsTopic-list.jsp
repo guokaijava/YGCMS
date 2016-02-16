@@ -15,6 +15,37 @@ var grid;
 var form;
 var _dialog;
 $(function (){
+	var addFileUploadComponent = function(dialog){
+		dialog.find("input[type=file]").each(function(){
+			$(this).change(function(){
+				if($(this).val()!=""){
+					 var imgPath = $(this).val();
+			         //判断上传文件的后缀名
+			         var strExtension = imgPath.substr(imgPath.lastIndexOf('.') + 1);
+			         if (strExtension != 'jpg' && strExtension != 'gif'
+			            && strExtension != 'png' && strExtension != 'bmp') {
+			                alert("请选择图片文件");
+			                return;
+			            }
+			         var dataEle = dialog.find("#"+$(this).attr("id").split("_")[0]+"ID");
+			         var imgivewEle = dialog.find("#"+$(this).attr("id").split("_")[0]+"_view");
+					$.ajaxFileUpload ({
+		                    url: contextPath +"/CmsUpload/upload.koala", //用于文件上传的服务器端请求地址
+		                    secureuri: false, //是否需要安全协议，一般设置为false
+		                    fileElementId: $(this).attr("id"), //文件上传域的ID
+		                    dataType: 'json', //返回值类型 一般设置为json
+		                    success: function (data, status){
+		                    	dataEle.val(data[0].localpath+"/"+data[0].fileName);
+		                    	imgivewEle.attr("src",data[0].localpath+"/"+data[0].fileName);
+		                    },
+		                    error: function (data, status, e){
+		                        alert(e);
+		                    }
+		            });
+				}
+			});
+		});
+	};
     grid = $("#<%=gridId%>");
     form = $("#<%=formId%>");
 	PageLoader = {
@@ -35,7 +66,8 @@ $(function (){
 	                columns: [
 	         				{ title: '专题名称', name: 'topicname', width: 400},
 	                        { title: '简称', name: 'shortname', width: width},
-	                        { title: '所属栏目', name: 'channelid', width: width}
+	                        { title:'描述',name:'description',width:width}
+	                        
 	                ]
 	         }).on({
 	                   'add': function(){
@@ -96,6 +128,9 @@ $(function (){
 	            }).on({
 	                'hidden.bs.modal': function(){
 	                    $(this).remove();
+	                },
+	                'shown.bs.modal':function(){
+	                	addFileUploadComponent(dialog);
 	                }
 	            }).find('.modal-body').html(html);
 	            self.initPage(dialog.find('form'));
@@ -135,6 +170,17 @@ $(function (){
 	                            }else{
 	                                elm.val(json[index]);
 	                            }
+	                            if(index=="titleimg"||index=="contentimg"){
+	                            	dialog.find('#'+ index + '_view').attr("src",json[index]);
+	                            }
+	                            if(index=="isrecommend"){
+									elm = dialog.find('#'+ index + 'ID1');
+									if(elm.val()==json[index]){
+										elm.attr("checked",true);
+									}else{
+										dialog.find('#'+ index + 'ID2').attr("checked",true);
+									}
+	                            }
 	                        }
 	                });
 	                dialog.modal({
@@ -142,11 +188,14 @@ $(function (){
 	                }).on({
 	                    'hidden.bs.modal': function(){
 	                        $(this).remove();
+	                    },
+	                    'shown.bs.modal':function(){
+	                    	addFileUploadComponent(dialog);
 	                    }
 	                });
 	                dialog.find('#save').on('click',{grid: grid}, function(e){
 	                    if(!Validator.Validate(dialog.find('form')[0],3))return;
-	                    $.post('${pageContext.request.contextPath}/CmsTopic/update.koala?id='+id, dialog.find('form').serialize()).done(function(result){
+	                    $.post('${pageContext.request.contextPath}/CmsTopic/update.koala', dialog.find('form').serialize()).done(function(result){
 	                        if(result.success){
 	                            dialog.modal('hide');
 	                            e.data.grid.data('koala.grid').refresh();
