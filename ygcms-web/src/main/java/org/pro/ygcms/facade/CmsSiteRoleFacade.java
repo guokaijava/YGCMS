@@ -20,7 +20,10 @@ public interface CmsSiteRoleFacade {
 	public List<CmsSiteRoleDTO> findAllCmsSiteRole();
 	
 	public Page<CmsSiteRoleDTO> pageQueryCmsSiteRole(CmsSiteRoleDTO cmsSiteRole, int currentPage, int pageSize);
-	
+
+	public InvokeResult terminateSiteResourcesFromRole(Long roleId, String[] siteResourceIds);
+
+	public InvokeResult grantSiteResourcesToRole(Long roleId, String[] siteResourceIds);
 
 }
 

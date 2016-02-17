@@ -14,14 +14,14 @@ public class CmsSiteRole extends CmsAbstractEntity{
 
 	private static final long serialVersionUID = -986957342130632033L;
 	@Column(name="site_id")
-	private Long siteid;
+	private String siteid;
 	@Column(name="role_id")
 	private Long roleid;
 	
-	public Long getSiteid() {
+	public String getSiteid() {
 		return siteid;
 	}
-	public void setSiteid(Long siteid) {
+	public void setSiteid(String siteid) {
 		this.siteid = siteid;
 	}
 	public Long getRoleid() {
@@ -31,7 +31,7 @@ public class CmsSiteRole extends CmsAbstractEntity{
 		this.roleid = roleid;
 	}
 	public CmsSiteRole(){}
-	public CmsSiteRole(Long siteid,Long roleid){
+	public CmsSiteRole(String siteid,Long roleid){
 		this.siteid = siteid;
 		this.roleid = roleid;
 	}
@@ -39,10 +39,10 @@ public class CmsSiteRole extends CmsAbstractEntity{
 	public String[] businessKeys() {
 		return null;
 	}
-	public static void grantSiteToRole(Long roleId, Long siteid) {
+	public static void grantSiteToRole(Long roleId, String siteid) {
 		 getRepository().save(new CmsSiteRole(siteid,roleId));
 	}
-	public static void terminateSiteToRole(Long roleId, Long siteid) {
+	public static void terminateSiteToRole(Long roleId, String siteid) {
 		StringBuilder jpql = new StringBuilder("select _siterole from CmsSiteRole _siterole where _siterole.roleid = "+roleId+" and _siterole.siteid = "+siteid);
 		List<CmsSiteRole>  list = getRepository().createJpqlQuery(jpql.toString()).list();
 		if(list.size()>0){

@@ -256,12 +256,12 @@ public class SecurityConfigApplicationImpl implements SecurityConfigApplication 
     }
 
 	@Override
-	public void grantSiteResourceToAuthority(Long siteid, Long roleId) {
+	public void grantSiteResourceToAuthority(String siteid, Long roleId) {
 		CmsSiteRole.grantSiteToRole(roleId,siteid);
 	}
 
 	@Override
-	public void terminateSiteResourceToAuthority(Long siteid, Long roleId) {
+	public void terminateSiteResourceToAuthority(String siteid, Long roleId) {
 		CmsSiteRole.terminateSiteToRole(roleId,siteid);
 	}
 

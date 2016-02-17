@@ -394,8 +394,8 @@ public interface SecurityConfigApplication {
      */
     void changeLastModifyTimeOfUser(User user);
 
-	void grantSiteResourceToAuthority(Long siteid, Long roleId);
+	void grantSiteResourceToAuthority(String siteid, Long roleId);
 
-	void terminateSiteResourceToAuthority(Long siteid, Long roleId);
+	void terminateSiteResourceToAuthority(String siteid, Long roleId);
 
 }

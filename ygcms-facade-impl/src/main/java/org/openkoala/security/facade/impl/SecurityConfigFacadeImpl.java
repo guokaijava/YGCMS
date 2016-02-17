@@ -924,8 +924,8 @@ public class SecurityConfigFacadeImpl implements SecurityConfigFacade {
     }
 
 	@Override
-	public InvokeResult grantSiteResourcesToRole(Long roleId,Long[] siteids) {
-        for (Long siteid : siteids) {
+	public InvokeResult grantSiteResourcesToRole(Long roleId,String[] siteids) {
+        for (String siteid : siteids) {
             securityConfigApplication.grantSiteResourceToAuthority(siteid, roleId);
         }
         return InvokeResult.success();
@@ -933,8 +933,8 @@ public class SecurityConfigFacadeImpl implements SecurityConfigFacade {
 	}
 
 	@Override
-	public InvokeResult terminateSiteResourcesFromRole(Long roleId,Long[] siteids) {
-		 for (Long siteid : siteids) {
+	public InvokeResult terminateSiteResourcesFromRole(Long roleId,String[] siteids) {
+		 for (String siteid : siteids) {
 	            securityConfigApplication.terminateSiteResourceToAuthority(siteid, roleId);
 	     }
 	     return InvokeResult.success();

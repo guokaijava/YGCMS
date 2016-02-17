@@ -15,7 +15,7 @@ public class CmsSiteRoleDTO implements Serializable {
 
 	private Long roleid;
 
-	private Long siteid;
+	private String siteid;
 
 	public void setRoleid(Long roleid) {
 		this.roleid = roleid;
@@ -25,11 +25,11 @@ public class CmsSiteRoleDTO implements Serializable {
 		return this.roleid;
 	}
 
-	public void setSiteid(Long siteid) {
+	public void setSiteid(String siteid) {
 		this.siteid = siteid;
 	}
 
-	public Long getSiteid() {
+	public String getSiteid() {
 		return this.siteid;
 	}
 

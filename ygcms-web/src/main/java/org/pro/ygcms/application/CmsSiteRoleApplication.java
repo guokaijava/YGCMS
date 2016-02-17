@@ -18,6 +18,8 @@ public interface CmsSiteRoleApplication {
 	public void removeCmsSiteRoles(Set<CmsSiteRole> cmsSiteRoles);
 	
 	public List<CmsSiteRole> findAllCmsSiteRole();
+
+	public CmsSiteRole getCmsSiteRoleByCondition(Long roleId, String str);
 	
 }
 

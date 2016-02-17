@@ -2,12 +2,17 @@ package org.pro.ygcms.web.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
 import org.dayatang.utils.Page;
 import org.openkoala.koala.commons.InvokeResult;
+import org.pro.ygcms.facade.CmsChannelExtFacade;
+import org.pro.ygcms.facade.CmsChannelFacade;
 import org.pro.ygcms.facade.CmsSiteFacade;
+import org.pro.ygcms.facade.dto.CmsChannelDTO;
+import org.pro.ygcms.facade.dto.CmsChannelExtDTO;
 import org.pro.ygcms.facade.dto.CmsSiteDTO;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -24,10 +29,25 @@ public class CmsSiteController {
 		
 	@Inject
 	private CmsSiteFacade cmsSiteFacade;
+	@Inject
+	private CmsChannelFacade cmsChannelFacade;
+	@Inject
+	private CmsChannelExtFacade cmsChannelExtFacade;
 	
 	@ResponseBody
 	@RequestMapping("/add")
 	public InvokeResult add(CmsSiteDTO cmsSiteDTO) {
+		String siteId = UUID.randomUUID().toString();
+		cmsSiteDTO.setId(siteId);
+		// 新增根栏目
+		CmsChannelDTO ccd = new CmsChannelDTO();
+		ccd.setSiteId(siteId);
+		ccd.setParentId("0");
+		String channelid = cmsChannelFacade.creatCmsChannel(ccd);
+		CmsChannelExtDTO cced = new CmsChannelExtDTO();
+		cced.setChannelId(channelid);
+		cmsChannelExtFacade.creatCmsChannelExt(cced);
+		
 		return cmsSiteFacade.creatCmsSite(cmsSiteDTO);
 	}
 	

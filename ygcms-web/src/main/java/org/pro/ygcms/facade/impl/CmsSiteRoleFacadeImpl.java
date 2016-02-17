@@ -19,6 +19,7 @@ import org.pro.ygcms.facade.dto.CmsSiteRoleDTO;
 import org.pro.ygcms.facade.impl.assembler.CmsSiteRoleAssembler;
 
 @Named
+@SuppressWarnings("unchecked")
 public class CmsSiteRoleFacadeImpl implements CmsSiteRoleFacade {
 
 	@Inject
@@ -68,13 +69,34 @@ public class CmsSiteRoleFacadeImpl implements CmsSiteRoleFacade {
 	public Page<CmsSiteRoleDTO> pageQueryCmsSiteRole(CmsSiteRoleDTO queryVo, int currentPage, int pageSize) {
 		List<Object> conditionVals = new ArrayList<Object>();
 	   	StringBuilder jpql = new StringBuilder("select _cmsSiteRole from CmsSiteRole _cmsSiteRole   where 1=1 ");
-        Page<CmsSiteRole> pages = getQueryChannelService()
+		Page<CmsSiteRole> pages = getQueryChannelService()
 		   .createJpqlQuery(jpql.toString())
 		   .setParameters(conditionVals)
 		   .setPage(currentPage, pageSize)
 		   .pagedList();
 		   
         return new Page<CmsSiteRoleDTO>(pages.getStart(), pages.getResultCount(),pageSize, CmsSiteRoleAssembler.toDTOs(pages.getData()));
+	}
+
+	@Override
+	public InvokeResult terminateSiteResourcesFromRole(Long roleId, String[] siteResourceIds) {
+		Set<CmsSiteRole> cmsSiteRoles= new HashSet<CmsSiteRole>();
+		for(String str : siteResourceIds){
+			cmsSiteRoles.add(application.getCmsSiteRoleByCondition(roleId,str));
+		}
+		application.removeCmsSiteRoles(cmsSiteRoles);
+		return InvokeResult.success();
+	}
+
+	@Override
+	public InvokeResult grantSiteResourcesToRole(Long roleId, String[] siteResourceIds) {
+		for(String str : siteResourceIds){
+			CmsSiteRoleDTO csrd = new CmsSiteRoleDTO();
+			csrd.setRoleid(roleId);
+			csrd.setSiteid(str);
+			application.creatCmsSiteRole(CmsSiteRoleAssembler.toEntity(csrd));
+		}
+		return InvokeResult.success();
 	}
 	
 	

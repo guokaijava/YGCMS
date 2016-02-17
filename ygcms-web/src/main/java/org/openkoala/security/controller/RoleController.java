@@ -15,6 +15,7 @@ import org.openkoala.security.facade.dto.UrlAccessResourceDTO;
 import org.openkoala.security.shiro.CurrentUser;
 import org.openkoala.security.shiro.RoleHandle;
 import org.openkoala.security.shiro.extend.ShiroFilterChainManager;
+import org.pro.ygcms.facade.CmsSiteRoleFacade;
 import org.pro.ygcms.facade.dto.CmsSiteDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +48,9 @@ public class RoleController {
 
     @Inject
     private RoleHandle roleHandle;
+    
+    @Inject
+	private CmsSiteRoleFacade cmsSiteRoleFacade;
 
 	/**
 	 * 添加角色
@@ -329,12 +333,12 @@ public class RoleController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/grantSiteResourcesToRole", method = RequestMethod.POST)
-	public InvokeResult grantSiteResourcesToRole(Long roleId, Long[] siteResourceIds) {
-		return securityConfigFacade.grantSiteResourcesToRole(roleId, siteResourceIds);
+	public InvokeResult grantSiteResourcesToRole(Long roleId, String[] siteResourceIds) {
+		return cmsSiteRoleFacade.grantSiteResourcesToRole(roleId, siteResourceIds);
 	}
 
 	/**
-	 * 从角色中撤销页面元素权限资源。
+	 * 从角色中撤销站点资源。
 	 *
 	 * @param roleId
 	 * @param pageElementResourceIds
@@ -342,8 +346,8 @@ public class RoleController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/terminateSiteResourcesFromRole", method = RequestMethod.POST)
-	public InvokeResult terminateSiteResourcesFromRole(Long roleId, Long[] siteResourceIds) {
-		return	securityConfigFacade.terminateSiteResourcesFromRole(roleId, siteResourceIds);
+	public InvokeResult terminateSiteResourcesFromRole(Long roleId, String[] siteResourceIds) {
+		return cmsSiteRoleFacade.terminateSiteResourcesFromRole(roleId,siteResourceIds);
 	}
     
 }

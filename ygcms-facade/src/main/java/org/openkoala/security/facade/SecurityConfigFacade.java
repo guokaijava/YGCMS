@@ -451,9 +451,8 @@ public interface SecurityConfigFacade {
      */
     public void initSecuritySystem();
 
-	InvokeResult grantSiteResourcesToRole(Long roleId,Long[] pageElementResourceIds);
+	InvokeResult grantSiteResourcesToRole(Long roleId,String[] pageElementResourceIds);
 
-	InvokeResult terminateSiteResourcesFromRole(Long roleId,
-			Long[] pageElementResourceIds);
+	InvokeResult terminateSiteResourcesFromRole(Long roleId,String[] pageElementResourceIds);
 
 }
