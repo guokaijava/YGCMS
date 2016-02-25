@@ -23,21 +23,21 @@ public class CmsContentDTO implements Serializable {
 
 	private Short commentsDay;
 
-	private Integer channelId;
+	private String channelId;
 
 	private Short status;
 
 	private Integer score;
 
-	private Integer modelId;
+	private String modelId;
 
-	private Integer siteId;
+	private String siteId;
 
-	private Integer userId;
+	private String userId;
 
 	private Short downloadsDay;
 
-	private Integer typeId;
+	private String typeId;
 
 	private Short upsDay;
 
@@ -77,11 +77,11 @@ public class CmsContentDTO implements Serializable {
 		return this.commentsDay;
 	}
 
-	public void setChannelId(Integer channelId) {
+	public void setChannelId(String channelId) {
 		this.channelId = channelId;
 	}
 
-	public Integer getChannelId() {
+	public String getChannelId() {
 		return this.channelId;
 	}
 
@@ -101,27 +101,27 @@ public class CmsContentDTO implements Serializable {
 		return this.score;
 	}
 
-	public void setModelId(Integer modelId) {
+	public void setModelId(String modelId) {
 		this.modelId = modelId;
 	}
 
-	public Integer getModelId() {
+	public String getModelId() {
 		return this.modelId;
 	}
 
-	public void setSiteId(Integer siteId) {
+	public void setSiteId(String siteId) {
 		this.siteId = siteId;
 	}
 
-	public Integer getSiteId() {
+	public String getSiteId() {
 		return this.siteId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
-	public Integer getUserId() {
+	public String getUserId() {
 		return this.userId;
 	}
 
@@ -133,11 +133,11 @@ public class CmsContentDTO implements Serializable {
 		return this.downloadsDay;
 	}
 
-	public void setTypeId(Integer typeId) {
+	public void setTypeId(String typeId) {
 		this.typeId = typeId;
 	}
 
-	public Integer getTypeId() {
+	public String getTypeId() {
 		return this.typeId;
 	}
 
