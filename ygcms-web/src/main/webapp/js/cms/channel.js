@@ -2,13 +2,12 @@ var channelManager = function(){
 	var baseUrl =  contextPath + '/CmsChannel/';
 	var dialog = null;    //对话框
 	/**
-	 * 生成内容模版树问问
+	 * 生成内容模版
 	 */
 	var getTree = function(id){
 		$('#channelTree').loader({
 			opacity: 0
 		});
-		
 		$.get(baseUrl + 'getSitelist.koala').done(function(data){
 			var firstsite = 0;
 			$.each(data.sitelist, function(index){
@@ -438,7 +437,6 @@ var channelManager = function(){
 				
 		}
 	}
-	
 	return {
 		getTree: getTree,
 		initoperate:initoperate,
