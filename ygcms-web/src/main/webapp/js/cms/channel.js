@@ -2,7 +2,7 @@ var channelManager = function(){
 	var baseUrl =  contextPath + '/CmsChannel/';
 	var dialog = null;    //对话框
 	/**
-	 * 生成内容模版树
+	 * 生成内容模版树问问
 	 */
 	var getTree = function(id){
 		$('#channelTree').loader({
