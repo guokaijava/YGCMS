@@ -23,19 +23,19 @@ public class CmsContent extends CmsAbstractEntity {
 	private static final long serialVersionUID = -7567394041535559128L;
 
 	@Column(name = "channel_id")
-	private int channelId;
+	private String channelId;
 
 	@Column(name = "user_id")
-	private int userId;
+	private String userId;
 
 	@Column(name = "type_id")
-	private int typeId;
+	private String typeId;
 
 	@Column(name = "model_id")
-	private int modelId;
+	private String modelId;
 
 	@Column(name = "site_id")
-	private int siteId;
+	private String siteId;
 
 	@Column(name = "sort_date")
 	private Timestamp sortDate;
@@ -67,43 +67,43 @@ public class CmsContent extends CmsAbstractEntity {
 	@Column(name = "score")
 	private int score;
 
-	public int getChannelId() {
+	public String getChannelId() {
 		return channelId;
 	}
 
-	public void setChannelId(int channelId) {
+	public void setChannelId(String channelId) {
 		this.channelId = channelId;
 	}
 
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
-	public int getTypeId() {
+	public String getTypeId() {
 		return typeId;
 	}
 
-	public void setTypeId(int typeId) {
+	public void setTypeId(String typeId) {
 		this.typeId = typeId;
 	}
 
-	public int getModelId() {
+	public String getModelId() {
 		return modelId;
 	}
 
-	public void setModelId(int modelId) {
+	public void setModelId(String modelId) {
 		this.modelId = modelId;
 	}
 
-	public int getSiteId() {
+	public String getSiteId() {
 		return siteId;
 	}
 
-	public void setSiteId(int siteId) {
+	public void setSiteId(String siteId) {
 		this.siteId = siteId;
 	}
 
