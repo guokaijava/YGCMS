@@ -96,7 +96,7 @@ var contentManager = function(){
         });
 	}
 	
-	//获取专题数据
+	//获取专题数据1
 	var topicList = null;
 	var getTopicData = function(){
 		$.get(contextPath + '/CmsTopic/allList.koala').done(function(data){
