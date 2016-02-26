@@ -21,6 +21,8 @@
 	<div style="clear: both;"></div>
 	<input id="pid" value="" type="hidden"/>
 	<input id="pname" value="" type="hidden"/>
+	<input id="siteid" value="" type="hidden"/>
+	<input id="modelid" value="" type="hidden"/>
 </div>
 <script type="text/javascript"
 	src="<c:url value='/js/cms/content.js' />"></script>
