@@ -50,8 +50,8 @@ public class CmsContentController {
 		String[] value = ids.split(",");
         Long[] idArrs = new Long[value.length];
         for (int i = 0; i < value.length; i ++) {
-        	        					idArrs[i] = Long.parseLong(value[i]);
-						        }
+        	idArrs[i] = Long.parseLong(value[i]);
+        }
         return cmsContentFacade.removeCmsContents(idArrs);
 	}
 	

@@ -49,6 +49,15 @@ public class CmsModelItemController {
 		return map;
 	}
 	
+	@ResponseBody
+	@RequestMapping("/contentGetItemsByPrarentId/{pid}")
+	public Map<String,Object> contentGetItemsByPrarentId(@PathVariable String pid) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("tplList", cmsModelItemFacade.getItemsByModelId(pid,0));
+		
+		return map;
+	}
+	
 	@SuppressWarnings("rawtypes")
 	@ResponseBody
 	@RequestMapping("/pageJson")

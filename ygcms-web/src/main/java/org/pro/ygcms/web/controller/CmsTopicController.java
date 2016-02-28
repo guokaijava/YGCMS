@@ -2,6 +2,7 @@ package org.pro.ygcms.web.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -41,6 +42,13 @@ public class CmsTopicController {
 	@RequestMapping("/pageJson")
 	public Page pageJson(CmsTopicDTO cmsTopicDTO, @RequestParam int page, @RequestParam int pagesize) {
 		Page<CmsTopicDTO> all = cmsTopicFacade.pageQueryCmsTopic(cmsTopicDTO, page, pagesize);
+		return all;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/allList")
+	public List allList(CmsTopicDTO cmsTopicDTO) {
+		List<CmsTopicDTO> all = cmsTopicFacade.findAllCmsTopic();
 		return all;
 	}
 	

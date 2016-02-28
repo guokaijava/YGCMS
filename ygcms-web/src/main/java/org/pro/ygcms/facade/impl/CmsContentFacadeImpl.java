@@ -66,10 +66,17 @@ public class CmsContentFacadeImpl implements CmsContentFacade {
 	}
 	
 	public Page<CmsContentDTO> pageQueryCmsContent(CmsContentDTO queryVo, int currentPage, int pageSize) {
-		List<Object> conditionVals = new ArrayList<Object>();
-	   	StringBuilder jpql = new StringBuilder("select _cmsContent from CmsContent _cmsContent   where 1=1 ");
+	   	List<Object> conditionVals = new ArrayList<Object>();
+	   	StringBuilder jpql = new StringBuilder("SELECT NEW org.pro.ygcms.facade.dto.CmsContentInfoDTO( ");
+	   	jpql.append(" _cmsContent.id,_cmsContentExt.title,_cmsContent.typeId ");
+	   	jpql.append(" ,_cmsContentExt.author,_cmsContent.viewsDay,_cmsContentExt.releaseDate,_cmsContent.status ) ");
+	   	jpql.append(" FROM CmsContent _cmsContent,CmsContentExt _cmsContentExt,CmsChannel _cmsChannel,CmsChannel _parent  where 1=1 ");
+	   	jpql.append(" AND _cmsContent.id=_cmsContentExt.contentId ");
+	   	jpql.append(" AND _cmsContent.channelId=_cmsChannel.id ");
 	   	if (queryVo.getChannelId() != null) {
-	   		jpql.append(" and _cmsContent.channelId=?");
+	   		jpql.append(" and _cmsChannel.lft between _parent.lft and _parent.rgt ");
+	   		jpql.append(" and _cmsChannel.siteId=_parent.siteId ");
+	   		jpql.append(" and _parent.id=? ");
 	   		conditionVals.add(queryVo.getChannelId());
 	   	}	
 	   	if (queryVo.getUserId() != null) {
