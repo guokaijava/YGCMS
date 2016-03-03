@@ -27,7 +27,7 @@ public class CmsContentExtController {
 	
 	@ResponseBody
 	@RequestMapping("/add")
-	public InvokeResult add(CmsContentExtDTO cmsContentExtDTO) {
+	public String add(CmsContentExtDTO cmsContentExtDTO) {
 		return cmsContentExtFacade.creatCmsContentExt(cmsContentExtDTO);
 	}
 	

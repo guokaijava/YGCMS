@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.UUID;
 import java.text.MessageFormat;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,9 +38,11 @@ public class CmsContentExtFacadeImpl implements CmsContentExtFacade {
 		return InvokeResult.success(CmsContentExtAssembler.toDTO(application.getCmsContentExt(id)));
 	}
 	
-	public InvokeResult creatCmsContentExt(CmsContentExtDTO cmsContentExtDTO) {
+	public String creatCmsContentExt(CmsContentExtDTO cmsContentExtDTO) {
+		cmsContentExtDTO.setId(UUID.randomUUID().toString());
 		application.creatCmsContentExt(CmsContentExtAssembler.toEntity(cmsContentExtDTO));
-		return InvokeResult.success();
+		return cmsContentExtDTO.getId();
+//		return InvokeResult.success();
 	}
 	
 	public InvokeResult updateCmsContentExt(CmsContentExtDTO cmsContentExtDTO) {

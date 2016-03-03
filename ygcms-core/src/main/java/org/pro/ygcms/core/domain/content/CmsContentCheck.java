@@ -23,7 +23,7 @@ public class CmsContentCheck extends CmsAbstractEntity {
 	private static final long serialVersionUID = 9022137585935709906L;
 
 	@Column(name = "content_id")
-	private int contentId;
+	private String contentId;
 
 	@Column(name = "check_step")
 	private short checkStep;
@@ -40,11 +40,11 @@ public class CmsContentCheck extends CmsAbstractEntity {
 	@Column(name = "check_date")
 	private Timestamp checkDate;
 
-	public int getContentId() {
+	public String getContentId() {
 		return contentId;
 	}
 
-	public void setContentId(int contentId) {
+	public void setContentId(String contentId) {
 		this.contentId = contentId;
 	}
 

@@ -9,7 +9,7 @@ public interface CmsContentTagFacade {
 
 	public InvokeResult getCmsContentTag(Long id);
 	
-	public InvokeResult creatCmsContentTag(CmsContentTagDTO cmsContentTag);
+	public String creatCmsContentTag(CmsContentTagDTO cmsContentTag);
 	
 	public InvokeResult updateCmsContentTag(CmsContentTagDTO cmsContentTag);
 	

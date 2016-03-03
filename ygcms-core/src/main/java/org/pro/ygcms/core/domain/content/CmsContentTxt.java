@@ -21,7 +21,7 @@ public class CmsContentTxt extends CmsAbstractEntity {
 	private static final long serialVersionUID = 284635206054316146L;
 
 	@Column(name = "content_id")
-	private int contentId;
+	private String contentId;
 
 	@Column(name = "txt")
 	private String txt;
@@ -35,11 +35,11 @@ public class CmsContentTxt extends CmsAbstractEntity {
 	@Column(name = "txt3")
 	private String txt3;
 
-	public int getContentId() {
+	public String getContentId() {
 		return contentId;
 	}
 
-	public void setContentId(int contentId) {
+	public void setContentId(String contentId) {
 		this.contentId = contentId;
 	}
 

@@ -40,14 +40,16 @@ public class CmsContentCheckAssembler {
 			return null;
 		}
 	 	CmsContentCheck result  = new CmsContentCheck();
-        result.setId (cmsContentCheckDTO.getId());
-         result.setVersion (cmsContentCheckDTO.getVersion());
-         result.setContentId (cmsContentCheckDTO.getContentId());
-         result.setCheckStep (cmsContentCheckDTO.getCheckStep());
-         result.setCheckOpinion (cmsContentCheckDTO.getCheckOpinion());
-         result.setIsRejected (cmsContentCheckDTO.getIsRejected());
-         result.setReviewer (cmsContentCheckDTO.getReviewer());
-         result.setCheckDate (cmsContentCheckDTO.getCheckDate());
+	 	result.setId (cmsContentCheckDTO.getId());
+	 	result.setVersion (cmsContentCheckDTO.getVersion());
+	 	result.setContentId (cmsContentCheckDTO.getContentId());
+	 	result.setCheckStep (cmsContentCheckDTO.getCheckStep());
+	 	result.setCheckOpinion (cmsContentCheckDTO.getCheckOpinion());
+	 	result.setIsRejected (cmsContentCheckDTO.getIsRejected());
+	 	if(cmsContentCheckDTO.getReviewer()!=null){
+	 		result.setReviewer (cmsContentCheckDTO.getReviewer());
+	 	}
+	 	result.setCheckDate (cmsContentCheckDTO.getCheckDate());
  	  	return result;
 	 }
 	

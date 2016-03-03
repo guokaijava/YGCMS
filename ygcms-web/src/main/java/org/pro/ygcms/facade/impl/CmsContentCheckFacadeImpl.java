@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.UUID;
 import java.text.MessageFormat;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -38,6 +39,7 @@ public class CmsContentCheckFacadeImpl implements CmsContentCheckFacade {
 	}
 	
 	public InvokeResult creatCmsContentCheck(CmsContentCheckDTO cmsContentCheckDTO) {
+		cmsContentCheckDTO.setId(UUID.randomUUID().toString());
 		application.creatCmsContentCheck(CmsContentCheckAssembler.toEntity(cmsContentCheckDTO));
 		return InvokeResult.success();
 	}
@@ -88,11 +90,10 @@ public class CmsContentCheckFacadeImpl implements CmsContentCheckFacade {
 	   		jpql.append(" and _cmsContentCheck.reviewer=?");
 	   		conditionVals.add(queryVo.getReviewer());
 	   	}	
-        Page<CmsContentCheck> pages = getQueryChannelService()
-		   .createJpqlQuery(jpql.toString())
-		   .setParameters(conditionVals)
-		   .setPage(currentPage, pageSize)
-		   .pagedList();
+	   	
+		@SuppressWarnings("unchecked")
+		Page<CmsContentCheck> pages = getQueryChannelService().createJpqlQuery(jpql.toString())
+		   .setParameters(conditionVals).setPage(currentPage, pageSize).pagedList();
 		   
         return new Page<CmsContentCheckDTO>(pages.getStart(), pages.getResultCount(),pageSize, CmsContentCheckAssembler.toDTOs(pages.getData()));
 	}

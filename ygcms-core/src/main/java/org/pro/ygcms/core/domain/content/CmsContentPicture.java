@@ -21,7 +21,7 @@ public class CmsContentPicture extends CmsAbstractEntity {
 	private static final long serialVersionUID = -909830222709137800L;
 
 	@Column(name = "content_id")
-	private int contentId;
+	private String contentId;
 
 	@Column(name = "priority")
 	private int priority;
@@ -32,11 +32,11 @@ public class CmsContentPicture extends CmsAbstractEntity {
 	@Column(name = "description")
 	private String description;
 
-	public int getContentId() {
+	public String getContentId() {
 		return contentId;
 	}
 
-	public void setContentId(int contentId) {
+	public void setContentId(String contentId) {
 		this.contentId = contentId;
 	}
 

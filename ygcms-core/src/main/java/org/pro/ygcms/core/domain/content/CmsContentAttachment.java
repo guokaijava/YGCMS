@@ -21,7 +21,7 @@ public class CmsContentAttachment extends CmsAbstractEntity {
 	private static final long serialVersionUID = 2324774385449391779L;
 
 	@Column(name = "content_id")
-	private int contentId;
+	private String contentId;
 
 	@Column(name = "priority")
 	private int priority;
@@ -38,11 +38,11 @@ public class CmsContentAttachment extends CmsAbstractEntity {
 	@Column(name = "download_count")
 	private int downloadCount;
 
-	public int getContentId() {
+	public String getContentId() {
 		return contentId;
 	}
 
-	public void setContentId(int contentId) {
+	public void setContentId(String contentId) {
 		this.contentId = contentId;
 	}
 

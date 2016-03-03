@@ -9,7 +9,7 @@ public interface CmsContentExtFacade {
 
 	public InvokeResult getCmsContentExt(Long id);
 	
-	public InvokeResult creatCmsContentExt(CmsContentExtDTO cmsContentExt);
+	public String creatCmsContentExt(CmsContentExtDTO cmsContentExt);
 	
 	public InvokeResult updateCmsContentExt(CmsContentExtDTO cmsContentExt);
 	

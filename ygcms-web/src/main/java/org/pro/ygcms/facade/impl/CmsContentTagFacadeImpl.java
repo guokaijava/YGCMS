@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.UUID;
 import java.text.MessageFormat;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,9 +38,11 @@ public class CmsContentTagFacadeImpl implements CmsContentTagFacade {
 		return InvokeResult.success(CmsContentTagAssembler.toDTO(application.getCmsContentTag(id)));
 	}
 	
-	public InvokeResult creatCmsContentTag(CmsContentTagDTO cmsContentTagDTO) {
+	public String creatCmsContentTag(CmsContentTagDTO cmsContentTagDTO) {
+		cmsContentTagDTO.setId(UUID.randomUUID().toString());
 		application.creatCmsContentTag(CmsContentTagAssembler.toEntity(cmsContentTagDTO));
-		return InvokeResult.success();
+		return cmsContentTagDTO.getId();
+//		return InvokeResult.success();
 	}
 	
 	public InvokeResult updateCmsContentTag(CmsContentTagDTO cmsContentTagDTO) {

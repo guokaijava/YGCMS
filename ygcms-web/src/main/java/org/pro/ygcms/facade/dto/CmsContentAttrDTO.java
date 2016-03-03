@@ -17,7 +17,7 @@ public class CmsContentAttrDTO implements Serializable {
 
 	private String attrValue;
 
-	private Integer contentId;
+	private String contentId;
 
 	public void setAttrName(String attrName) {
 		this.attrName = attrName;
@@ -35,11 +35,11 @@ public class CmsContentAttrDTO implements Serializable {
 		return this.attrValue;
 	}
 
-	public void setContentId(Integer contentId) {
+	public void setContentId(String contentId) {
 		this.contentId = contentId;
 	}
 
-	public Integer getContentId() {
+	public String getContentId() {
 		return this.contentId;
 	}
 

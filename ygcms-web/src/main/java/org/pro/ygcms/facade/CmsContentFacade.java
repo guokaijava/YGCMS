@@ -9,7 +9,7 @@ public interface CmsContentFacade {
 
 	public InvokeResult getCmsContent(Long id);
 	
-	public InvokeResult creatCmsContent(CmsContentDTO cmsContent);
+	public String creatCmsContent(CmsContentDTO cmsContent);
 	
 	public InvokeResult updateCmsContent(CmsContentDTO cmsContent);
 	
@@ -19,7 +19,7 @@ public interface CmsContentFacade {
 	
 	public List<CmsContentDTO> findAllCmsContent();
 	
-	public Page<CmsContentDTO> pageQueryCmsContent(CmsContentDTO cmsContent, int currentPage, int pageSize);
+	public Page<CmsContentInfoDTO> pageQueryCmsContent(CmsContentDTO cmsContent, int currentPage, int pageSize);
 	
 
 }

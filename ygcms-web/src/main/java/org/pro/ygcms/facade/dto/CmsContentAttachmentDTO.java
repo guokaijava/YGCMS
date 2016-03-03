@@ -23,7 +23,7 @@ public class CmsContentAttachmentDTO implements Serializable {
 
 	private String attachmentName;
 
-	private Integer contentId;
+	private String contentId;
 
 	public void setAttachmentPath(String attachmentPath) {
 		this.attachmentPath = attachmentPath;
@@ -65,11 +65,11 @@ public class CmsContentAttachmentDTO implements Serializable {
 		return this.attachmentName;
 	}
 
-	public void setContentId(Integer contentId) {
+	public void setContentId(String contentId) {
 		this.contentId = contentId;
 	}
 
-	public Integer getContentId() {
+	public String getContentId() {
 		return this.contentId;
 	}
 

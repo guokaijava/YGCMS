@@ -13,23 +13,23 @@ public class CmsContentChannelDTO implements Serializable {
 
 	private int version;
 
-	private Integer channelId;
+	private String channelId;
 
-	private Integer contentId;
+	private String contentId;
 
-	public void setChannelId(Integer channelId) {
+	public void setChannelId(String channelId) {
 		this.channelId = channelId;
 	}
 
-	public Integer getChannelId() {
+	public String getChannelId() {
 		return this.channelId;
 	}
 
-	public void setContentId(Integer contentId) {
+	public void setContentId(String contentId) {
 		this.contentId = contentId;
 	}
 
-	public Integer getContentId() {
+	public String getContentId() {
 		return this.contentId;
 	}
 

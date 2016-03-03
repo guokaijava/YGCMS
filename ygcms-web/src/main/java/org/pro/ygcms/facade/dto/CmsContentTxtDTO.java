@@ -2,6 +2,8 @@ package org.pro.ygcms.facade.dto;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.StringUtils;
+
 public class CmsContentTxtDTO implements Serializable {
 
 	/**
@@ -21,7 +23,7 @@ public class CmsContentTxtDTO implements Serializable {
 
 	private String txt;
 
-	private Integer contentId;
+	private String contentId;
 
 	public void setTxt1(String txt1) {
 		this.txt1 = txt1;
@@ -55,11 +57,11 @@ public class CmsContentTxtDTO implements Serializable {
 		return this.txt;
 	}
 
-	public void setContentId(Integer contentId) {
+	public void setContentId(String contentId) {
 		this.contentId = contentId;
 	}
 
-	public Integer getContentId() {
+	public String getContentId() {
 		return this.contentId;
 	}
 
@@ -102,5 +104,36 @@ public class CmsContentTxtDTO implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	public void init() {
+		blankToNull();
+	}
+
+	public void blankToNull() {
+		if (StringUtils.isBlank(getTxt())) {
+			setTxt(null);
+		}
+		if (StringUtils.isBlank(getTxt1())) {
+			setTxt1(null);
+		}
+		if (StringUtils.isBlank(getTxt2())) {
+			setTxt2(null);
+		}
+		if (StringUtils.isBlank(getTxt3())) {
+			setTxt3(null);
+		}
+	}
+	
+
+	/**
+	 * 是否所有属性都为空
+	 * 
+	 * @return
+	 */
+	public boolean isAllBlank() {
+		return StringUtils.isBlank(getTxt()) && StringUtils.isBlank(getTxt1())
+				&& StringUtils.isBlank(getTxt2())
+				&& StringUtils.isBlank(getTxt3());
 	}
 }

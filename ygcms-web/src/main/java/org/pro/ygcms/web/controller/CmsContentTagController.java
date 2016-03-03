@@ -27,7 +27,7 @@ public class CmsContentTagController {
 	
 	@ResponseBody
 	@RequestMapping("/add")
-	public InvokeResult add(CmsContentTagDTO cmsContentTagDTO) {
+	public String add(CmsContentTagDTO cmsContentTagDTO) {
 		return cmsContentTagFacade.creatCmsContentTag(cmsContentTagDTO);
 	}
 	

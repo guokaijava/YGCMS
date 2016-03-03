@@ -66,6 +66,9 @@ public class CmsContent extends CmsAbstractEntity {
 
 	@Column(name = "score")
 	private int score;
+	
+	@Column(name = "is_delete")
+	private Boolean isDelete;
 
 	public String getChannelId() {
 		return channelId;
@@ -185,6 +188,14 @@ public class CmsContent extends CmsAbstractEntity {
 
 	public void setScore(int score) {
 		this.score = score;
+	}
+	
+	public Boolean getIsDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(Boolean isDelete) {
+		this.isDelete = isDelete;
 	}
 
 	@Override

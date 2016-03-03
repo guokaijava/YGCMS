@@ -21,7 +21,7 @@ public class CmsContentAttr extends CmsAbstractEntity {
 	private static final long serialVersionUID = 7980455880954954905L;
 
 	@Column(name = "content_id")
-	private int contentId;
+	private String contentId;
 
 	@Column(name = "attr_name")
 	private String attrName;
@@ -29,11 +29,11 @@ public class CmsContentAttr extends CmsAbstractEntity {
 	@Column(name = "attr_value")
 	private String attrValue;
 
-	public int getContentId() {
+	public String getContentId() {
 		return contentId;
 	}
 
-	public void setContentId(int contentId) {
+	public void setContentId(String contentId) {
 		this.contentId = contentId;
 	}
 

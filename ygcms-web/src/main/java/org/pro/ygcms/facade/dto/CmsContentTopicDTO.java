@@ -13,23 +13,23 @@ public class CmsContentTopicDTO implements Serializable {
 
 	private int version;
 
-	private Integer topicId;
+	private String topicId;
 
-	private Integer contentId;
+	private String contentId;
 
-	public void setTopicId(Integer topicId) {
+	public void setTopicId(String topicId) {
 		this.topicId = topicId;
 	}
 
-	public Integer getTopicId() {
+	public String getTopicId() {
 		return this.topicId;
 	}
 
-	public void setContentId(Integer contentId) {
+	public void setContentId(String contentId) {
 		this.contentId = contentId;
 	}
 
-	public Integer getContentId() {
+	public String getContentId() {
 		return this.contentId;
 	}
 

@@ -21,24 +21,24 @@ public class CmsContentChannel extends CmsAbstractEntity {
 	private static final long serialVersionUID = 3265673396430946452L;
 
 	@Column(name = "channel_id")
-	private int channelId;
+	private String channelId;
 
 	@Column(name = "content_id")
-	private int contentId;
+	private String contentId;
 
-	public int getChannelId() {
+	public String getChannelId() {
 		return channelId;
 	}
 
-	public void setChannelId(int channelId) {
+	public void setChannelId(String channelId) {
 		this.channelId = channelId;
 	}
 
-	public int getContentId() {
+	public String getContentId() {
 		return contentId;
 	}
 
-	public void setContentId(int contentId) {
+	public void setContentId(String contentId) {
 		this.contentId = contentId;
 	}
 
