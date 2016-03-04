@@ -6,17 +6,15 @@
 	<ul class="u-tree tree" id="contentTree"
 		oncontextmenu="return false" style="width:28%;min-height:500px;height:500px;border-radius:0"></ul>
 	<div class="right-content" style="width: 70%;position:relative;top:-55px;padding-right:0px;height:540px;">
-	    <div class="dropdown" style="margin:3px 0 7px">
-  			<button id="dLabel" type="button" class="btn btn-success"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	    <div class="dropdown" style="position:absolute;margin:6px 0 0 7px;z-index:1000">
+  			<button id="dLabel" type="button" class="btn btn-primary" style="border-top-right-radius: 0;border-bottom-right-radius: 0;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     			<span class="glyphicon glyphicon-plus"></span> 发布
     			<span class="caret"></span>
   			</button>
   			<ul class="dropdown-menu" aria-labelledby="dLabel" id="content_createmenu">
   			</ul>
 		</div>
-		<div id="contentgrid" style="hight:540px">
-			
-		</div>
+		<div id="contentgrid" style="hight:540px"></div>
 	</div>
 	<div style="clear: both;"></div>
 	<input id="pid" value="" type="hidden"/>

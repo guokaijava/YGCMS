@@ -430,8 +430,8 @@ var contentManager = function(){
 		}];
 
 		var btns = [
-		            {content: '<button class="btn btn-success" type="button"><span class="glyphicon glyphicon-edit"><span>修改</button>', action: 'modify'},
-		            {content: '<button class="btn btn-danger" type="button"><span class="glyphicon glyphicon-remove"><span>删除</button>', action: 'delete'}
+		            {content: '<button class="btn btn-success" style="margin-left:78px;border-top-left-radius: 0;border-bottom-left-radius: 0;" type="button"><span class="glyphicon glyphicon-edit"><span>修改</button>', action: 'modify'},
+		            {content: '<button class="btn btn-danger" type="button"><span class="glyphicon glyphicon-remove"><span>删除</button>', action: 'delete'},
 		            ];
 
 		if(rootcid!=null){
@@ -481,7 +481,8 @@ var contentManager = function(){
 							content: '确定要删除所选记录吗?',
 							callBack: remove
 						});
-					}
+					},
+					'newContent':function(event,data){}
 				});
 			}
 			loaddataindex++;
