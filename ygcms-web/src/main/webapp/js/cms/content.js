@@ -430,7 +430,7 @@ var contentManager = function(){
 		}];
 
 		var btns = [
-		            {content: '<button class="btn btn-success" style="margin-left:78px;border-top-left-radius: 0;border-bottom-left-radius: 0;" type="button"><span class="glyphicon glyphicon-edit"><span>修改</button>', action: 'modify'},
+		            {content: '<button class="btn btn-success" type="button"><span class="glyphicon glyphicon-edit"><span>修改</button>', action: 'modify'},
 		            {content: '<button class="btn btn-danger" type="button"><span class="glyphicon glyphicon-remove"><span>删除</button>', action: 'delete'},
 		            ];
 
@@ -482,11 +482,13 @@ var contentManager = function(){
 							callBack: remove
 						});
 					},
-					'newContent':function(event,data){}
+					'newContent':function(event,data){
+					}
 				});
 			}
 			loaddataindex++;
-			grid.find(".grid-table-body").css("height","462px");
+			grid.find(".btn-group").eq(0).prepend('<div class="btn-group"><button id="dLabel" type="button" class="btn btn-primary" style="border-top-right-radius: 0;border-bottom-right-radius: 0;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-plus"></span> 发布<span class="caret"></span></button><ul class="dropdown-menu" aria-labelledby="dLabel" id="content_createmenu"></ul></div>');
+			initoperate();
 		}
 	}
 
