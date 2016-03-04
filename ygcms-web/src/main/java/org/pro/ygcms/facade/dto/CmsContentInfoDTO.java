@@ -3,6 +3,8 @@ package org.pro.ygcms.facade.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.pro.ygcms.web.util.DateTimeUtil;
+
 /**
  * 内容信息数据对象
  * 作者：任建新
@@ -21,16 +23,17 @@ public class CmsContentInfoDTO implements Serializable {
 	private String typeName;//类型名称
 	private String author;//作者
 	private Integer viewsDay;//点击
-	private Date releaseDate;//发布时间
+	private String releaseDate;//发布时间
 	private short status;//状态
 	
-	public CmsContentInfoDTO(String id,String title,String typeId,String author,Integer viewsDay,Date releaseDate,short status){
+	public CmsContentInfoDTO(String id,String title,String typeId,String typeName,String author,Integer viewsDay,Date releaseDate,short status){
 		this.id = id;
 		this.title = title;
 		this.typeId = typeId;
+		this.typeName = typeName;
 		this.author = author;
 		this.viewsDay = viewsDay;
-		this.releaseDate = releaseDate;
+		this.releaseDate = DateTimeUtil.Date2String(releaseDate, "yyyy-MM-dd HH:mm");
 		this.status = status;
 	}
 	
@@ -70,10 +73,10 @@ public class CmsContentInfoDTO implements Serializable {
 	public void setViewsDay(Integer viewsDay) {
 		this.viewsDay = viewsDay;
 	}
-	public Date getReleaseDate() {
+	public String getReleaseDate() {
 		return releaseDate;
 	}
-	public void setReleaseDate(Date releaseDate) {
+	public void setReleaseDate(String releaseDate) {
 		this.releaseDate = releaseDate;
 	}
 	public short getStatus() {

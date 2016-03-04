@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.UUID;
 import java.text.MessageFormat;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -12,6 +13,7 @@ import org.dayatang.utils.Page;
 import org.dayatang.querychannel.QueryChannelService;
 import org.openkoala.koala.commons.InvokeResult;
 import org.pro.ygcms.facade.dto.*;
+import org.pro.ygcms.facade.impl.assembler.CmsChannelAssembler;
 import org.pro.ygcms.facade.impl.assembler.CmsContentAssembler;
 import org.pro.ygcms.facade.CmsContentFacade;
 import org.pro.ygcms.application.CmsContentApplication;
@@ -37,9 +39,10 @@ public class CmsContentFacadeImpl implements CmsContentFacade {
 		return InvokeResult.success(CmsContentAssembler.toDTO(application.getCmsContent(id)));
 	}
 	
-	public InvokeResult creatCmsContent(CmsContentDTO cmsContentDTO) {
+	public String creatCmsContent(CmsContentDTO cmsContentDTO) {
+		cmsContentDTO.setId(UUID.randomUUID().toString());
 		application.creatCmsContent(CmsContentAssembler.toEntity(cmsContentDTO));
-		return InvokeResult.success();
+		return cmsContentDTO.getId();
 	}
 	
 	public InvokeResult updateCmsContent(CmsContentDTO cmsContentDTO) {
@@ -65,14 +68,18 @@ public class CmsContentFacadeImpl implements CmsContentFacade {
 		return CmsContentAssembler.toDTOs(application.findAllCmsContent());
 	}
 	
-	public Page<CmsContentDTO> pageQueryCmsContent(CmsContentDTO queryVo, int currentPage, int pageSize) {
+	public Page<CmsContentInfoDTO> pageQueryCmsContent(CmsContentDTO queryVo, int currentPage, int pageSize) {
 	   	List<Object> conditionVals = new ArrayList<Object>();
 	   	StringBuilder jpql = new StringBuilder("SELECT NEW org.pro.ygcms.facade.dto.CmsContentInfoDTO( ");
-	   	jpql.append(" _cmsContent.id,_cmsContentExt.title,_cmsContent.typeId ");
+	   	jpql.append(" _cmsContent.id,_cmsContentExt.title,_cmsContent.typeId,_cmsContentType.typename ");
 	   	jpql.append(" ,_cmsContentExt.author,_cmsContent.viewsDay,_cmsContentExt.releaseDate,_cmsContent.status ) ");
-	   	jpql.append(" FROM CmsContent _cmsContent,CmsContentExt _cmsContentExt,CmsChannel _cmsChannel,CmsChannel _parent  where 1=1 ");
+	   	jpql.append(" FROM CmsContent _cmsContent,CmsContentExt _cmsContentExt,CmsChannel _cmsChannel,CmsChannel _parent ");
+	   	jpql.append(" ,CmsContentType _cmsContentType ");
+	   	jpql.append(" where 1=1 ");
+	   	jpql.append(" AND _cmsContent.isDelete=0 ");
 	   	jpql.append(" AND _cmsContent.id=_cmsContentExt.contentId ");
 	   	jpql.append(" AND _cmsContent.channelId=_cmsChannel.id ");
+	   	jpql.append(" AND _cmsContent.typeId=_cmsContentType.id ");
 	   	if (queryVo.getChannelId() != null) {
 	   		jpql.append(" and _cmsChannel.lft between _parent.lft and _parent.rgt ");
 	   		jpql.append(" and _cmsChannel.siteId=_parent.siteId ");
@@ -131,13 +138,14 @@ public class CmsContentFacadeImpl implements CmsContentFacade {
 	   		jpql.append(" and _cmsContent.score=?");
 	   		conditionVals.add(queryVo.getScore());
 	   	}	
-        Page<CmsContent> pages = getQueryChannelService()
+	   	
+        @SuppressWarnings("unchecked")
+		Page<CmsContentInfoDTO> pages = getQueryChannelService()
 		   .createJpqlQuery(jpql.toString())
 		   .setParameters(conditionVals)
 		   .setPage(currentPage, pageSize)
 		   .pagedList();
-		   
-        return new Page<CmsContentDTO>(pages.getStart(), pages.getResultCount(),pageSize, CmsContentAssembler.toDTOs(pages.getData()));
+        return new Page<CmsContentInfoDTO>(pages.getStart(), pages.getResultCount(),pageSize, pages.getData());
 	}
 	
 	

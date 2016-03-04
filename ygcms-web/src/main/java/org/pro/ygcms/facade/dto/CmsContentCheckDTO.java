@@ -23,7 +23,7 @@ public class CmsContentCheckDTO implements Serializable {
 
 	private Boolean isRejected;
 
-	private Integer contentId;
+	private String contentId;
 
 	private String checkOpinion;
 
@@ -59,11 +59,11 @@ public class CmsContentCheckDTO implements Serializable {
 		return this.isRejected;
 	}
 
-	public void setContentId(Integer contentId) {
+	public void setContentId(String contentId) {
 		this.contentId = contentId;
 	}
 
-	public Integer getContentId() {
+	public String getContentId() {
 		return this.contentId;
 	}
 
@@ -115,4 +115,15 @@ public class CmsContentCheckDTO implements Serializable {
 			return false;
 		return true;
 	}
+	
+	public void init() {
+		short zero = 0;
+		if (getCheckStep() == null) {
+			setCheckStep(zero);
+		}
+		if (getIsRejected() == null) {
+			setIsRejected(false);
+		}
+	}
+
 }

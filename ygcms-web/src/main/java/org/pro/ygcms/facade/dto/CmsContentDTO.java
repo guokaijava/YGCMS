@@ -1,6 +1,8 @@
 package org.pro.ygcms.facade.dto;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 import java.io.Serializable;
 
@@ -204,5 +206,38 @@ public class CmsContentDTO implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	public void init() {
+		short zero = 0;
+		short bzero = 0;
+		if (this.getViewsDay() == null) {
+			this.setViewsDay(0);
+		}
+		if (this.getCommentsDay() == null) {
+			setCommentsDay(zero);
+		}
+		if (this.getDownloadsDay() == null) {
+			this.setDownloadsDay(zero);
+		}
+		if (this.getUpsDay() == null) {
+			this.setUpsDay(zero);
+		}
+		if (this.getHasTitleImg() == null) {
+			this.setHasTitleImg(false);
+		}
+		if (this.getIsRecommend() == null) {
+			setIsRecommend(false);
+		}
+		if (this.getSortDate() == null) {
+			this.setSortDate(new Timestamp(System.currentTimeMillis()));
+		}
+		if (this.getTopLevel() == null) {
+			this.setTopLevel(bzero);
+		}
+		// 保存后立即生成静态化，如果这些值为null，则需要在模板中增加判断，使模板编写变得复杂。
+		if(this.getScore()==null){
+			this.setScore(0);
+		}
 	}
 }

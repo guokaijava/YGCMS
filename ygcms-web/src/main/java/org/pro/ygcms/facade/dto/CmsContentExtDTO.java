@@ -2,6 +2,8 @@ package org.pro.ygcms.facade.dto;
 
 import java.sql.Timestamp;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.Serializable;
 
 public class CmsContentExtDTO implements Serializable {
@@ -25,7 +27,7 @@ public class CmsContentExtDTO implements Serializable {
 
 	private Boolean needRegenerate;
 
-	private Integer contentId;
+	private String contentId;
 
 	private String mediaType;
 
@@ -50,6 +52,34 @@ public class CmsContentExtDTO implements Serializable {
 	private String typeImg;
 
 	private Boolean isBold;
+	
+	//CmsContentDTO属性
+	private String channelId;//栏目id
+	
+	private String modelId;//模型id
+
+	private String siteId;//站点id
+	
+	private Short topLevel;//固顶级别
+	
+	private String typeId;//内容类型id
+	
+	//CmsContentTopicDTO属性
+	private String topicId;//专题id
+	
+	//CmsContentTagDTO属性
+	private String tagStr;//标签
+	
+	//CmsContentTxtDTO属性
+	private String txt;//内容
+	
+	//CmsContentAttachmentDTO属性
+	private String attachments;
+	
+	private String media;
+	
+	//CmsContentPictureDTO属性
+	private String[] pictures;//图片集
 
 	public void setMediaPath(String mediaPath) {
 		this.mediaPath = mediaPath;
@@ -91,11 +121,11 @@ public class CmsContentExtDTO implements Serializable {
 		return this.needRegenerate;
 	}
 
-	public void setContentId(Integer contentId) {
+	public void setContentId(String contentId) {
 		this.contentId = contentId;
 	}
 
-	public Integer getContentId() {
+	public String getContentId() {
 		return this.contentId;
 	}
 
@@ -210,6 +240,94 @@ public class CmsContentExtDTO implements Serializable {
 	public void setVersion(int version) {
 		this.version = version;
 	}
+	
+	public String getChannelId() {
+		return channelId;
+	}
+
+	public void setChannelId(String channelId) {
+		this.channelId = channelId;
+	}
+
+	public String getModelId() {
+		return modelId;
+	}
+
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
+	}
+
+	public String getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(String siteId) {
+		this.siteId = siteId;
+	}
+
+	public String getTopicId() {
+		return topicId;
+	}
+
+	public void setTopicId(String topicId) {
+		this.topicId = topicId;
+	}
+
+	public Short getTopLevel() {
+		return topLevel;
+	}
+
+	public void setTopLevel(Short topLevel) {
+		this.topLevel = topLevel;
+	}
+
+	public String getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(String typeId) {
+		this.typeId = typeId;
+	}
+
+	public String getTagStr() {
+		return tagStr;
+	}
+
+	public void setTagStr(String tagStr) {
+		this.tagStr = tagStr;
+	}
+
+	public String getTxt() {
+		return txt;
+	}
+
+	public void setTxt(String txt) {
+		this.txt = txt;
+	}
+
+	public String getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(String attachments) {
+		this.attachments = attachments;
+	}
+
+	public String getMedia() {
+		return media;
+	}
+
+	public void setMedia(String media) {
+		this.media = media;
+	}
+
+	public String[] getPictures() {
+		return pictures;
+	}
+
+	public void setPictures(String[] pictures) {
+		this.pictures = pictures;
+	}
 
 	@Override
 	public int hashCode() {
@@ -234,5 +352,61 @@ public class CmsContentExtDTO implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	public void blankToNull() {
+		if (StringUtils.isBlank(this.getShortTitle())) {
+			this.setShortTitle(null);
+		}
+		if (StringUtils.isBlank(this.getAuthor())) {
+			this.setAuthor(null);
+		}
+		if (StringUtils.isBlank(this.getOrigin())) {
+			this.setOrigin(null);
+		}
+		if (StringUtils.isBlank(this.getOriginUrl())) {
+			this.setOriginUrl(null);
+		}
+		if (StringUtils.isBlank(this.getDescription())) {
+			this.setDescription(null);
+		}
+		if (StringUtils.isBlank(this.getTitleColor())) {
+			this.setTitleColor(null);
+		}
+		if (StringUtils.isBlank(this.getTitleImg())) {
+			this.setTitleImg(null);
+		}
+		if (StringUtils.isBlank(this.getContentImg())) {
+			this.setContentImg(null);
+		}
+		if (StringUtils.isBlank(this.getTypeImg())) {
+			this.setTypeImg(null);
+		}
+		if (StringUtils.isBlank(this.getLink())) {
+			this.setLink(null);
+		}
+		if (StringUtils.isBlank(this.getTplContent())) {
+			this.setTplContent(null);
+		}
+		if (StringUtils.isBlank(this.getMediaPath())) {
+			this.setMediaPath(null);
+		}
+		if (StringUtils.isBlank(this.getMediaType())) {
+			this.setMediaType(null);
+		}
+	}
+
+	
+	public void init() {
+		if (this.getReleaseDate() == null) {
+			this.setReleaseDate(new Timestamp(System.currentTimeMillis()));
+		}
+		if (this.getIsBold() == null) {
+			this.setIsBold(false);
+		}
+		if(this.getNeedRegenerate()==null){
+			this.setNeedRegenerate(true);
+		}
+		blankToNull();
 	}
 }

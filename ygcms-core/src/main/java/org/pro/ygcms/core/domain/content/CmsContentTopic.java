@@ -21,24 +21,24 @@ public class CmsContentTopic extends CmsAbstractEntity {
 	private static final long serialVersionUID = -5193559420802725602L;
 
 	@Column(name = "content_id")
-	private int contentId;
+	private String contentId;
 
 	@Column(name = "topic_id")
-	private int topicId;
+	private String topicId;
 
-	public int getContentId() {
+	public String getContentId() {
 		return contentId;
 	}
 
-	public void setContentId(int contentId) {
+	public void setContentId(String contentId) {
 		this.contentId = contentId;
 	}
 
-	public int getTopicId() {
+	public String getTopicId() {
 		return topicId;
 	}
 
-	public void setTopicId(int topicId) {
+	public void setTopicId(String topicId) {
 		this.topicId = topicId;
 	}
 

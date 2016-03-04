@@ -19,7 +19,7 @@ public class CmsContentPictureDTO implements Serializable {
 
 	private String imgPath;
 
-	private Integer contentId;
+	private String contentId;
 
 	public void setDescription(String description) {
 		this.description = description;
@@ -45,11 +45,11 @@ public class CmsContentPictureDTO implements Serializable {
 		return this.imgPath;
 	}
 
-	public void setContentId(Integer contentId) {
+	public void setContentId(String contentId) {
 		this.contentId = contentId;
 	}
 
-	public Integer getContentId() {
+	public String getContentId() {
 		return this.contentId;
 	}
 
