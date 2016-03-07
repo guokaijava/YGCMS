@@ -11,7 +11,7 @@ import org.pro.ygcms.core.domain.content.CmsContentAttr;
 @Transactional
 public class CmsContentAttrApplicationImpl implements CmsContentAttrApplication {
 
-	public CmsContentAttr getCmsContentAttr(Long id) {
+	public CmsContentAttr getCmsContentAttr(String id) {
 		return CmsContentAttr.get(CmsContentAttr.class, id);
 	}
 	
@@ -37,6 +37,10 @@ public class CmsContentAttrApplicationImpl implements CmsContentAttrApplication 
 	
 	public List<CmsContentAttr> findAllCmsContentAttr() {
 		return CmsContentAttr.findAll(CmsContentAttr.class);
+	}
+	
+	public List<CmsContentAttr> findAllCmsContentAttrByCId(String contentId){
+		return CmsContentAttr.findByProperty(CmsContentAttr.class, "contentId", contentId);
 	}
 	
 }

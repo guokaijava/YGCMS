@@ -7,19 +7,21 @@ import org.pro.ygcms.facade.dto.*;
 
 public interface CmsContentExtFacade {
 
-	public InvokeResult getCmsContentExt(Long id);
+	public InvokeResult getCmsContentExt(String id);
 	
 	public String creatCmsContentExt(CmsContentExtDTO cmsContentExt);
 	
 	public InvokeResult updateCmsContentExt(CmsContentExtDTO cmsContentExt);
 	
-	public InvokeResult removeCmsContentExt(Long id);
+	public InvokeResult removeCmsContentExt(String id);
 	
-	public InvokeResult removeCmsContentExts(Long[] ids);
+	public InvokeResult removeCmsContentExts(String[] ids);
 	
 	public List<CmsContentExtDTO> findAllCmsContentExt();
 	
 	public Page<CmsContentExtDTO> pageQueryCmsContentExt(CmsContentExtDTO cmsContentExt, int currentPage, int pageSize);
+	
+	public CmsContentExtDTO getCmsContentExtByCId(String contentId);
 	
 
 }

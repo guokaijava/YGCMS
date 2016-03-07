@@ -11,7 +11,7 @@ import org.pro.ygcms.core.domain.content.CmsContentExt;
 @Transactional
 public class CmsContentExtApplicationImpl implements CmsContentExtApplication {
 
-	public CmsContentExt getCmsContentExt(Long id) {
+	public CmsContentExt getCmsContentExt(String id) {
 		return CmsContentExt.get(CmsContentExt.class, id);
 	}
 	
@@ -37,6 +37,11 @@ public class CmsContentExtApplicationImpl implements CmsContentExtApplication {
 	
 	public List<CmsContentExt> findAllCmsContentExt() {
 		return CmsContentExt.findAll(CmsContentExt.class);
+	}
+	
+	public CmsContentExt getCmsContentExtByCId(String contentId){
+		CmsContentExt cmsContentExt = CmsContentExt.findByProperty(CmsContentExt.class, "contentId", contentId).get(0);
+		return cmsContentExt;
 	}
 	
 }

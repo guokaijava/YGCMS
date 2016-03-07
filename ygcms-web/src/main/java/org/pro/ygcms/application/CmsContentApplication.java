@@ -7,7 +7,7 @@ import  org.pro.ygcms.core.domain.content.CmsContent;
 
 public interface CmsContentApplication {
 
-	public CmsContent getCmsContent(Long id);
+	public CmsContent getCmsContent(String id);
 	
 	public void creatCmsContent(CmsContent cmsContent);
 	

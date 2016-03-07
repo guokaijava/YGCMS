@@ -33,7 +33,7 @@ public class CmsContentAttrFacadeImpl implements CmsContentAttrFacade {
      return queryChannel;
     }
 	
-	public InvokeResult getCmsContentAttr(Long id) {
+	public InvokeResult getCmsContentAttr(String id) {
 		return InvokeResult.success(CmsContentAttrAssembler.toDTO(application.getCmsContentAttr(id)));
 	}
 	
@@ -47,14 +47,14 @@ public class CmsContentAttrFacadeImpl implements CmsContentAttrFacade {
 		return InvokeResult.success();
 	}
 	
-	public InvokeResult removeCmsContentAttr(Long id) {
+	public InvokeResult removeCmsContentAttr(String id) {
 		application.removeCmsContentAttr(application.getCmsContentAttr(id));
 		return InvokeResult.success();
 	}
 	
-	public InvokeResult removeCmsContentAttrs(Long[] ids) {
+	public InvokeResult removeCmsContentAttrs(String[] ids) {
 		Set<CmsContentAttr> cmsContentAttrs= new HashSet<CmsContentAttr>();
-		for (Long id : ids) {
+		for (String id : ids) {
 			cmsContentAttrs.add(application.getCmsContentAttr(id));
 		}
 		application.removeCmsContentAttrs(cmsContentAttrs);
@@ -80,7 +80,8 @@ public class CmsContentAttrFacadeImpl implements CmsContentAttrFacade {
 	   		jpql.append(" and _cmsContentAttr.attrValue like ?");
 	   		conditionVals.add(MessageFormat.format("%{0}%", queryVo.getAttrValue()));
 	   	}		
-        Page<CmsContentAttr> pages = getQueryChannelService()
+        @SuppressWarnings("unchecked")
+		Page<CmsContentAttr> pages = getQueryChannelService()
 		   .createJpqlQuery(jpql.toString())
 		   .setParameters(conditionVals)
 		   .setPage(currentPage, pageSize)
@@ -89,5 +90,7 @@ public class CmsContentAttrFacadeImpl implements CmsContentAttrFacade {
         return new Page<CmsContentAttrDTO>(pages.getStart(), pages.getResultCount(),pageSize, CmsContentAttrAssembler.toDTOs(pages.getData()));
 	}
 	
-	
+	public List<CmsContentAttrDTO> getCmsContentAttrByCId(String contentId){
+		return CmsContentAttrAssembler.toDTOs(application.findAllCmsContentAttrByCId(contentId));
+	}
 }

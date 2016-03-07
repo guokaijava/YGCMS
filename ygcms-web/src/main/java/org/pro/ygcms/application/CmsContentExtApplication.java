@@ -7,7 +7,7 @@ import  org.pro.ygcms.core.domain.content.CmsContentExt;
 
 public interface CmsContentExtApplication {
 
-	public CmsContentExt getCmsContentExt(Long id);
+	public CmsContentExt getCmsContentExt(String id);
 	
 	public void creatCmsContentExt(CmsContentExt cmsContentExt);
 	
@@ -18,6 +18,8 @@ public interface CmsContentExtApplication {
 	public void removeCmsContentExts(Set<CmsContentExt> cmsContentExts);
 	
 	public List<CmsContentExt> findAllCmsContentExt();
+	
+	public CmsContentExt getCmsContentExtByCId(String contentId);
 	
 }
 

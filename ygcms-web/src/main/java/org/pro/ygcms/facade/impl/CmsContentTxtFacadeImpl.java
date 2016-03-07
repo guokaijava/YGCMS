@@ -33,7 +33,7 @@ public class CmsContentTxtFacadeImpl implements CmsContentTxtFacade {
      return queryChannel;
     }
 	
-	public InvokeResult getCmsContentTxt(Long id) {
+	public InvokeResult getCmsContentTxt(String id) {
 		return InvokeResult.success(CmsContentTxtAssembler.toDTO(application.getCmsContentTxt(id)));
 	}
 	
@@ -47,14 +47,14 @@ public class CmsContentTxtFacadeImpl implements CmsContentTxtFacade {
 		return InvokeResult.success();
 	}
 	
-	public InvokeResult removeCmsContentTxt(Long id) {
+	public InvokeResult removeCmsContentTxt(String id) {
 		application.removeCmsContentTxt(application.getCmsContentTxt(id));
 		return InvokeResult.success();
 	}
 	
-	public InvokeResult removeCmsContentTxts(Long[] ids) {
+	public InvokeResult removeCmsContentTxts(String[] ids) {
 		Set<CmsContentTxt> cmsContentTxts= new HashSet<CmsContentTxt>();
-		for (Long id : ids) {
+		for (String id : ids) {
 			cmsContentTxts.add(application.getCmsContentTxt(id));
 		}
 		application.removeCmsContentTxts(cmsContentTxts);
@@ -88,7 +88,8 @@ public class CmsContentTxtFacadeImpl implements CmsContentTxtFacade {
 	   		jpql.append(" and _cmsContentTxt.txt3 like ?");
 	   		conditionVals.add(MessageFormat.format("%{0}%", queryVo.getTxt3()));
 	   	}		
-        Page<CmsContentTxt> pages = getQueryChannelService()
+        @SuppressWarnings("unchecked")
+		Page<CmsContentTxt> pages = getQueryChannelService()
 		   .createJpqlQuery(jpql.toString())
 		   .setParameters(conditionVals)
 		   .setPage(currentPage, pageSize)
@@ -97,5 +98,8 @@ public class CmsContentTxtFacadeImpl implements CmsContentTxtFacade {
         return new Page<CmsContentTxtDTO>(pages.getStart(), pages.getResultCount(),pageSize, CmsContentTxtAssembler.toDTOs(pages.getData()));
 	}
 	
+	public CmsContentTxtDTO getCmsContentTxtByCId(String contentId){
+		return CmsContentTxtAssembler.toDTO(application.getCmsContentTxtByCId(contentId));
+	}
 	
 }

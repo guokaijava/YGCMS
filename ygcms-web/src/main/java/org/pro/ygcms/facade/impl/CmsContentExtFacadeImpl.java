@@ -31,10 +31,10 @@ public class CmsContentExtFacadeImpl implements CmsContentExtFacade {
        if(queryChannel==null){
           queryChannel = InstanceFactory.getInstance(QueryChannelService.class,"queryChannel");
        }
-     return queryChannel;
+       return queryChannel;
     }
 	
-	public InvokeResult getCmsContentExt(Long id) {
+	public InvokeResult getCmsContentExt(String id) {
 		return InvokeResult.success(CmsContentExtAssembler.toDTO(application.getCmsContentExt(id)));
 	}
 	
@@ -50,14 +50,14 @@ public class CmsContentExtFacadeImpl implements CmsContentExtFacade {
 		return InvokeResult.success();
 	}
 	
-	public InvokeResult removeCmsContentExt(Long id) {
+	public InvokeResult removeCmsContentExt(String id) {
 		application.removeCmsContentExt(application.getCmsContentExt(id));
 		return InvokeResult.success();
 	}
 	
-	public InvokeResult removeCmsContentExts(Long[] ids) {
+	public InvokeResult removeCmsContentExts(String[] ids) {
 		Set<CmsContentExt> cmsContentExts= new HashSet<CmsContentExt>();
-		for (Long id : ids) {
+		for (String id : ids) {
 			cmsContentExts.add(application.getCmsContentExt(id));
 		}
 		application.removeCmsContentExts(cmsContentExts);
@@ -138,8 +138,10 @@ public class CmsContentExtFacadeImpl implements CmsContentExtFacade {
 	   	if (queryVo.getNeedRegenerate() != null) {
 		   	jpql.append(" and _cmsContentExt.needRegenerate is ?");
 		   	conditionVals.add(queryVo.getNeedRegenerate());
-	   	}	
-        Page<CmsContentExt> pages = getQueryChannelService()
+	   	}
+	   	
+        @SuppressWarnings("unchecked")
+		Page<CmsContentExt> pages = getQueryChannelService()
 		   .createJpqlQuery(jpql.toString())
 		   .setParameters(conditionVals)
 		   .setPage(currentPage, pageSize)
@@ -148,5 +150,9 @@ public class CmsContentExtFacadeImpl implements CmsContentExtFacade {
         return new Page<CmsContentExtDTO>(pages.getStart(), pages.getResultCount(),pageSize, CmsContentExtAssembler.toDTOs(pages.getData()));
 	}
 	
+	public CmsContentExtDTO getCmsContentExtByCId(String contentId){
+		CmsContentExtDTO cmsContentExtDTO = CmsContentExtAssembler.toDTO(application.getCmsContentExtByCId(contentId));
+		return cmsContentExtDTO;
+	}
 	
 }

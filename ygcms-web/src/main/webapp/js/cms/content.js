@@ -97,21 +97,6 @@ var contentManager = function(){
 		});
 	}
 
-	//获取专题数据1
-	var topicList = null;
-	var getTopicData = function(){
-		$.get(contextPath + '/CmsTopic/allList.koala').done(function(data){
-			topicList = data;
-		});
-	}
-	//获取内容类型数据
-	var typeList = null;
-	var getTypeData = function(){
-		$.get(contextPath + '/CmsContentType/allList.koala').done(function(data){
-			typeList = data;
-		});
-	}
-
 	var selectParent = function(id){
 		datainit(id);
 	};
@@ -143,6 +128,7 @@ var contentManager = function(){
 		var url = contextPath + '/CmsModel/pageJson.koala?page=0&pagesize=20';
 		$.get(url).done(function(data){
 			var operateul = $("#content_createmenu");
+			$("#content_createmenu").html("");
 			$.each(data.data, function(){
 				operateul.append("<li id=\""+this.id+"\"><a>"+this.modelname+"</a></li>")  
 			});
@@ -150,10 +136,6 @@ var contentManager = function(){
 				$(this).click(function(){
 					var type = $(this).attr("id");
 					$("#contentDetail").find("#modelid").val(type);
-					//获取专题数据
-					getTopicData();
-					//获取类型数据
-					getTypeData();
 					var dialog = $('<div class="modal fade"><div class="modal-dialog modal-lg">'
 							+'<div class="modal-content"><div class="modal-header"><button type="button" class="close" '
 							+'data-dismiss="modal" aria-hidden="true">&times;</button>'
@@ -170,8 +152,7 @@ var contentManager = function(){
 								$(this).remove();
 							},
 							'shown.bs.modal':function(){
-								$.get(contextPath + '/CmsModelItem/contentGetItemsByPrarentId/'+type+'.koala').done(function(result){
-									console.log(result);
+								$.get(baseUrl + 'toAdd.koala?modelId='+type).done(function(result){
 									renderForm(result,dialog);
 								});
 							}
@@ -180,51 +161,6 @@ var contentManager = function(){
 				});
 			});
 		});
-	};
-
-	// 修改栏目信息
-	var modifyInfoSort = function(id){
-		var dialog = $('<div class="modal fade"><div class="modal-dialog modal-lg">'
-				+'<div class="modal-content"><div class="modal-header"><button type="button" class="close" '
-				+'data-dismiss="modal" aria-hidden="true">&times;</button>'
-				+'<h4 class="modal-title">修改信息</h4></div><div class="modal-body">'
-				+'<p>One fine body&hellip;</p></div><div class="modal-footer">'
-				+'<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'
-				+'<button type="button" class="btn btn-success" id="save">保存</button></div></div>'
-				+'</div></div>');
-		$.get('pages/content/CmsContent-add.jsp').done(function(html){
-			dialog.modal({
-				keyboard:false
-			}).on({
-				'hidden.bs.modal': function(){
-					$(this).remove();
-				},
-				'shown.bs.modal':function(){
-					$.get(baseUrl + 'getChannel.koala?id='+id).done(function(result){
-						$("#contentDetail").find("#modelid").val(result.cmsContent.modelId);
-						renderForm(result,dialog);
-					});
-				}
-			}).find('.modal-body').html(html);
-		});
-	};
-	
-	var delInfoSort = function(id){
-		var data = [{ name: 'ids', value: id.join(',') }];
-    	$.post(baseUrl+'delete.koala', data).done(function(result){
-            if(result.success){
-                $('#contentgrid').getGrid().refresh();
-                $('#contentgrid').getGrid().message({
-                    type: 'success',
-                    content: '删除成功'
-                });
-            }else{
-            	$('#contentgrid').getGrid().message({
-                    type: 'error',
-                    content: result.result
-                });
-            }
-    	});
 	};
 
 	// 渲染表单
@@ -294,19 +230,65 @@ var contentManager = function(){
 			$.post(posturl, root.find('form').serialize()).done(function(result){
 				if(result.success ){
 					root.modal('hide');
-					e.data.grid.data('koala.grid').refresh();
-					e.data.grid.message({
+					$('#contentgrid').getGrid().refresh();
+					$('#contentgrid').message({
 						type: 'success',
 						content: '保存成功'
 					});
 				}else{
-					root.find('.modal-content').message({
+					$('#contentgrid').message({
 						type: 'error',
 						content: result.actionError
 					});
 				}
 			});
 		});
+	};
+	
+	// 修改栏目信息
+	var modifyInfoSort = function(id){
+		var dialog = $('<div class="modal fade"><div class="modal-dialog modal-lg">'
+				+'<div class="modal-content"><div class="modal-header"><button type="button" class="close" '
+				+'data-dismiss="modal" aria-hidden="true">&times;</button>'
+				+'<h4 class="modal-title">修改信息</h4></div><div class="modal-body">'
+				+'<p>One fine body&hellip;</p></div><div class="modal-footer">'
+				+'<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'
+				+'<button type="button" class="btn btn-success" id="save">保存</button></div></div>'
+				+'</div></div>');
+		$.get('pages/content/CmsContent-add.jsp').done(function(html){
+			dialog.modal({
+				keyboard:false
+			}).on({
+				'hidden.bs.modal': function(){
+					$(this).remove();
+				},
+				'shown.bs.modal':function(){
+					$.get(baseUrl + 'get/'+id+'.koala').done(function(result){
+						$("#contentDetail").find("#modelid").val(result.cmsContent.modelId);
+						$("#contentDetail").find("#siteid").val(result.cmsContent.siteId);
+						renderForm(result,dialog);
+					});
+				}
+			}).find('.modal-body').html(html);
+		});
+	};
+	
+	var delInfoSort = function(id){
+		var data = [{ name: 'ids', value: id.join(',') }];
+    	$.post(baseUrl+'delete.koala', data).done(function(result){
+            if(result.success){
+                $('#contentgrid').getGrid().refresh();
+                $('#contentgrid').message({
+                    type: 'success',
+                    content: '删除成功'
+                });
+            }else{
+            	$('#contentgrid').message({
+                    type: 'error',
+                    content: result.result
+                });
+            }
+    	});
 	};
 	
 	// 渲染行
@@ -334,16 +316,16 @@ var contentManager = function(){
 				//专题
 				rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><select name='"+field_name+"' class=\"form-control\">";
 				rowhtml += "<option value=''>选择专题</option>";
-				for(var i=0;i<topicList.length;i++){
-					var topic= topicList[i];
+				for(var i=0;i<result.topicList.length;i++){
+					var topic= result.topicList[i];
 					rowhtml += "<option value='"+topic.id+"'>"+topic.topicname+"</option>";
 				}
 				rowhtml += "</select></div>";
 			}else if(row.field == "typeId"){
 				//内容类型
 				rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><select name='"+field_name+"' class=\"form-control\">";
-				for(var i=0;i<typeList.length;i++){
-					var type= typeList[i];
+				for(var i=0;i<result.typeList.length;i++){
+					var type= result.typeList[i];
 					rowhtml += "<option value='"+type.id+"'>"+type.typename+"</option>";
 				}
 				rowhtml += "</select></div>";
@@ -400,7 +382,7 @@ var contentManager = function(){
 
 	var loaddataindex=0;
 	var datainit = function(rootcid){
-
+		
 		var grid = $('#contentgrid');
 		var cols = [{
 			title: '标题',
@@ -433,7 +415,6 @@ var contentManager = function(){
 		            {content: '<button class="btn btn-success" type="button"><span class="glyphicon glyphicon-edit"><span>修改</button>', action: 'modify'},
 		            {content: '<button class="btn btn-danger" type="button"><span class="glyphicon glyphicon-remove"><span>删除</button>', action: 'delete'},
 		            ];
-
 		if(rootcid!=null){
 			if(loaddataindex>0){
 				grid.getGrid().urlrefresh(baseUrl+"pageJson.koala?channelId="+rootcid);
@@ -443,7 +424,7 @@ var contentManager = function(){
 					columns: cols,
 					buttons: btns,
 					isShowPages:true,
-					url:baseUrl+"pageJson.koala"
+					url:baseUrl+"pageJson.koala?channelId="+rootcid
 				}).on({
 					'modify': function(event, data){
 						var indexs = data.data;
@@ -485,9 +466,9 @@ var contentManager = function(){
 					'newContent':function(event,data){
 					}
 				});
+				grid.find(".btn-group").eq(0).prepend('<div class="btn-group"><button id="dLabel" type="button" class="btn btn-primary" style="border-top-right-radius: 0;border-bottom-right-radius: 0;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-plus"></span> 发布<span class="caret"></span></button><ul class="dropdown-menu" aria-labelledby="dLabel" id="content_createmenu"></ul></div>');
 			}
 			loaddataindex++;
-			grid.find(".btn-group").eq(0).prepend('<div class="btn-group"><button id="dLabel" type="button" class="btn btn-primary" style="border-top-right-radius: 0;border-bottom-right-radius: 0;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-plus"></span> 发布<span class="caret"></span></button><ul class="dropdown-menu" aria-labelledby="dLabel" id="content_createmenu"></ul></div>');
 			initoperate();
 		}
 	}

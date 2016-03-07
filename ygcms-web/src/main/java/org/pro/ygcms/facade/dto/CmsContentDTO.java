@@ -1,8 +1,6 @@
 package org.pro.ygcms.facade.dto;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashSet;
 
 import java.io.Serializable;
 
@@ -46,6 +44,8 @@ public class CmsContentDTO implements Serializable {
 	private Short topLevel;
 
 	private Boolean isRecommend;
+	
+	private Boolean isDelete;
 
 	public void setHasTitleImg(Boolean hasTitleImg) {
 		this.hasTitleImg = hasTitleImg;
@@ -167,6 +167,14 @@ public class CmsContentDTO implements Serializable {
 		return this.isRecommend;
 	}
 
+	public Boolean getIsDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(Boolean isDelete) {
+		this.isDelete = isDelete;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -228,6 +236,9 @@ public class CmsContentDTO implements Serializable {
 		}
 		if (this.getIsRecommend() == null) {
 			setIsRecommend(false);
+		}
+		if (this.getIsDelete() == null) {
+			setIsDelete(false);
 		}
 		if (this.getSortDate() == null) {
 			this.setSortDate(new Timestamp(System.currentTimeMillis()));

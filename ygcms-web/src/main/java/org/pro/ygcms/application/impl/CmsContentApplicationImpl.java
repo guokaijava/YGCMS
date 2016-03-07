@@ -11,7 +11,7 @@ import org.pro.ygcms.core.domain.content.CmsContent;
 @Transactional
 public class CmsContentApplicationImpl implements CmsContentApplication {
 
-	public CmsContent getCmsContent(Long id) {
+	public CmsContent getCmsContent(String id) {
 		return CmsContent.get(CmsContent.class, id);
 	}
 	
@@ -20,7 +20,7 @@ public class CmsContentApplicationImpl implements CmsContentApplication {
 	}
 	
 	public void updateCmsContent(CmsContent cmsContent) {
-		cmsContent .save();
+		cmsContent.save();
 	}
 	
 	public void removeCmsContent(CmsContent cmsContent) {

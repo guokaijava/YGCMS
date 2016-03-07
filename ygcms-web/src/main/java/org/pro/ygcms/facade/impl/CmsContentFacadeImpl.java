@@ -1,11 +1,8 @@
 package org.pro.ygcms.facade.impl;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.UUID;
-import java.text.MessageFormat;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.dayatang.domain.InstanceFactory;
@@ -13,7 +10,6 @@ import org.dayatang.utils.Page;
 import org.dayatang.querychannel.QueryChannelService;
 import org.openkoala.koala.commons.InvokeResult;
 import org.pro.ygcms.facade.dto.*;
-import org.pro.ygcms.facade.impl.assembler.CmsChannelAssembler;
 import org.pro.ygcms.facade.impl.assembler.CmsContentAssembler;
 import org.pro.ygcms.facade.CmsContentFacade;
 import org.pro.ygcms.application.CmsContentApplication;
@@ -35,7 +31,7 @@ public class CmsContentFacadeImpl implements CmsContentFacade {
      return queryChannel;
     }
 	
-	public InvokeResult getCmsContent(Long id) {
+	public InvokeResult getCmsContent(String id) {
 		return InvokeResult.success(CmsContentAssembler.toDTO(application.getCmsContent(id)));
 	}
 	
@@ -50,17 +46,20 @@ public class CmsContentFacadeImpl implements CmsContentFacade {
 		return InvokeResult.success();
 	}
 	
-	public InvokeResult removeCmsContent(Long id) {
+	public InvokeResult removeCmsContent(String id) {
 		application.removeCmsContent(application.getCmsContent(id));
 		return InvokeResult.success();
 	}
 	
-	public InvokeResult removeCmsContents(Long[] ids) {
-		Set<CmsContent> cmsContents= new HashSet<CmsContent>();
-		for (Long id : ids) {
-			cmsContents.add(application.getCmsContent(id));
+	public InvokeResult removeCmsContents(String[] ids) {
+//		Set<CmsContent> cmsContents= new HashSet<CmsContent>();
+		for (String id : ids) {
+			CmsContent cmsContent = application.getCmsContent(id);
+			cmsContent.setIsDelete(true);
+			application.updateCmsContent(cmsContent);
+//			cmsContents.add(application.getCmsContent(id));
 		}
-		application.removeCmsContents(cmsContents);
+//		application.removeCmsContents(cmsContents);
 		return InvokeResult.success();
 	}
 	

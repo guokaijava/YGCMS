@@ -44,30 +44,31 @@ public class CmsContentAssembler {
 		return results;
 	}
 	
-	 public static CmsContent  toEntity(CmsContentDTO  cmsContentDTO){
-	 	if (cmsContentDTO == null) {
+	public static CmsContent  toEntity(CmsContentDTO  cmsContentDTO){
+		if (cmsContentDTO == null) {
 			return null;
 		}
-	 	CmsContent result  = new CmsContent();
-        result.setId (cmsContentDTO.getId());
-         result.setVersion (cmsContentDTO.getVersion());
-         result.setChannelId (cmsContentDTO.getChannelId());
-         result.setUserId (cmsContentDTO.getUserId());
-         result.setTypeId (cmsContentDTO.getTypeId());
-         result.setModelId (cmsContentDTO.getModelId());
-         result.setSiteId (cmsContentDTO.getSiteId());
-         result.setSortDate (cmsContentDTO.getSortDate());
-         result.setTopLevel (cmsContentDTO.getTopLevel());
-         result.setHasTitleImg (cmsContentDTO.getHasTitleImg());
-         result.setIsRecommend (cmsContentDTO.getIsRecommend());
-         result.setStatus (cmsContentDTO.getStatus());
-         result.setViewsDay (cmsContentDTO.getViewsDay());
-         result.setCommentsDay (cmsContentDTO.getCommentsDay());
-         result.setDownloadsDay (cmsContentDTO.getDownloadsDay());
-         result.setUpsDay (cmsContentDTO.getUpsDay());
-         result.setScore (cmsContentDTO.getScore());
- 	  	return result;
-	 }
+		CmsContent result  = new CmsContent();
+		result.setId (cmsContentDTO.getId());
+		result.setVersion (cmsContentDTO.getVersion());
+		result.setChannelId (cmsContentDTO.getChannelId());
+		result.setUserId (cmsContentDTO.getUserId());
+		result.setTypeId (cmsContentDTO.getTypeId());
+		result.setModelId (cmsContentDTO.getModelId());
+		result.setSiteId (cmsContentDTO.getSiteId());
+		result.setSortDate (cmsContentDTO.getSortDate());
+		result.setTopLevel (cmsContentDTO.getTopLevel());
+		result.setHasTitleImg (cmsContentDTO.getHasTitleImg());
+		result.setIsRecommend (cmsContentDTO.getIsRecommend());
+		result.setStatus (cmsContentDTO.getStatus());
+		result.setViewsDay (cmsContentDTO.getViewsDay());
+		result.setCommentsDay (cmsContentDTO.getCommentsDay());
+		result.setDownloadsDay (cmsContentDTO.getDownloadsDay());
+		result.setUpsDay (cmsContentDTO.getUpsDay());
+		result.setScore (cmsContentDTO.getScore());
+		result.setIsDelete(cmsContentDTO.getIsDelete());
+		return result;
+	}
 	
 	public static List<CmsContent> toEntities(Collection<CmsContentDTO> cmsContentDTOs) {
 		if (cmsContentDTOs == null) {

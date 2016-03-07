@@ -2,6 +2,8 @@ package org.pro.ygcms.web.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -19,6 +21,12 @@ import org.pro.ygcms.facade.CmsContentExtFacade;
 import org.pro.ygcms.facade.CmsContentFacade;
 import org.pro.ygcms.facade.CmsContentTopicFacade;
 import org.pro.ygcms.facade.CmsContentTxtFacade;
+import org.pro.ygcms.facade.CmsContentTypeFacade;
+import org.pro.ygcms.facade.CmsModelItemFacade;
+import org.pro.ygcms.facade.dto.CmsChannelAttrDTO;
+import org.pro.ygcms.facade.dto.CmsChannelDTO;
+import org.pro.ygcms.facade.dto.CmsChannelExtDTO;
+import org.pro.ygcms.facade.dto.CmsChannelTxtDTO;
 import org.pro.ygcms.facade.dto.CmsContentAttrDTO;
 import org.pro.ygcms.facade.dto.CmsContentChannelDTO;
 import org.pro.ygcms.facade.dto.CmsContentCheckDTO;
@@ -27,6 +35,8 @@ import org.pro.ygcms.facade.dto.CmsContentExtDTO;
 import org.pro.ygcms.facade.dto.CmsContentInfoDTO;
 import org.pro.ygcms.facade.dto.CmsContentTopicDTO;
 import org.pro.ygcms.facade.dto.CmsContentTxtDTO;
+import org.pro.ygcms.facade.dto.CmsTopicDTO;
+import org.pro.ygcms.facade.impl.assembler.CmsTopicFacade;
 import org.pro.ygcms.web.util.RequestUtils;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -48,13 +58,29 @@ public class CmsContentController {
 	@Inject
 	private CmsContentAttrFacade cmsContentAttrFacade;
 	@Inject
-	private CmsContentTxtFacade CmsContentTxtFacade;
+	private CmsContentTxtFacade cmsContentTxtFacade;
 	@Inject
 	private CmsContentCheckFacade cmsContentCheckFacade;
 	@Inject
 	private CmsContentChannelFacade cmsContentChannelFacade;
 	@Inject
 	private CmsContentTopicFacade cmsContentTopicFacade;
+	@Inject
+	private CmsModelItemFacade cmsModelItemFacade;
+	@Inject
+	private CmsTopicFacade cmsTopicFacade;
+	@Inject
+	private CmsContentTypeFacade cmsContentTypeFacade;
+	
+	@ResponseBody
+	@RequestMapping("/toAdd")
+	public Map<String,Object> toAdd(@RequestParam String modelId) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("tplList", cmsModelItemFacade.getItemsByModelId(modelId,0));
+		map.put("topicList", cmsTopicFacade.findAllCmsTopic());
+		map.put("typeList", cmsContentTypeFacade.findAllCmsContentType());
+		return map;
+	}
 	
 	@ResponseBody
 	@RequestMapping("/add")
@@ -94,10 +120,11 @@ public class CmsContentController {
 		
 		//新增CmsContentTxtDTO
 		CmsContentTxtDTO cmsContentTxtDTO = new CmsContentTxtDTO();
+		cmsContentExtDTO.setTxt(cmsContentExtDTO.getTxt());
 		if (!cmsContentTxtDTO.isAllBlank()) {
 			cmsContentTxtDTO.setContentId(content_id);
 			cmsContentTxtDTO.init();
-			CmsContentTxtFacade.creatCmsContentTxt(cmsContentTxtDTO);
+			cmsContentTxtFacade.creatCmsContentTxt(cmsContentTxtDTO);
 		}
 		
 		//新增CmsContentCheckDTO
@@ -147,21 +174,27 @@ public class CmsContentController {
 	@ResponseBody
 	@RequestMapping("/delete")
 	public InvokeResult remove(@RequestParam String ids) {
-		System.out.println(123);
-		System.out.println(ids);
-//		String[] value = ids.split(",");
-//        Long[] idArrs = new Long[value.length];
-//        for (int i = 0; i < value.length; i ++) {
-//        	idArrs[i] = Long.parseLong(value[i]);
-//        }
-//        return cmsContentFacade.removeCmsContents(idArrs);
-		return InvokeResult.success();
+		String[] idArrs = ids.split(",");
+        return cmsContentFacade.removeCmsContents(idArrs);
+//		return InvokeResult.success();
 	}
 	
 	@ResponseBody
 	@RequestMapping("/get/{id}")
-	public InvokeResult get(@PathVariable Long id) {
-		return cmsContentFacade.getCmsContent(id);
+	public Map<String, Object> get(@PathVariable String id) {
+		CmsContentDTO cmsContent = (CmsContentDTO)cmsContentFacade.getCmsContent(id).getData();
+		CmsContentExtDTO CmsContentExt = cmsContentExtFacade.getCmsContentExtByCId(id);
+		List<CmsContentAttrDTO> cmsContentAttr = cmsContentAttrFacade.getCmsContentAttrByCId(id);
+		CmsContentTxtDTO cmsContentTxt  = cmsContentTxtFacade.getCmsContentTxtByCId(id);
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("tplList", cmsModelItemFacade.getItemsByModelId(cmsContent.getModelId(),0));
+		map.put("topicList", cmsTopicFacade.findAllCmsTopic());
+		map.put("typeList", cmsContentTypeFacade.findAllCmsContentType());
+		map.put("cmsContent",cmsContent);
+		map.put("CmsContentExt", CmsContentExt);
+		map.put("cmsContentAttr", cmsContentAttr);
+		map.put("cmsContentTxt", cmsContentTxt);
+		return map;
 	}
 	
 		

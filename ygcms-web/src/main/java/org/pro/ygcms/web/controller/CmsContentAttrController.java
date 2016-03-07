@@ -47,17 +47,13 @@ public class CmsContentAttrController {
 	@ResponseBody
 	@RequestMapping("/delete")
 	public InvokeResult remove(@RequestParam String ids) {
-		String[] value = ids.split(",");
-        Long[] idArrs = new Long[value.length];
-        for (int i = 0; i < value.length; i ++) {
-        	        					idArrs[i] = Long.parseLong(value[i]);
-						        }
-        return cmsContentAttrFacade.removeCmsContentAttrs(idArrs);
+		String[] idArrs = ids.split(",");
+		return cmsContentAttrFacade.removeCmsContentAttrs(idArrs);
 	}
 	
 	@ResponseBody
 	@RequestMapping("/get/{id}")
-	public InvokeResult get(@PathVariable Long id) {
+	public InvokeResult get(@PathVariable String id) {
 		return cmsContentAttrFacade.getCmsContentAttr(id);
 	}
 	
