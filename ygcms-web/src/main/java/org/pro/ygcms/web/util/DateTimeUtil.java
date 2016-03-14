@@ -239,7 +239,7 @@ public class DateTimeUtil {
 	 *            字符串
 	 * @see 字符串转换成日期类型 格式为yyyy-MM-dd
 	 */
-	public  Date String2Date(String szDate) {
+	public static Date String2Date(String szDate) {
 		return String2Date(szDate, 2);
 	}
 
@@ -251,7 +251,7 @@ public class DateTimeUtil {
 	 *            数值转换的格式 1->yyyy-MM-dd HH:mm:ss 2->yyyy-MM-dd
 	 * @see 字符串转换成日期类型
 	 */
-	public  Date String2Date(String szDate, int option) {
+	public static Date String2Date(String szDate, int option) {
 		try {
 			String pattern = "yyyy-MM-dd HH:mm:ss";
 			switch (option) {
