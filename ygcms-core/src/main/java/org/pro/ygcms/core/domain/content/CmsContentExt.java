@@ -1,6 +1,6 @@
 package org.pro.ygcms.core.domain.content;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,7 +44,7 @@ public class CmsContentExt extends CmsAbstractEntity {
 	private String description;
 
 	@Column(name = "release_date")
-	private Timestamp releaseDate;
+	private Date releaseDate;
 
 	@Column(name = "media_path")
 	private String mediaPath;
@@ -132,11 +132,11 @@ public class CmsContentExt extends CmsAbstractEntity {
 		this.description = description;
 	}
 
-	public Timestamp getReleaseDate() {
+	public Date getReleaseDate() {
 		return releaseDate;
 	}
 
-	public void setReleaseDate(Timestamp releaseDate) {
+	public void setReleaseDate(Date releaseDate) {
 		this.releaseDate = releaseDate;
 	}
 

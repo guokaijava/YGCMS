@@ -11,7 +11,7 @@ import org.pro.ygcms.core.domain.content.CmsContentTopic;
 @Transactional
 public class CmsContentTopicApplicationImpl implements CmsContentTopicApplication {
 
-	public CmsContentTopic getCmsContentTopic(Long id) {
+	public CmsContentTopic getCmsContentTopic(String id) {
 		return CmsContentTopic.get(CmsContentTopic.class, id);
 	}
 	
@@ -37,6 +37,16 @@ public class CmsContentTopicApplicationImpl implements CmsContentTopicApplicatio
 	
 	public List<CmsContentTopic> findAllCmsContentTopic() {
 		return CmsContentTopic.findAll(CmsContentTopic.class);
+	}
+
+	@Override
+	public CmsContentTopic getCmsContentTopicByCId(String contentId) {
+		List<CmsContentTopic>  topicList = CmsContentTopic.findByProperty(CmsContentTopic.class, "contentId", contentId);
+		if(topicList!=null && topicList.size()>0){
+			CmsContentTopic cmsContentTopic =  topicList.get(0);
+			return cmsContentTopic;
+		}
+		return null;
 	}
 	
 }

@@ -1,8 +1,9 @@
 package org.pro.ygcms.facade.dto;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
+import org.pro.ygcms.web.util.DateTimeUtil;
 
 import java.io.Serializable;
 
@@ -37,7 +38,7 @@ public class CmsContentExtDTO implements Serializable {
 
 	private String contentImg;
 
-	private Timestamp releaseDate;
+	private String releaseDate;
 
 	private String shortTitle;
 
@@ -161,11 +162,11 @@ public class CmsContentExtDTO implements Serializable {
 		return this.contentImg;
 	}
 
-	public void setReleaseDate(Timestamp releaseDate) {
+	public void setReleaseDate(String releaseDate) {
 		this.releaseDate = releaseDate;
 	}
 
-	public Timestamp getReleaseDate() {
+	public String getReleaseDate() {
 		return this.releaseDate;
 	}
 
@@ -399,7 +400,9 @@ public class CmsContentExtDTO implements Serializable {
 	
 	public void init() {
 		if (this.getReleaseDate() == null) {
-			this.setReleaseDate(new Timestamp(System.currentTimeMillis()));
+//			this.setReleaseDate(new Timestamp(System.currentTimeMillis()));
+			this.setReleaseDate(DateTimeUtil.Date2String(new Date(), "yyyy-MM-dd"));
+//			this.setReleaseDate(DateTimeUtil.Date2String(new Date(), "yyyy-MM-dd HH:mm:ss"));
 		}
 		if (this.getIsBold() == null) {
 			this.setIsBold(false);

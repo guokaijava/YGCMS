@@ -23,6 +23,8 @@ public interface CmsContentAttrFacade {
 	
 	public List<CmsContentAttrDTO> getCmsContentAttrByCId(String contentId);
 	
+	public InvokeResult removeCmsContentAttrsByCId(String contentId);
+	
 
 }
 

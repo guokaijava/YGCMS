@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.dayatang.utils.Page;
 import org.openkoala.koala.commons.InvokeResult;
 import org.openkoala.security.shiro.CurrentUser;
 import org.pro.ygcms.core.web.Constants;
+import org.pro.ygcms.facade.CmsChannelFacade;
 import org.pro.ygcms.facade.CmsContentAttrFacade;
 import org.pro.ygcms.facade.CmsContentChannelFacade;
 import org.pro.ygcms.facade.CmsContentCheckFacade;
@@ -37,6 +39,7 @@ import org.pro.ygcms.facade.dto.CmsContentTopicDTO;
 import org.pro.ygcms.facade.dto.CmsContentTxtDTO;
 import org.pro.ygcms.facade.dto.CmsTopicDTO;
 import org.pro.ygcms.facade.impl.assembler.CmsTopicFacade;
+import org.pro.ygcms.web.util.DateTimeUtil;
 import org.pro.ygcms.web.util.RequestUtils;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -71,6 +74,8 @@ public class CmsContentController {
 	private CmsTopicFacade cmsTopicFacade;
 	@Inject
 	private CmsContentTypeFacade cmsContentTypeFacade;
+	@Inject
+	private CmsChannelFacade cmsChannelFacade;
 	
 	@ResponseBody
 	@RequestMapping("/toAdd")
@@ -103,7 +108,7 @@ public class CmsContentController {
 		//新增CmsContentExtDTO
 		cmsContentExtDTO.setContentId(content_id);
 		if (cmsContentExtDTO.getReleaseDate() == null) {
-			cmsContentExtDTO.setReleaseDate(cmsContentDTO.getSortDate());
+			cmsContentExtDTO.setReleaseDate(DateTimeUtil.Date2String(cmsContentDTO.getSortDate(), "yyyy-MM-dd"));
 		}
 		cmsContentExtDTO.init();
 		cmsContentExtFacade.creatCmsContentExt(cmsContentExtDTO);
@@ -120,7 +125,7 @@ public class CmsContentController {
 		
 		//新增CmsContentTxtDTO
 		CmsContentTxtDTO cmsContentTxtDTO = new CmsContentTxtDTO();
-		cmsContentExtDTO.setTxt(cmsContentExtDTO.getTxt());
+		cmsContentTxtDTO.setTxt(cmsContentExtDTO.getTxt());
 		if (!cmsContentTxtDTO.isAllBlank()) {
 			cmsContentTxtDTO.setContentId(content_id);
 			cmsContentTxtDTO.init();
@@ -157,10 +162,60 @@ public class CmsContentController {
 	
 	@ResponseBody
 	@RequestMapping("/update")
-	public InvokeResult update(CmsContentDTO cmsContentDTO,HttpServletRequest req) {
-		// 插入CmsContent
-//		return cmsContentFacade.updateCmsContent(cmsContentDTO);
-		System.out.println(223);
+	public InvokeResult update(CmsContentExtDTO cmsContentExtDTO,HttpServletRequest req) {
+		// 更新CmsContent
+		CmsContentDTO cmsContent = (CmsContentDTO)cmsContentFacade.getCmsContent(cmsContentExtDTO.getContentId()).getData();
+		cmsContent.setTypeId(cmsContentExtDTO.getTypeId());//属性ID
+		cmsContent.setTopLevel(cmsContentExtDTO.getTopLevel());//固顶级别
+		// 是否有标题图
+		cmsContent.setHasTitleImg(!StringUtils.isBlank(cmsContentExtDTO.getTitleImg()));
+		cmsContentFacade.updateCmsContent(cmsContent);
+		
+		//更新CmsContentAttrDTO
+		Map<String,String> map = RequestUtils.getRequestMap(req, "attr_");
+		if(map!=null && map.size()>0){
+			cmsContentAttrFacade.removeCmsContentAttrsByCId(cmsContentExtDTO.getContentId());
+			for(String str : map.keySet()){
+				CmsContentAttrDTO cmsContentAttrDTO = new CmsContentAttrDTO();
+				cmsContentAttrDTO.setAttrName(str);
+				cmsContentAttrDTO.setAttrValue(map.get(str));
+				cmsContentAttrDTO.setContentId(cmsContentExtDTO.getContentId());
+				cmsContentAttrFacade.creatCmsContentAttr(cmsContentAttrDTO);
+			}
+		}
+		
+		//更新CmsContentTxtDTO
+		CmsContentTxtDTO cmsContentTxtDTO = cmsContentTxtFacade.getCmsContentTxtByCId(cmsContentExtDTO.getContentId());
+		if(cmsContentTxtDTO==null){
+			cmsContentTxtDTO = new CmsContentTxtDTO();
+			cmsContentTxtDTO.setTxt(cmsContentExtDTO.getTxt());
+			if (!cmsContentTxtDTO.isAllBlank()) {
+				cmsContentTxtDTO.setContentId(cmsContentExtDTO.getContentId());
+				cmsContentTxtDTO.init();
+				cmsContentTxtFacade.creatCmsContentTxt(cmsContentTxtDTO);
+			}
+		}else{
+			cmsContentExtDTO.setTxt(cmsContentExtDTO.getTxt());
+			cmsContentTxtFacade.updateCmsContentTxt(cmsContentTxtDTO);
+		}
+		
+		//更新CmsContentTopicDTO
+		if(cmsContentExtDTO.getTopicId()!=null){
+			cmsContentTopicFacade.removeCmsContentTopicsByCId(cmsContentExtDTO.getContentId());
+			CmsContentTopicDTO cmsContentTopicDTO = new CmsContentTopicDTO();
+			cmsContentTopicDTO.setContentId(cmsContentExtDTO.getContentId());
+			cmsContentTopicDTO.setTopicId(cmsContentExtDTO.getTopicId());
+			cmsContentTopicFacade.creatCmsContentTopic(cmsContentTopicDTO);
+		}
+		
+		//更新CmsContentExtDTO
+		CmsContentExtDTO cmsContentExt = new CmsContentExtDTO();
+		cmsContentExt.setId(cmsContentExtDTO.getId());
+		cmsContentExt.setTypeImg(null);
+		cmsContentExt.setTitleImg(null);
+		cmsContentExt.setContentImg(null);
+		cmsContentExtFacade.updateCmsContentExt((CmsContentExtDTO)cmsContentExtFacade.getCmsContentExt(cmsContentExtDTO.getId()).getData());
+		
 		return InvokeResult.success();
 	}
 	
@@ -183,17 +238,22 @@ public class CmsContentController {
 	@RequestMapping("/get/{id}")
 	public Map<String, Object> get(@PathVariable String id) {
 		CmsContentDTO cmsContent = (CmsContentDTO)cmsContentFacade.getCmsContent(id).getData();
-		CmsContentExtDTO CmsContentExt = cmsContentExtFacade.getCmsContentExtByCId(id);
+		CmsContentExtDTO cmsContentExt = cmsContentExtFacade.getCmsContentExtByCId(id);
 		List<CmsContentAttrDTO> cmsContentAttr = cmsContentAttrFacade.getCmsContentAttrByCId(id);
 		CmsContentTxtDTO cmsContentTxt  = cmsContentTxtFacade.getCmsContentTxtByCId(id);
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("tplList", cmsModelItemFacade.getItemsByModelId(cmsContent.getModelId(),0));
 		map.put("topicList", cmsTopicFacade.findAllCmsTopic());
 		map.put("typeList", cmsContentTypeFacade.findAllCmsContentType());
+		CmsChannelDTO cmsChannelDTO = (CmsChannelDTO) cmsChannelFacade.getCmsChannel(cmsContent.getChannelId()).getData();
+		String channelName = cmsChannelDTO.getChannelName();
+		CmsContentTopicDTO cmsContentTopic = cmsContentTopicFacade.getCmsContentTopicByCId(id);
+		map.put("channelName",channelName);
 		map.put("cmsContent",cmsContent);
-		map.put("CmsContentExt", CmsContentExt);
+		map.put("cmsContentExt", cmsContentExt);
 		map.put("cmsContentAttr", cmsContentAttr);
 		map.put("cmsContentTxt", cmsContentTxt);
+		map.put("cmsContentTopic", cmsContentTopic);
 		return map;
 	}
 	

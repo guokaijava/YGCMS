@@ -20,6 +20,5 @@ public interface CmsContentAttrApplication {
 	public List<CmsContentAttr> findAllCmsContentAttr();
 	
 	public List<CmsContentAttr> findAllCmsContentAttrByCId(String contentId);
-	
 }
 
