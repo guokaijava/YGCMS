@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -140,7 +141,7 @@ public class CmsChannelFacadeImpl implements CmsChannelFacade {
 				+ "(cc.id,cc.channelName,cc.siteId,cc.parentId) FROM CmsChannel cc  "
 				+ "WHERE cc.siteId='"+siteId+"' order by cc.priority,cc.id ");
 		List<CmsChannelInfoDTO> all = getQueryChannelService().createJpqlQuery(jpql.toString()).list();
-		LinkedHashMap<String, CmsChannelInfoDTO> map = new LinkedHashMap<String, CmsChannelInfoDTO>();
+		Map<String, CmsChannelInfoDTO> map = new LinkedHashMap<String, CmsChannelInfoDTO>();
 		if(top!=null){
 			map.put(top.getId(), top);
 			for (CmsChannelInfoDTO cmsChannelInfoDTO : all) {

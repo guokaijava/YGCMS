@@ -1,3 +1,4 @@
+
 class CmsChannelApplicationImpl {
 
 	def context
