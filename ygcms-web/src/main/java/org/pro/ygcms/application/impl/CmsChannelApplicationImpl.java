@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 import javax.inject.Named;
 import org.springframework.transaction.annotation.Transactional;
+import org.openkoala.businesslog.MethodAlias;
 import org.pro.ygcms.application.CmsChannelApplication;
 import org.pro.ygcms.core.domain.channel.CmsChannel;
 
@@ -15,6 +16,7 @@ public class CmsChannelApplicationImpl implements CmsChannelApplication {
 		return CmsChannel.get(CmsChannel.class, id);
 	}
 	
+	@MethodAlias("creatCmsChannel")
 	public void creatCmsChannel(CmsChannel cmsChannel) {
 		cmsChannel.save();
 	}
