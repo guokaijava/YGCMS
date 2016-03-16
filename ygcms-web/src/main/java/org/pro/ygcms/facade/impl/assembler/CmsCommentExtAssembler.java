@@ -12,14 +12,14 @@ public class CmsCommentExtAssembler {
 		if (cmsCommentExt == null) {
 			return null;
 		}
-    	CmsCommentExtDTO result  = new CmsCommentExtDTO();
-	    	result.setId (cmsCommentExt.getId());
-     	    	result.setVersion (cmsCommentExt.getVersion());
-     	    	result.setCommentId (cmsCommentExt.getCommentId());
-     	    	result.setIp (cmsCommentExt.getIp());
-     	    	result.setText (cmsCommentExt.getText());
-     	    	result.setReply (cmsCommentExt.getReply());
-     	    return result;
+		CmsCommentExtDTO result  = new CmsCommentExtDTO();
+		result.setId (cmsCommentExt.getId());
+		result.setVersion (cmsCommentExt.getVersion());
+		result.setCommentId (cmsCommentExt.getCommentId());
+		result.setIp (cmsCommentExt.getIp());
+		result.setText (cmsCommentExt.getText());
+		result.setReply (cmsCommentExt.getReply());
+		return result;
 	 }
 	
 	public static List<CmsCommentExtDTO>  toDTOs(Collection<CmsCommentExt>  cmsCommentExts){
@@ -38,13 +38,13 @@ public class CmsCommentExtAssembler {
 			return null;
 		}
 	 	CmsCommentExt result  = new CmsCommentExt();
-        result.setId (cmsCommentExtDTO.getId());
-         result.setVersion (cmsCommentExtDTO.getVersion());
-         result.setCommentId (cmsCommentExtDTO.getCommentId());
-         result.setIp (cmsCommentExtDTO.getIp());
-         result.setText (cmsCommentExtDTO.getText());
-         result.setReply (cmsCommentExtDTO.getReply());
- 	  	return result;
+	 	result.setId (cmsCommentExtDTO.getId());
+	 	result.setVersion (cmsCommentExtDTO.getVersion());
+	 	result.setCommentId (cmsCommentExtDTO.getCommentId());
+	 	result.setIp (cmsCommentExtDTO.getIp());
+	 	result.setText (cmsCommentExtDTO.getText());
+	 	result.setReply (cmsCommentExtDTO.getReply());
+	 	return result;
 	 }
 	
 	public static List<CmsCommentExt> toEntities(Collection<CmsCommentExtDTO> cmsCommentExtDTOs) {

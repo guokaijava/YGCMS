@@ -70,8 +70,8 @@ public class CmsContentFacadeImpl implements CmsContentFacade {
 	public Page<CmsContentInfoDTO> pageQueryCmsContent(CmsContentDTO queryVo, int currentPage, int pageSize) {
 	   	List<Object> conditionVals = new ArrayList<Object>();
 	   	StringBuilder jpql = new StringBuilder("SELECT NEW org.pro.ygcms.facade.dto.CmsContentInfoDTO( ");
-	   	jpql.append(" _cmsContent.id,_cmsContentExt.title,_cmsContent.typeId,_cmsContentType.typename ");
-	   	jpql.append(" ,_cmsContentExt.author,_cmsContent.viewsDay,_cmsContentExt.releaseDate,_cmsContent.status ) ");
+	   	jpql.append(" _cmsContent.id,_cmsContentExt.title,_cmsChannel.channelName,_cmsContent.typeId,_cmsContentType.typename ");
+	   	jpql.append(" ,_cmsContentExt.author,_cmsContent.viewsDay,_cmsContentExt.releaseDate,_cmsContent.status) ");
 	   	jpql.append(" FROM CmsContent _cmsContent,CmsContentExt _cmsContentExt,CmsChannel _cmsChannel,CmsChannel _parent ");
 	   	jpql.append(" ,CmsContentType _cmsContentType ");
 	   	jpql.append(" where 1=1 ");

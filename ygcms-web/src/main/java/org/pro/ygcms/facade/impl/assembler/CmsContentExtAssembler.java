@@ -76,7 +76,6 @@ public class CmsContentExtAssembler {
 	 	result.setLink(cmsContentExtDTO.getLink());
 	 	result.setTplContent(cmsContentExtDTO.getTplContent());
 	 	result.setNeedRegenerate(cmsContentExtDTO.getNeedRegenerate()==null?false:cmsContentExtDTO.getNeedRegenerate());
-	 	System.out.println(444444);
 	 	return result;
 	 }
 	
