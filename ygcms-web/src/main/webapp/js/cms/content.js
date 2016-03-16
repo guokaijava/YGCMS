@@ -185,6 +185,11 @@ var contentManager = function(){
 			}else if(ele.card == 3){ // 图片信息
 				root.find("#tab_image").append(renderRow(result,ele,root));
 			}else if(ele.card == 4){ // 附件信息
+				if(result.cmsContent!=null ){
+					root.find("#li_file").css("display","block");
+				}else{
+					root.find("#li_file").css("display","none");
+				}
 				root.find("#tab_file").append(renderRow(result,ele,root));
 			}else if(ele.card == 5){ // 高级设置
 				root.find("#tab_permiss").append(renderRow(result,ele,root));
@@ -409,8 +414,10 @@ var contentManager = function(){
 				root.find("#txteditor")[0].contentWindow.setContent(field_value);
 				rowhtml = "<input type=\"hidden\" name='"+field_name+"' id='"+field_name+"' value='"+field_value+"'/>";
 			}
-		}else if(row.datatype == 10){ 
+		}else if(row.datatype == 10){ //
 			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><div class=\"fileinput\"><button class=\"btn btn-success\"><i class=\"glyphicon glyphicon-picture\"></i>&nbsp;选择文件</button><input type='file' id='"+field_name+"_file' name=\"myfiles\"/><input type=\"hidden\" name='"+field_name+"' id='"+field_name+"'/><img id='"+field_name+"_view' alt='请上传"+row.itemlabel+"' src='"+field_value+"'/><div></div>";
+		}else if(row.datatype == 11){ //
+			rowhtml = "";
 		}
 		return rowhtml;
 	}
