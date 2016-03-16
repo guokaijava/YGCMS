@@ -24,6 +24,28 @@ public class CmsContentAttachmentDTO implements Serializable {
 	private String attachmentName;
 
 	private String contentId;
+	
+	private String fileTitle;
+	
+	private String fileDescription;
+	
+
+	public String getFileTitle() {
+		return fileTitle;
+	}
+
+	public void setFileTitle(String fileTitle) {
+		this.fileTitle = fileTitle;
+	}
+
+
+	public String getFileDescription() {
+		return fileDescription;
+	}
+
+	public void setFileDescription(String fileDescription) {
+		this.fileDescription = fileDescription;
+	}
 
 	public void setAttachmentPath(String attachmentPath) {
 		this.attachmentPath = attachmentPath;

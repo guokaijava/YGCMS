@@ -48,4 +48,28 @@ public abstract class Constants {
 	 * 水印图片
 	 */
 	public static final String WATER_IMG_PTAH = "/images/global.logo.png";
+	/**
+	 * 内容状态：草稿
+	 */
+	public static final byte CONTENT_CHECK_DRAFT = 0;
+	/**
+	 * 内容状态：审核中
+	 */
+	public static final byte CONTENT_CHECK_CHECKING = 1;
+	/**
+	 * 内容状态：退回
+	 */
+	public static final byte CONTENT_CHECK_REJECT = -1;
+	/**
+	 * 内容状态：已审核
+	 */
+	public static final byte CONTENT_CHECK_CHECKED = 2;
+	/**
+	 * 内容状态：回收站
+	 */
+	public static final byte CONTENT_CHECK_RECYCLE = 3;
+	/**
+	 * 内容状态：投稿
+	 */
+	public static final byte CONTENT_CHECK_CONTRIBUTE = 4;
 }

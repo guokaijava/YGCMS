@@ -1,21 +1,25 @@
 package org.pro.ygcms.web.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.dayatang.utils.Page;
 import org.openkoala.koala.commons.InvokeResult;
 import org.openkoala.security.shiro.CurrentUser;
-import org.pro.ygcms.core.web.Constants;
 import org.pro.ygcms.facade.CmsChannelFacade;
+import org.pro.ygcms.facade.CmsContentAttachmentFacade;
 import org.pro.ygcms.facade.CmsContentAttrFacade;
 import org.pro.ygcms.facade.CmsContentChannelFacade;
 import org.pro.ygcms.facade.CmsContentCheckFacade;
@@ -25,10 +29,8 @@ import org.pro.ygcms.facade.CmsContentTopicFacade;
 import org.pro.ygcms.facade.CmsContentTxtFacade;
 import org.pro.ygcms.facade.CmsContentTypeFacade;
 import org.pro.ygcms.facade.CmsModelItemFacade;
-import org.pro.ygcms.facade.dto.CmsChannelAttrDTO;
 import org.pro.ygcms.facade.dto.CmsChannelDTO;
-import org.pro.ygcms.facade.dto.CmsChannelExtDTO;
-import org.pro.ygcms.facade.dto.CmsChannelTxtDTO;
+import org.pro.ygcms.facade.dto.CmsContentAttachmentDTO;
 import org.pro.ygcms.facade.dto.CmsContentAttrDTO;
 import org.pro.ygcms.facade.dto.CmsContentChannelDTO;
 import org.pro.ygcms.facade.dto.CmsContentCheckDTO;
@@ -37,8 +39,8 @@ import org.pro.ygcms.facade.dto.CmsContentExtDTO;
 import org.pro.ygcms.facade.dto.CmsContentInfoDTO;
 import org.pro.ygcms.facade.dto.CmsContentTopicDTO;
 import org.pro.ygcms.facade.dto.CmsContentTxtDTO;
-import org.pro.ygcms.facade.dto.CmsTopicDTO;
 import org.pro.ygcms.facade.impl.assembler.CmsTopicFacade;
+import org.pro.ygcms.web.util.Constants;
 import org.pro.ygcms.web.util.DateTimeUtil;
 import org.pro.ygcms.web.util.RequestUtils;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -49,6 +51,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping("/CmsContent")
@@ -76,6 +81,8 @@ public class CmsContentController {
 	private CmsContentTypeFacade cmsContentTypeFacade;
 	@Inject
 	private CmsChannelFacade cmsChannelFacade;
+	@Inject
+	private CmsContentAttachmentFacade cmsContentAttachmentFacade;
 	
 	@ResponseBody
 	@RequestMapping("/toAdd")
@@ -90,7 +97,6 @@ public class CmsContentController {
 	@ResponseBody
 	@RequestMapping("/add")
 	public InvokeResult add(CmsContentExtDTO cmsContentExtDTO,HttpServletRequest req) {
-		
 		CmsContentDTO cmsContentDTO = new CmsContentDTO();
 		cmsContentDTO.setUserId(CurrentUser.getUserAccount());
 		cmsContentDTO.setChannelId(cmsContentExtDTO.getChannelId());
@@ -104,7 +110,6 @@ public class CmsContentController {
 		cmsContentDTO.init();
 		// 插入成功后返回Id
 		String content_id = cmsContentFacade.creatCmsContent(cmsContentDTO);
-		
 		//新增CmsContentExtDTO
 		cmsContentExtDTO.setContentId(content_id);
 		if (cmsContentExtDTO.getReleaseDate() == null) {
@@ -112,7 +117,6 @@ public class CmsContentController {
 		}
 		cmsContentExtDTO.init();
 		cmsContentExtFacade.creatCmsContentExt(cmsContentExtDTO);
-		
 		//新增CmsContentAttrDTO
 		Map<String,String> map = RequestUtils.getRequestMap(req, "attr_");
 		for(String str : map.keySet()){
@@ -122,7 +126,6 @@ public class CmsContentController {
 			cmsContentAttrDTO.setContentId(content_id);
 			cmsContentAttrFacade.creatCmsContentAttr(cmsContentAttrDTO);
 		}
-		
 		//新增CmsContentTxtDTO
 		CmsContentTxtDTO cmsContentTxtDTO = new CmsContentTxtDTO();
 		cmsContentTxtDTO.setTxt(cmsContentExtDTO.getTxt());
@@ -131,25 +134,21 @@ public class CmsContentController {
 			cmsContentTxtDTO.init();
 			cmsContentTxtFacade.creatCmsContentTxt(cmsContentTxtDTO);
 		}
-		
 		//新增CmsContentCheckDTO
 		CmsContentCheckDTO cmsContentCheckDTO = new CmsContentCheckDTO();
 		cmsContentCheckDTO.setContentId(content_id);
 		cmsContentCheckDTO.init();
 		cmsContentCheckFacade.creatCmsContentCheck(cmsContentCheckDTO);
-		
 		/*//新增CmsContentTagDTO
 		String[] tagArr = StringUtils.split(cmsContentExtDTO.getTagStr(), ",");
 		CmsContentTagDTO cmsContentTagDTO = new CmsContentTagDTO();
 		cmsContentTagDTO.setTagName(cmsContentExtDTO.getTagStr());
 		cmsContentTagFacade.creatCmsContentTag(cmsContentTagDTO);*/
-		
 		//新增CmsContentChannelDTO
 		CmsContentChannelDTO cmsContentChannelDTO = new CmsContentChannelDTO();
 		cmsContentChannelDTO.setContentId(content_id);
 		cmsContentChannelDTO.setChannelId(cmsContentExtDTO.getChannelId());
 		cmsContentChannelFacade.creatCmsContentChannel(cmsContentChannelDTO);
-		
 		//新增CmsContentTopicDTO
 		if(cmsContentExtDTO.getTopicId()!=null){
 			CmsContentTopicDTO cmsContentTopicDTO = new CmsContentTopicDTO();
@@ -170,7 +169,6 @@ public class CmsContentController {
 		// 是否有标题图
 		cmsContent.setHasTitleImg(!StringUtils.isBlank(cmsContentExtDTO.getTitleImg()));
 		cmsContentFacade.updateCmsContent(cmsContent);
-		
 		//更新CmsContentAttrDTO
 		Map<String,String> map = RequestUtils.getRequestMap(req, "attr_");
 		if(map!=null && map.size()>0){
@@ -183,7 +181,6 @@ public class CmsContentController {
 				cmsContentAttrFacade.creatCmsContentAttr(cmsContentAttrDTO);
 			}
 		}
-		
 		//更新CmsContentTxtDTO
 		CmsContentTxtDTO cmsContentTxtDTO = cmsContentTxtFacade.getCmsContentTxtByCId(cmsContentExtDTO.getContentId());
 		if(cmsContentTxtDTO==null){
@@ -198,7 +195,6 @@ public class CmsContentController {
 			cmsContentExtDTO.setTxt(cmsContentExtDTO.getTxt());
 			cmsContentTxtFacade.updateCmsContentTxt(cmsContentTxtDTO);
 		}
-		
 		//更新CmsContentTopicDTO
 		if(cmsContentExtDTO.getTopicId()!=null){
 			cmsContentTopicFacade.removeCmsContentTopicsByCId(cmsContentExtDTO.getContentId());
@@ -207,21 +203,14 @@ public class CmsContentController {
 			cmsContentTopicDTO.setTopicId(cmsContentExtDTO.getTopicId());
 			cmsContentTopicFacade.creatCmsContentTopic(cmsContentTopicDTO);
 		}
-		
 		//更新CmsContentExtDTO
-		CmsContentExtDTO cmsContentExt = new CmsContentExtDTO();
-		cmsContentExt.setId(cmsContentExtDTO.getId());
-		cmsContentExt.setTypeImg(null);
-		cmsContentExt.setTitleImg(null);
-		cmsContentExt.setContentImg(null);
-		cmsContentExtFacade.updateCmsContentExt((CmsContentExtDTO)cmsContentExtFacade.getCmsContentExt(cmsContentExtDTO.getId()).getData());
-		
+		cmsContentExtFacade.updateCmsContentExt(cmsContentExtDTO);
 		return InvokeResult.success();
 	}
 	
 	@ResponseBody
 	@RequestMapping("/pageJson")
-	public Page<CmsContentInfoDTO> pageJson(CmsContentDTO cmsContentDTO, @RequestParam int page, @RequestParam int pagesize) {
+	public Page<CmsContentInfoDTO> pageJson(CmsContentExtDTO cced , CmsContentDTO cmsContentDTO, @RequestParam int page, @RequestParam int pagesize) {
 		Page<CmsContentInfoDTO> all = cmsContentFacade.pageQueryCmsContent(cmsContentDTO, page, pagesize);
 		return all;
 	}
@@ -231,7 +220,6 @@ public class CmsContentController {
 	public InvokeResult remove(@RequestParam String ids) {
 		String[] idArrs = ids.split(",");
         return cmsContentFacade.removeCmsContents(idArrs);
-//		return InvokeResult.success();
 	}
 	
 	@ResponseBody
@@ -248,13 +236,52 @@ public class CmsContentController {
 		CmsChannelDTO cmsChannelDTO = (CmsChannelDTO) cmsChannelFacade.getCmsChannel(cmsContent.getChannelId()).getData();
 		String channelName = cmsChannelDTO.getChannelName();
 		CmsContentTopicDTO cmsContentTopic = cmsContentTopicFacade.getCmsContentTopicByCId(id);
+		List<CmsContentAttachmentDTO> cmsContentAttachement = cmsContentAttachmentFacade.getCmsContentAttachmentByCId(id);
 		map.put("channelName",channelName);
 		map.put("cmsContent",cmsContent);
 		map.put("cmsContentExt", cmsContentExt);
 		map.put("cmsContentAttr", cmsContentAttr);
 		map.put("cmsContentTxt", cmsContentTxt);
 		map.put("cmsContentTopic", cmsContentTopic);
+		map.put("cmsContentAttachment", cmsContentAttachement);
 		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/upload",produces = "text/html;charset=UTF-8")
+	public  String fileUpload(CmsContentAttachmentDTO cmsContentAttachment,HttpServletRequest request,@RequestParam("ufile") MultipartFile ufile) {
+        	if(request.getHeader("content-type")!=null&&"application/x-www-form-urlencoded".equals(request.getHeader("content-type"))){
+            	 return null;//不支持断点续传，直接返回null即可
+        	}
+        	JSONArray map = new JSONArray();
+            if(!ufile.isEmpty()){
+            	String localpath = Constants.BASEPICUPLOADPATH+DateTimeUtil.Date2String(new Date(),"YYYYMMDD");
+                String serverPath=request.getSession().getServletContext().getRealPath("/");
+                String originFileName=ufile.getOriginalFilename();
+                String suffix=originFileName.split("\\.")[originFileName.split("\\.").length-1];
+                String base64Name=UUID.randomUUID().toString()+"."+suffix;
+                File file =  new File(serverPath+localpath,base64Name);
+                try {
+                    FileUtils.copyInputStreamToFile(ufile.getInputStream(),file);//存储文件
+                    //WaterMarkUtil.pressImage(serverPath+Constants.WATER_IMG_PTAH, file.getAbsolutePath(), 0, 0);
+                    cmsContentAttachment.setAttachmentPath(localpath+"/"+base64Name);
+                    cmsContentAttachment.setAttachmentName(base64Name);
+                    cmsContentAttachment.setFilename(originFileName);
+                    cmsContentAttachment.setId(UUID.randomUUID().toString());
+                    // 保存附件
+                    cmsContentAttachmentFacade.creatCmsContentAttachment(cmsContentAttachment);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }  
+            }
+            map.add(cmsContentAttachment);
+        return map.toString();	
+	}
+	
+	@ResponseBody
+	@RequestMapping("/removefile/{id}")
+	public  InvokeResult removeUFile(@PathVariable String id){
+		return cmsContentAttachmentFacade.removeCmsContentAttachment(id);
 	}
 	
 		

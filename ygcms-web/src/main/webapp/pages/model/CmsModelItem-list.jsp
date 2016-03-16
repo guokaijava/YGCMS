@@ -9,7 +9,7 @@ var grid;
 var form;
 var _dialog;
 var params= $('.tab-pane.active').data();
-var datatypearr=['字符串文本','整型文本','浮点型文本','文本区','日期','下拉列表','复选框','单选框','文本编辑区','单文件上传区'];
+var datatypearr=['字符串文本','整型文本','浮点型文本','文本区','日期','下拉列表','复选框','单选框','文本编辑区','单文件上传区','附件列表'];
 var cardarr = ['基本信息','内容编辑','图片信息','附件信息','高级设置'];
 $(function (){
     grid = $("#<%=gridId%>");

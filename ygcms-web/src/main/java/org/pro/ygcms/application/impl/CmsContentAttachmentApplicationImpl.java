@@ -11,7 +11,7 @@ import org.pro.ygcms.core.domain.content.CmsContentAttachment;
 @Transactional
 public class CmsContentAttachmentApplicationImpl implements CmsContentAttachmentApplication {
 
-	public CmsContentAttachment getCmsContentAttachment(Long id) {
+	public CmsContentAttachment getCmsContentAttachment(String id) {
 		return CmsContentAttachment.get(CmsContentAttachment.class, id);
 	}
 	
@@ -37,6 +37,11 @@ public class CmsContentAttachmentApplicationImpl implements CmsContentAttachment
 	
 	public List<CmsContentAttachment> findAllCmsContentAttachment() {
 		return CmsContentAttachment.findAll(CmsContentAttachment.class);
+	}
+
+	@Override
+	public List<CmsContentAttachment> getCmsContentAttachmentByCid(String id) {
+		return CmsContentAttachment.findByProperty(CmsContentAttachment.class, "contentId", id);
 	}
 	
 }

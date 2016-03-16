@@ -1,22 +1,23 @@
 package org.pro.ygcms.facade.impl;
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Set;
-import java.text.MessageFormat;
+
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.dayatang.domain.InstanceFactory;
-import org.dayatang.utils.Page;
-import org.dayatang.querychannel.QueryChannelService;
-import org.openkoala.koala.commons.InvokeResult;
-import org.pro.ygcms.facade.dto.*;
-import org.pro.ygcms.facade.impl.assembler.CmsContentAttachmentAssembler;
-import org.pro.ygcms.facade.CmsContentAttachmentFacade;
-import org.pro.ygcms.application.CmsContentAttachmentApplication;
 
-import org.pro.ygcms.core.domain.content.*;
+import org.dayatang.domain.InstanceFactory;
+import org.dayatang.querychannel.QueryChannelService;
+import org.dayatang.utils.Page;
+import org.openkoala.koala.commons.InvokeResult;
+import org.pro.ygcms.application.CmsContentAttachmentApplication;
+import org.pro.ygcms.core.domain.content.CmsContentAttachment;
+import org.pro.ygcms.facade.CmsContentAttachmentFacade;
+import org.pro.ygcms.facade.dto.CmsContentAttachmentDTO;
+import org.pro.ygcms.facade.impl.assembler.CmsContentAttachmentAssembler;
 
 @Named
 public class CmsContentAttachmentFacadeImpl implements CmsContentAttachmentFacade {
@@ -33,7 +34,7 @@ public class CmsContentAttachmentFacadeImpl implements CmsContentAttachmentFacad
      return queryChannel;
     }
 	
-	public InvokeResult getCmsContentAttachment(Long id) {
+	public InvokeResult getCmsContentAttachment(String id) {
 		return InvokeResult.success(CmsContentAttachmentAssembler.toDTO(application.getCmsContentAttachment(id)));
 	}
 	
@@ -47,14 +48,14 @@ public class CmsContentAttachmentFacadeImpl implements CmsContentAttachmentFacad
 		return InvokeResult.success();
 	}
 	
-	public InvokeResult removeCmsContentAttachment(Long id) {
+	public InvokeResult removeCmsContentAttachment(String id) {
 		application.removeCmsContentAttachment(application.getCmsContentAttachment(id));
 		return InvokeResult.success();
 	}
 	
-	public InvokeResult removeCmsContentAttachments(Long[] ids) {
+	public InvokeResult removeCmsContentAttachments(String[] ids) {
 		Set<CmsContentAttachment> cmsContentAttachments= new HashSet<CmsContentAttachment>();
-		for (Long id : ids) {
+		for (String id : ids) {
 			cmsContentAttachments.add(application.getCmsContentAttachment(id));
 		}
 		application.removeCmsContentAttachments(cmsContentAttachments);
@@ -99,6 +100,11 @@ public class CmsContentAttachmentFacadeImpl implements CmsContentAttachmentFacad
 		   .pagedList();
 		   
         return new Page<CmsContentAttachmentDTO>(pages.getStart(), pages.getResultCount(),pageSize, CmsContentAttachmentAssembler.toDTOs(pages.getData()));
+	}
+
+	@Override
+	public List<CmsContentAttachmentDTO> getCmsContentAttachmentByCId(String id) {
+		return CmsContentAttachmentAssembler.toDTOs(application.getCmsContentAttachmentByCid(id));
 	}
 	
 	

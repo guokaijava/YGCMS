@@ -7,19 +7,21 @@ import org.pro.ygcms.facade.dto.*;
 
 public interface CmsContentAttachmentFacade {
 
-	public InvokeResult getCmsContentAttachment(Long id);
+	public InvokeResult getCmsContentAttachment(String id);
 	
 	public InvokeResult creatCmsContentAttachment(CmsContentAttachmentDTO cmsContentAttachment);
 	
 	public InvokeResult updateCmsContentAttachment(CmsContentAttachmentDTO cmsContentAttachment);
 	
-	public InvokeResult removeCmsContentAttachment(Long id);
+	public InvokeResult removeCmsContentAttachment(String id);
 	
-	public InvokeResult removeCmsContentAttachments(Long[] ids);
+	public InvokeResult removeCmsContentAttachments(String[] ids);
 	
 	public List<CmsContentAttachmentDTO> findAllCmsContentAttachment();
 	
 	public Page<CmsContentAttachmentDTO> pageQueryCmsContentAttachment(CmsContentAttachmentDTO cmsContentAttachment, int currentPage, int pageSize);
+
+	public List<CmsContentAttachmentDTO> getCmsContentAttachmentByCId(String id);
 	
 
 }
