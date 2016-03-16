@@ -169,7 +169,12 @@ var contentManager = function(){
 		root.find("#tab_base").append("<input type=\"hidden\" name=\"siteId\" value=\""+$("#contentDetail").find("#siteid").val()+"\"/>");
 		// 增加模板元素
 		root.find("#tab_base").append("<input type=\"hidden\" name=\"modelId\" value=\""+$("#contentDetail").find("#modelid").val()+"\"/>");
-
+		// 增加内容ID
+		if(result.cmsContent !=null ){
+			root.find("#tab_base").append("<input type=\"hidden\" name=\"contentId\" value=\""+result.cmsContent["id"]+"\"/>");
+			root.find("#tab_base").append("<input type=\"hidden\" name=\"version\" value=\""+result.cmsContentExt["version"]+"\"/>");
+			root.find("#tab_base").append("<input type=\"hidden\" name=\"id\" value=\""+result.cmsContentExt["id"]+"\"/>");
+		}
 		// 渲染栏目模型元素
 		for(var i = 0;result.tplList.length>0&&i<result.tplList.length;i++){
 			var ele = result.tplList[i];
@@ -264,6 +269,8 @@ var contentManager = function(){
 				},
 				'shown.bs.modal':function(){
 					$.get(baseUrl + 'get/'+id+'.koala').done(function(result){
+						$("#contentDetail").find("#pid").val(result.cmsContent.channelId);
+						$("#contentDetail").find("#pname").val(result.channelName);
 						$("#contentDetail").find("#modelid").val(result.cmsContent.modelId);
 						$("#contentDetail").find("#siteid").val(result.cmsContent.siteId);
 						renderForm(result,dialog);
@@ -296,37 +303,65 @@ var contentManager = function(){
 		var rowhtml="";
 		var field_name = row.iscustom == 1?"attr_"+row.field:row.field;
 		var field_value="";
+		if(result.cmsContent != undefined){
+			if(row.iscustom == 1){
+				for(var i=0;result.cmsContentAttr.length>0&&i<result.cmsContentAttr.length;i++){
+					if(result.cmsContentAttr[i].attrName == row.field){
+						field_value = result.cmsContentAttr[i].attrValue;
+						break;
+					}
+				}
+			}
+			
+			if(result.cmsContentTopic!=null && result.cmsContentTopic[field_name]!=undefined){
+				field_value = result.cmsContentTopic[field_name];
+			}
+			if(result.cmsContentExt[field_name]!=undefined){
+				field_value = result.cmsContentExt[field_name];
+			}
+			if(result.cmsContent[field_name]!=undefined){
+				field_value = result.cmsContent[field_name];
+			}
+		}
 		if(row.datatype == 1){ // 字符串文本
-			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><input type='text' name='"+field_name+"' class=\"form-control\"/></div>";
+			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><input type='text' name='"+field_name+"' value='"+field_value+"' class=\"form-control\"/></div>";
 		}else if(row.datatype == 2){ // 整型文本
-			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><input type='text' name='"+field_name+"' class=\"form-control\"/></div>";
+			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><input type='text' name='"+field_name+"' value='"+field_value+"' class=\"form-control\"/></div>";
 		}else if(row.datatype == 3){ // 浮点型文本
-			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><input type='text' name='"+field_name+"' class=\"form-control\"/></div>";
+			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><input type='text' name='"+field_name+"' value='"+field_value+"' class=\"form-control\"/></div>";
 		}else if(row.datatype == 4){ // 文本区
-			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><textarea name='"+field_name+"' class=\"form-control\"></textarea></div>";
+			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><textarea name='"+field_name+"' class=\"form-control\">"+field_value+"</textarea></div>";
 		}else if(row.datatype == 5){ // 日期
-			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><input type='date' name='"+field_name+"' class=\"form-control\"/></div>";
+			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><input type='date' name='"+field_name+"' value='"+field_value+"' class=\"form-control\"/></div>";
 		}else if(row.datatype == 6){ // 下拉列表
 			if(row.field == "channelId"){
 				//栏目
-				rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><select name='"+field_name+"' class=\"form-control\">";
+				rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><select name='"+field_name+"' class=\"form-control\" value='"+field_value+"'>";
 				rowhtml += "<option value='"+$("#contentDetail").find("#pid").val()+"'>"+$("#contentDetail").find("#pname").val()+"</option>";
 				rowhtml += "</select></div>";
 			}else if(row.field == "topicId"){
 				//专题
-				rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><select name='"+field_name+"' class=\"form-control\">";
+				rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><select name='"+field_name+"' class=\"form-control\" value='"+field_value+"'>";
 				rowhtml += "<option value=''>选择专题</option>";
 				for(var i=0;i<result.topicList.length;i++){
 					var topic= result.topicList[i];
-					rowhtml += "<option value='"+topic.id+"'>"+topic.topicname+"</option>";
+					if(field_value==topic.id){
+						rowhtml += "<option value='"+topic.id+"' selected='selected'>"+topic.topicname+"</option>";
+					}else{
+						rowhtml += "<option value='"+topic.id+"'>"+topic.topicname+"</option>";
+					}
 				}
 				rowhtml += "</select></div>";
 			}else if(row.field == "typeId"){
 				//内容类型
-				rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><select name='"+field_name+"' class=\"form-control\">";
+				rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><select name='"+field_name+"' class=\"form-control\" value='"+field_value+"'>";
 				for(var i=0;i<result.typeList.length;i++){
 					var type= result.typeList[i];
-					rowhtml += "<option value='"+type.id+"'>"+type.typename+"</option>";
+					if(field_value==type.id){
+						rowhtml += "<option value='"+type.id+"' selected='selected'>"+type.typename+"</option>";
+					}else{
+						rowhtml += "<option value='"+type.id+"'>"+type.typename+"</option>";
+					}
 				}
 				rowhtml += "</select></div>";
 			}else{
@@ -370,7 +405,7 @@ var contentManager = function(){
 		}else if(row.datatype == 9){ // 文本编辑
 			if(row.field == "txt"){
 				root.find("#txteditor").css("display","block");
-				field_value = result.cmsChannelTxt!=undefined?result.cmsChannelTxt[field_name]:field_value;
+				field_value = result.cmsContentTxt!=undefined?result.cmsContentTxt[field_name]:field_value;
 				root.find("#txteditor")[0].contentWindow.setContent(field_value);
 				rowhtml = "<input type=\"hidden\" name='"+field_name+"' id='"+field_name+"' value='"+field_value+"'/>";
 			}

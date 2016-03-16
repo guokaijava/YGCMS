@@ -7,7 +7,7 @@ import  org.pro.ygcms.core.domain.content.CmsContentTopic;
 
 public interface CmsContentTopicApplication {
 
-	public CmsContentTopic getCmsContentTopic(Long id);
+	public CmsContentTopic getCmsContentTopic(String id);
 	
 	public void creatCmsContentTopic(CmsContentTopic cmsContentTopic);
 	
@@ -18,6 +18,8 @@ public interface CmsContentTopicApplication {
 	public void removeCmsContentTopics(Set<CmsContentTopic> cmsContentTopics);
 	
 	public List<CmsContentTopic> findAllCmsContentTopic();
+	
+	public CmsContentTopic getCmsContentTopicByCId(String contentId);
 	
 }
 

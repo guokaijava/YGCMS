@@ -12,26 +12,27 @@ public class CmsContentAssembler {
 		if (cmsContent == null) {
 			return null;
 		}
-    	CmsContentDTO result  = new CmsContentDTO();
-	    	result.setId (cmsContent.getId());
-     	    	result.setVersion (cmsContent.getVersion());
-     	    	result.setChannelId (cmsContent.getChannelId());
-     	    	result.setUserId (cmsContent.getUserId());
-     	    	result.setTypeId (cmsContent.getTypeId());
-     	    	result.setModelId (cmsContent.getModelId());
-     	    	result.setSiteId (cmsContent.getSiteId());
-     	    	result.setSortDate (cmsContent.getSortDate());
-     	    	result.setTopLevel (cmsContent.getTopLevel());
-     	    	result.setHasTitleImg (cmsContent.getHasTitleImg());
-     	    	result.setIsRecommend (cmsContent.getIsRecommend());
-     	    	result.setStatus (cmsContent.getStatus());
-     	    	result.setViewsDay (cmsContent.getViewsDay());
-     	    	result.setCommentsDay (cmsContent.getCommentsDay());
-     	    	result.setDownloadsDay (cmsContent.getDownloadsDay());
-     	    	result.setUpsDay (cmsContent.getUpsDay());
-     	    	result.setScore (cmsContent.getScore());
-     	    return result;
-	 }
+		CmsContentDTO result  = new CmsContentDTO();
+		result.setId (cmsContent.getId());
+		result.setVersion (cmsContent.getVersion());
+		result.setChannelId (cmsContent.getChannelId());
+		result.setUserId (cmsContent.getUserId());
+		result.setTypeId (cmsContent.getTypeId());
+		result.setModelId (cmsContent.getModelId());
+		result.setSiteId (cmsContent.getSiteId());
+		result.setSortDate (cmsContent.getSortDate());
+		result.setTopLevel (cmsContent.getTopLevel());
+		result.setHasTitleImg (cmsContent.getHasTitleImg());
+		result.setIsRecommend (cmsContent.getIsRecommend());
+		result.setStatus (cmsContent.getStatus());
+		result.setViewsDay (cmsContent.getViewsDay());
+		result.setCommentsDay (cmsContent.getCommentsDay());
+		result.setDownloadsDay (cmsContent.getDownloadsDay());
+		result.setUpsDay (cmsContent.getUpsDay());
+		result.setScore (cmsContent.getScore());
+		result.setIsDelete(cmsContent.getIsDelete());
+		return result;
+	}
 	
 	public static List<CmsContentDTO>  toDTOs(Collection<CmsContent>  cmsContents){
 		if (cmsContents == null) {

@@ -20,7 +20,9 @@ public class CmsContentExtApplicationImpl implements CmsContentExtApplication {
 	}
 	
 	public void updateCmsContentExt(CmsContentExt cmsContentExt) {
-		cmsContentExt .save();
+		System.out.println(11);
+		cmsContentExt.save();
+		System.out.println(22);
 	}
 	
 	public void removeCmsContentExt(CmsContentExt cmsContentExt) {

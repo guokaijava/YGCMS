@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
-import java.text.MessageFormat;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.dayatang.domain.InstanceFactory;
@@ -33,7 +32,7 @@ public class CmsContentTopicFacadeImpl implements CmsContentTopicFacade {
      return queryChannel;
     }
 	
-	public InvokeResult getCmsContentTopic(Long id) {
+	public InvokeResult getCmsContentTopic(String id) {
 		return InvokeResult.success(CmsContentTopicAssembler.toDTO(application.getCmsContentTopic(id)));
 	}
 	
@@ -47,14 +46,14 @@ public class CmsContentTopicFacadeImpl implements CmsContentTopicFacade {
 		return InvokeResult.success();
 	}
 	
-	public InvokeResult removeCmsContentTopic(Long id) {
+	public InvokeResult removeCmsContentTopic(String id) {
 		application.removeCmsContentTopic(application.getCmsContentTopic(id));
 		return InvokeResult.success();
 	}
 	
-	public InvokeResult removeCmsContentTopics(Long[] ids) {
+	public InvokeResult removeCmsContentTopics(String[] ids) {
 		Set<CmsContentTopic> cmsContentTopics= new HashSet<CmsContentTopic>();
-		for (Long id : ids) {
+		for (String id : ids) {
 			cmsContentTopics.add(application.getCmsContentTopic(id));
 		}
 		application.removeCmsContentTopics(cmsContentTopics);
@@ -76,7 +75,8 @@ public class CmsContentTopicFacadeImpl implements CmsContentTopicFacade {
 	   		jpql.append(" and _cmsContentTopic.topicId=?");
 	   		conditionVals.add(queryVo.getTopicId());
 	   	}	
-        Page<CmsContentTopic> pages = getQueryChannelService()
+        @SuppressWarnings("unchecked")
+		Page<CmsContentTopic> pages = getQueryChannelService()
 		   .createJpqlQuery(jpql.toString())
 		   .setParameters(conditionVals)
 		   .setPage(currentPage, pageSize)
@@ -85,5 +85,14 @@ public class CmsContentTopicFacadeImpl implements CmsContentTopicFacade {
         return new Page<CmsContentTopicDTO>(pages.getStart(), pages.getResultCount(),pageSize, CmsContentTopicAssembler.toDTOs(pages.getData()));
 	}
 	
+	public CmsContentTopicDTO getCmsContentTopicByCId(String contentId){
+		CmsContentTopicDTO cmsContentTopicDTO = CmsContentTopicAssembler.toDTO(application.getCmsContentTopicByCId(contentId));
+		return cmsContentTopicDTO;
+	}
 	
+	public InvokeResult removeCmsContentTopicsByCId(String contentId){
+		CmsContentTopic cmsContentTopic = application.getCmsContentTopicByCId(contentId);
+		application.removeCmsContentTopic(cmsContentTopic);
+		return InvokeResult.success();
+	}
 }

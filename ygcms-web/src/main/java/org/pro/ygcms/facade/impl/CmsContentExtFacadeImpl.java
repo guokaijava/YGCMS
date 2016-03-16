@@ -46,7 +46,9 @@ public class CmsContentExtFacadeImpl implements CmsContentExtFacade {
 	}
 	
 	public InvokeResult updateCmsContentExt(CmsContentExtDTO cmsContentExtDTO) {
+		System.out.println(111);
 		application.updateCmsContentExt(CmsContentExtAssembler.toEntity(cmsContentExtDTO));
+		System.out.println(222);
 		return InvokeResult.success();
 	}
 	

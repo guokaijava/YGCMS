@@ -93,4 +93,12 @@ public class CmsContentAttrFacadeImpl implements CmsContentAttrFacade {
 	public List<CmsContentAttrDTO> getCmsContentAttrByCId(String contentId){
 		return CmsContentAttrAssembler.toDTOs(application.findAllCmsContentAttrByCId(contentId));
 	}
+	
+	public InvokeResult removeCmsContentAttrsByCId(String contentId){
+		List<CmsContentAttr> cmsContentAttrList = application.findAllCmsContentAttrByCId(contentId);
+		Set<CmsContentAttr> cmsContentAttrSet = new HashSet<CmsContentAttr>();
+		cmsContentAttrSet.addAll(cmsContentAttrList);
+		application.removeCmsContentAttrs(cmsContentAttrSet);
+		return InvokeResult.success();
+	}
 }

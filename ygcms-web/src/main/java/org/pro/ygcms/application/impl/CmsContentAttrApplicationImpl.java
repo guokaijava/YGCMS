@@ -42,5 +42,4 @@ public class CmsContentAttrApplicationImpl implements CmsContentAttrApplication 
 	public List<CmsContentAttr> findAllCmsContentAttrByCId(String contentId){
 		return CmsContentAttr.findByProperty(CmsContentAttr.class, "contentId", contentId);
 	}
-	
 }

@@ -20,7 +20,7 @@ public class CmsContentTxtApplicationImpl implements CmsContentTxtApplication {
 	}
 	
 	public void updateCmsContentTxt(CmsContentTxt cmsContentTxt) {
-		cmsContentTxt .save();
+		cmsContentTxt.save();
 	}
 	
 	public void removeCmsContentTxt(CmsContentTxt cmsContentTxt) {
