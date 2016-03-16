@@ -7,22 +7,22 @@ input[type="radio"],input[type="checkbox"]{
 </style>
 <form class="form-horizontal" style="min-height:560px;height:560px" enctype="multipart/form-data" >
 	<ul class="nav nav-tabs" id="myTab">
-    	<li class="active" id="li_base"><a data-toggle="tab" href="#tab_base">基本信息</a></li>
-        <li class="" id="li_content"><a data-toggle="tab" href="#tab_content">内容编辑<i class="icon-remove tab-close"></i></a></li>
-        <li class="" id="li_image"><a data-toggle="tab" href="#tab_image">图片信息<i class="icon-remove tab-close"></i></a></li>
-        <li class="" id="li_file" style="display: none;"><a data-toggle="tab" href="#tab_file">附件信息<i class="icon-remove tab-close"></i></a></li>
-        <li class="" id="li_permiss"><a data-toggle="tab" href="#tab_permiss">高级设置<i class="icon-remove tab-close"></i></a></li>
-    </ul>
+		<li class="active" id="li_base"><a data-toggle="tab" href="#tab_base">基本信息</a></li>
+		<li class="" id="li_content"><a data-toggle="tab" href="#tab_content">内容编辑<i class="icon-remove tab-close"></i></a></li>
+		<li class="" id="li_image"><a data-toggle="tab" href="#tab_image">图片信息<i class="icon-remove tab-close"></i></a></li>
+		<li class="" id="li_file" style="display: none;"><a data-toggle="tab" href="#tab_file">附件信息<i class="icon-remove tab-close"></i></a></li>
+		<li class="" id="li_permiss"><a data-toggle="tab" href="#tab_permiss">高级设置<i class="icon-remove tab-close"></i></a></li>
+	</ul>
 	<div class="tab-content" id="myTabContent" style="padding-top:20px;height:540px;overflow-y:auto;overflow-x:hidden">
-    	<div id="tab_base" class="tab-pane fade active in">
-        </div>
-        <div id="tab_content" class="tab-pane fade">
-        	<iframe src="../thirdparty/ueditor/index.html" id="txteditor" scrolling="no" frameborder="0" style="width:100%;height:500px;display:none"></iframe>
-        </div>
-        <div id="tab_image" class="tab-pane fade">
-          
-        </div>
-        <div id="tab_file" class="tab-pane fade">
+		<div id="tab_base" class="tab-pane fade active in">
+		</div>
+		<div id="tab_content" class="tab-pane fade">
+			<iframe src="../thirdparty/ueditor/index.html" id="txteditor" scrolling="no" frameborder="0" style="width:100%;height:500px;display:none"></iframe>
+		</div>
+		<div id="tab_image" class="tab-pane fade">
+		
+		</div>
+		<div id="tab_file" class="tab-pane fade">
 			<div class="form-group">
 				<label class="col-lg-3 control-label">标题：</label>
 				<div class="col-lg-9">
@@ -49,7 +49,7 @@ input[type="radio"],input[type="checkbox"]{
 			<ul></ul>
 		</div>
 		<div id="tab_permiss" class="tab-pane fade">
-          
-    	</div>
+		
+		</div>
 	</div>
 </form>
