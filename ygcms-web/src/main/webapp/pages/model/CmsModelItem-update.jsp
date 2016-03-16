@@ -29,6 +29,7 @@
 				<option value="8">单选框</option>
 				<option value="9">文本编辑区</option>
 				<option value="10">单文件上传区</option>
+				<option value="11">附件列表</option>
 			</select>
 		</div>
 		<label class="col-lg-2 control-label">排序号:</label>

@@ -38,6 +38,13 @@ public class CmsContentAttachment extends CmsAbstractEntity {
 	@Column(name = "download_count")
 	private int downloadCount;
 
+	@Column(name = "title")
+	private String title;
+	
+	@Column(name = "description")
+	private String description;
+	
+	
 	public String getContentId() {
 		return contentId;
 	}
@@ -84,6 +91,22 @@ public class CmsContentAttachment extends CmsAbstractEntity {
 
 	public void setDownloadCount(int downloadCount) {
 		this.downloadCount = downloadCount;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override

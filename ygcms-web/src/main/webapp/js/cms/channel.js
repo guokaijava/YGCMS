@@ -346,7 +346,7 @@ var channelManager = function(){
 					rowhtml = "<input type=\"hidden\" name='"+field_name+"' id='"+field_name+"' value='"+field_value+"'/>";
 				}
 			}else if(row.datatype == 10){ 
-				rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><div class=\"fileinput\"><button class=\"btn btn-success\"><i class=\"glyphicon glyphicon-picture\"></i>&nbsp;选择文件</button><input type='file' id='"+field_name+"_file' name=\"myfiles\"/><input type=\"hidden\" name='"+field_name+"' id='"+field_name+"'/><img id='"+field_name+"_view' alt='请上传"+row.itemlabel+"' src='"+field_value+"'/><div></div>";
+				rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><div class=\"fileinput\"><button class=\"btn btn-success\"><i class=\"glyphicon glyphicon-picture\"></i>&nbsp;选择文件</button><input type='file' id='"+field_name+"_file' name=\"myfiles\"/><input type=\"hidden\" name='"+field_name+"' id='"+field_name+"' value='"+field_value+"'/><img id='"+field_name+"_view' alt='请上传"+row.itemlabel+"' src='"+field_value+"'/><div></div>";
 			}
 		}
 		return rowhtml;
