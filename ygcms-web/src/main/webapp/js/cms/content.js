@@ -1,3 +1,13 @@
+// 删除附件
+	var delfile = function(id){
+		$.get(contextPath + '/CmsContent/removefile/'+id+'.koala').done(function(result){
+			$("#"+id).remove();
+		});
+	};
+	// 打开附件
+	var openfile = function(path){
+		window.open(contextPath+path);
+	};
 var contentManager = function(){
 	var baseUrl =  contextPath + '/CmsContent/';
 	var dialog = null;    //对话框
@@ -22,6 +32,7 @@ var contentManager = function(){
 				$("#contentDetail").find("#siteid").val(this.value);
 			});
 			getTreeData(firstsite);
+			$("#contentDetail").find("#siteid").val(firstsite);
 		});
 	};
 	
@@ -162,7 +173,7 @@ var contentManager = function(){
 			});
 		});
 	};
-
+	
 	// 渲染表单
 	var renderForm = function(result,root){
 		// 增加站点元素
@@ -171,7 +182,7 @@ var contentManager = function(){
 		root.find("#tab_base").append("<input type=\"hidden\" name=\"modelId\" value=\""+$("#contentDetail").find("#modelid").val()+"\"/>");
 		// 增加内容ID
 		if(result.cmsContent !=null ){
-			root.find("#tab_base").append("<input type=\"hidden\" name=\"contentId\" value=\""+result.cmsContent["id"]+"\"/>");
+			root.find("#tab_base").append("<input type=\"hidden\" name=\"contentId\" id=\"contentId\" value=\""+result.cmsContent["id"]+"\"/>");
 			root.find("#tab_base").append("<input type=\"hidden\" name=\"version\" value=\""+result.cmsContentExt["version"]+"\"/>");
 			root.find("#tab_base").append("<input type=\"hidden\" name=\"id\" value=\""+result.cmsContentExt["id"]+"\"/>");
 		}
@@ -195,9 +206,39 @@ var contentManager = function(){
 				root.find("#tab_permiss").append(renderRow(result,ele,root));
 			}
 		}
-
+		// 附件列表赋值
+		if(result.cmsContentAttachment!=undefined && result.cmsContentAttachment.length > 0){
+			for(var i=0;i<result.cmsContentAttachment.length;i++){
+				var obj = result.cmsContentAttachment[i];
+				root.find("#fileList").append("<tr id=\""+obj.id+"\">"+
+						"<td class=\"col-lg-3\">"+obj.filename+"</th>"+
+						"<td class=\"col-lg-3\">"+obj.fileTitle+"</th>"+
+						"<td class=\"col-lg-3\">"+obj.fileDescription+"</th>"+
+						"<td class=\"col-lg-3\"><div class='btn btn-danger' onclick=\"delfile('"+obj.id+"');\">删除</div>&nbsp;&nbsp;<div class='btn btn-info' onclick=\"openfile('"+obj.attachmentPath+"');\">打开或下载</div></th>"+
+					"</tr>");
+			}
+		}
+        // 附件列表文件上传
+		root.find("#uploadfile").click(function(){
+			$.ajaxFileUpload ({
+				url: contextPath +"/CmsContent/upload.koala?fileTitle="+root.find("#file_title").val()+"&fileDescription="+root.find("#file_desc").val()+"&contentId="+root.find("#contentId").val(), //用于文件上传的服务器端请求地址
+				secureuri: false, //是否需要安全协议，一般设置为false
+				fileElementId:'ufile', //文件上传域的ID
+				dataType: 'json', //返回值类型 一般设置为json
+				success: function (data, status){
+					console.log(encodeURI(data[0].filename));
+					root.find("#fileList").append("<tr id=\""+data[0].id+"\">"+
+								"<td class=\"col-lg-3\">"+data[0].filename+"</th>"+
+								"<td class=\"col-lg-3\">"+data[0].fileTitle+"</th>"+
+								"<td class=\"col-lg-3\">"+data[0].fileDescription+"</th>"+
+								"<td class=\"col-lg-3\"><div class='btn btn-danger' onclick=\"delfile('"+data[0].id+"');\">删除</div>&nbsp;&nbsp;<div class='btn btn-info' onclick=\"openfile('"+data[0].attachmentPath+"');\">打开或下载</div></th>"+
+							"</tr>");
+				}
+			});
+		});
+		
 		// 绑定文件上传事件
-		root.find("input[type=file]").each(function(){
+		root.find("#tab_image input[type=file]").each(function(){
 			$(this).change(function(){
 				if($(this).val()!=""){
 					var imgPath = $(this).val();
@@ -415,7 +456,7 @@ var contentManager = function(){
 				rowhtml = "<input type=\"hidden\" name='"+field_name+"' id='"+field_name+"' value='"+field_value+"'/>";
 			}
 		}else if(row.datatype == 10){ //
-			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><div class=\"fileinput\"><button class=\"btn btn-success\"><i class=\"glyphicon glyphicon-picture\"></i>&nbsp;选择文件</button><input type='file' id='"+field_name+"_file' name=\"myfiles\"/><input type=\"hidden\" name='"+field_name+"' id='"+field_name+"'/><img id='"+field_name+"_view' alt='请上传"+row.itemlabel+"' src='"+field_value+"'/><div></div>";
+			rowhtml = "<div class=\"form-group\"><label class=\"col-lg-3 control-label\">"+row.itemlabel+"</label><div class=\"col-lg-7\"><div class=\"fileinput\"><button class=\"btn btn-success\"><i class=\"glyphicon glyphicon-picture\"></i>&nbsp;选择文件</button><input type='file' id='"+field_name+"_file' name=\"myfiles\"/><input type=\"hidden\" name='"+field_name+"' id='"+field_name+"' value='"+field_value+"'/><img id='"+field_name+"_view' alt='请上传"+row.itemlabel+"' src='"+field_value+"'/><div></div>";
 		}else if(row.datatype == 11){ //
 			rowhtml = "";
 		}
@@ -429,8 +470,12 @@ var contentManager = function(){
 		var cols = [{
 			title: '标题',
 			name: 'title',
-			width: 200,
+			width: 140,
 			sortable: false
+		},{
+			title: '栏目',
+			name: 'channelName',
+			width: 80
 		},{
 			title: '类型',
 			name: 'typeName',
@@ -438,7 +483,7 @@ var contentManager = function(){
 		},{
 			title: '发布者',
 			name: 'author',
-			width: 100
+			width: 80
 		},{
 			title: '点击',
 			name: 'viewsDay',
